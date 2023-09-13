@@ -1,0 +1,20 @@
+{
+  "name": "cargokite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sudo parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.66.1"
+  },
+  "dependencies": {
+    "@studio-freight/lenis": "^1.0.22",
+    "lenis": "^0.0.2"
+  }
+}

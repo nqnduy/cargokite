@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$cl-txt: #000000;
+$cl-body: #4B4B4B;
+$cl-white: #ffffff;
+$cl-orange: #ff471d;
+$cl-desc: #9A9A9A;
+$cl-bg: #EAEEF0;
+$dur-default: 300ms;
+
+//Font
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'HelveticaNowDisplay';
+    font-size: 0005787037037vw;
+    color: rgba($cl-txt, 1);
+    @media only screen and (min-width: 1728px) {
+        font-size: 10px;
+    }
+    @media only screen and (max-width: 991px) {
+        font-size: 0.01vw;
+    }
+    @media only screen and (max-width: 768px) {
+        font-size: 0.013vw;
+    }
+    @media only screen and (max-width: 476px) {
+        font-size: 0.2667vw;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+//Layout 
+.grid {
+    display: grid;
+    column-gap: 2rem;
+}
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 6rem;
+    max-width: 172.8rem;
+    &.fuild {
+        max-width: none;
+    }
+    &.grid {
+        grid-template-columns: repeat(16, 1fr);
+    }
+}
+
+//Header 
+.header {
+    background-color: rgba($cl-white, 0);
+    padding-top: 3.2rem;
+    padding-bottom: 3.2rem;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__logo {
+        display: inline-block;
+        height: 3.2rem;
+        margin-right: auto;
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+    &__links {
+        display: flex;
+        column-gap: 7.2rem;
+        justify-content: end;
+        align-items: center;
+        margin-right: 7.2rem;
+    }
+    &__link {
+        display: block;
+        color: rgba($cl-white, .7);
+        transition: color $dur-default ease;
+        &:hover, &.active {
+            color: rgba($cl-white, 1);
+        }
+    }
+}
