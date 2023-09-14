@@ -4,32 +4,38 @@
     box-sizing: border-box;
 }
 
+$cl-placeholder: #7A7A7A;
+$cl-sub: #BCBCBC;
 $cl-txt: #000000;
+$cl-note: #B8B8B8;
 $cl-body: #4B4B4B;
 $cl-white: #ffffff;
 $cl-orange: #ff471d;
+$cl-dark-orange: #EB2C00;
 $cl-desc: #9A9A9A;
 $cl-bg: #EAEEF0;
-$dur-default: 300ms;
+$dur-default: 400ms;
+
+$container-width: 172.8rem;
 
 //Font
 html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'HelveticaNowDisplay';
-    font-size: 0005787037037vw;
+    font-size: 0.5787037037vw;
     color: rgba($cl-txt, 1);
     @media only screen and (min-width: 1728px) {
         font-size: 10px;
     }
     @media only screen and (max-width: 991px) {
-        font-size: 0.01vw;
+        font-size: 1vw;
     }
     @media only screen and (max-width: 768px) {
-        font-size: 0.013vw;
+        font-size: 1.3vw;
     }
     @media only screen and (max-width: 476px) {
-        font-size: 0.2667vw;
+        font-size: 2.667vw;
     }
 }
 
@@ -37,6 +43,49 @@ a {
     text-decoration: none;
     color: inherit;
     display: inline-block;
+}
+
+.arr-wrap {
+    width: 100%;
+    height: 100%;
+    flex: none;
+    position: relative;
+    overflow: hidden;
+    &-32 {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+    .arr-ic-main {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0%;
+        bottom: auto;
+        left: 0%;
+        right: auto;
+    }
+    .arr-ic-clone {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0%;
+        bottom: auto;
+        left: 0%;
+        right: auto;
+        transform: translate(-150%, 150%);
+    }
+}
+.arr-hover {
+    &:hover {
+        .arr-ic-main {
+            transform: translate(150%,-150%);
+            transition: transform .6s cubic-bezier(.4,0,.1,1);
+        }
+        .arr-ic-clone {
+            transform: translate(0, 0);
+            transition: transform .6s cubic-bezier(.4,0,.1,1);
+        }
+    }
 }
 
 //Layout 
@@ -48,53 +97,11 @@ a {
     width: 100%;
     margin: 0 auto;
     padding: 0 6rem;
-    max-width: 172.8rem;
+    max-width: $container-width;
     &.fuild {
         max-width: none;
     }
     &.grid {
         grid-template-columns: repeat(16, 1fr);
-    }
-}
-
-//Header 
-.header {
-    background-color: rgba($cl-white, 0);
-    padding-top: 3.2rem;
-    padding-bottom: 3.2rem;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    &__logo {
-        display: inline-block;
-        height: 3.2rem;
-        margin-right: auto;
-        img {
-            height: 100%;
-            width: auto;
-        }
-    }
-    &__links {
-        display: flex;
-        column-gap: 7.2rem;
-        justify-content: end;
-        align-items: center;
-        margin-right: 7.2rem;
-    }
-    &__link {
-        display: block;
-        color: rgba($cl-white, .7);
-        transition: color $dur-default ease;
-        &:hover, &.active {
-            color: rgba($cl-white, 1);
-        }
     }
 }

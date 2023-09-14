@@ -1,0 +1,173 @@
+//Footer
+.footer {
+    background-color: rgba($cl-bg, 1);
+    &__form {
+        &-wrap {
+            grid-column: 2/7;
+            margin-top: -13.6rem;
+            padding: 3.2rem 6rem 6rem;
+            background-color: #212121;
+        }
+        &-icon {
+            margin-bottom: 4rem;
+        }
+        &-title {
+            color: rgba($cl-white, 1);
+            margin-bottom: 1.2rem;
+        }
+        &-sub {
+            color: rgba($cl-sub, 1);
+            margin-bottom: 2.4rem;
+        }
+        &-main {
+            display: flex;
+            flex-direction: column;
+            row-gap: .8rem;
+        }
+        &-caption {
+            margin-top: 1.2rem;
+            color: rgba($cl-placeholder, 1);
+        }
+    }
+
+    &__main {
+        grid-column: 8/16;
+        display: flex;
+        flex-direction: column;
+    }
+    &__links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+        border-bottom: 1px solid rgba($cl-txt, .1);
+        margin-bottom: 7.6rem;
+    }
+    &__link {
+        transition: color $dur-default ease;
+        &:hover, &.active {
+            color: rgba($cl-orange, 1);
+        }
+    }
+
+    &__info {
+        grid-template-columns: repeat(8, 1fr);
+        &-addr {
+            grid-column: 1/5;
+            grid-template-columns: repeat(2, 1fr);
+            &-label {
+                margin-bottom: 1.6rem;
+            }
+            &-txt {
+                color: rgba($cl-body, 1);
+            }
+        }
+        &-contact {
+            grid-column: 6/9;
+            display: flex;
+            flex-direction: column;
+            row-gap: .8rem;
+            &-label {
+                color: rgba($cl-body, 1);
+            }
+        }
+        &-copy {
+            grid-column: 1/5;
+            color: rgba($cl-note, 1);
+            padding-top: 4rem;
+            margin-top: auto;
+        }
+        &-legal {
+            grid-column: 6/9;   
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 4rem;
+            margin-top: auto;
+            &-link {
+                color: rgba($cl-note, 1);    
+            }
+        }
+    }
+
+    &__marquee {
+        display: block;
+        overflow: hidden;
+        color: rgba($cl-white, 1);
+        transition: color $dur-default ease;
+        &:hover {
+            color: rgba($cl-orange, 1);
+            .footer__marquee-wrap {
+                transform: translate(-4%);
+            }
+            .footer__marquee-item {
+                animation-play-state: paused;
+            }
+        }
+        &-wrap {
+            padding-top: 3.4rem;
+            padding-bottom: 2.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            flex-wrap: nowrap;
+            transform: translate(0);
+            transition: transform 1.6s ease-out
+        }
+        &-item {
+            padding-right: 3rem;
+            white-space: nowrap;
+            font-size: 18rem;
+            line-height: 1.15em;
+            animation-name: rtl;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            animation-duration: 20s;
+            animation-play-state: running;
+            width: max-content;
+            will-change: transform,width;
+        }
+    }
+}
+
+@keyframes rtl {
+    0% {
+        transform: translateZ(0);
+        visibility: visible;
+    }
+    100% {
+        transform: translate3d(-100%,0,0);
+    }
+}
+.input {
+    &-wrap {
+        width: 100%;
+    }
+    &-field {
+        width: 100%;
+        appearance: none;
+        -webkit-appearance: none;
+        outline: none;
+        border: none;
+        border-radius: none;
+        background-color: transparent;
+        padding: 2rem 2.4rem;
+        border: 1px solid rgba($cl-white, .1);
+        color: rgba($cl-white, 1);
+        transition: all $dur-default ease;
+        &::placeholder {
+            color: rgba($cl-placeholder, 1);
+        }
+    }
+    &-submit {
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        outline: none;
+        border: none;
+        border-radius: none;
+
+    }
+}
