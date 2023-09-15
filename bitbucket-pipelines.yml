@@ -7,12 +7,11 @@ image: atlassian/default-image:3
 
 pipelines:
   default:
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
     - step:
         name: 'Install Dependencies'
         script:
-          - npm install "Your deployment to staging script goes here..."
+          - npm install
     - step:
         name: 'Deployment to Production'
         script:
-          - parcel index.html "Your deployment to production script goes here..."
+          - parcel index.html
