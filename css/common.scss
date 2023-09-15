@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-kerning: none;
 }
 
 $cl-placeholder: #7A7A7A;
@@ -38,11 +39,45 @@ html {
         font-size: 2.667vw;
     }
 }
-
+.typejs {
+    //font-kerning: none;
+}
+.typejs.line {
+    //overflow: hidden;
+}
 a {
     text-decoration: none;
     color: inherit;
     display: inline-block;
+}
+.hover-un {
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    color: currentColor;
+    &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        bottom: -0.1em;
+        left: 0;
+        background-color: currentColor;
+        -webkit-transform-origin: right;
+        transform-origin: right;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        -webkit-transition: 0.6s transform cubic-bezier(0.66, 0, 0.15, 1);
+        transition: 0.6s transform cubic-bezier(0.66, 0, 0.15, 1);
+    }
+    &:hover {
+        &::after {
+            transform-origin: left;
+            -webkit-transform-origin: left;
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+    }
 }
 
 .arr-wrap {

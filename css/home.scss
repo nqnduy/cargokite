@@ -10,7 +10,7 @@
     &__title {
         margin-top: 32vh;
         grid-column: 1/8;
-        max-width: 66rem;
+        max-width: 68rem;
         color: rgba($cl-white, 1);
     }
     &__backer {
@@ -45,16 +45,44 @@
         }
     }
     &__sub {
-        grid-column: 14/17;
+        grid-column: 13/17;
         grid-row: 1/3;
         align-self: end;
+        justify-self: end;
         color: $cl-white;
-        max-width: 24.9rem;
         display: flex;
         flex-direction: column;
         row-gap: 4rem;
+        &-txt {
+            max-width: 25rem;
+            .line, span {
+                display: inline !important;
+            }
+        }
         &-caption {
+            display: flex;
+            width: calc(26rem + .2rem);
+            flex-wrap: nowrap;
+            
+            height: 2.56rem;
+            overflow: hidden;
             color: rgba($cl-white, .7);
+            &-item {
+                white-space: nowrap;
+                padding-right: .2rem;
+                &.anim {
+                    animation: rtl 14s infinite linear;
+                }
+            }
+        }
+        @keyframes rtl {
+            0% {
+                transform: translateZ(0);
+                visibility: visible;
+            }
+            100% {
+                transform: translate3d(-100%,0,0);
+            }
         }
     }
 }
@@ -64,12 +92,16 @@
         grid-column: 2/4;
         grid-row: 1/2;
         color: rgba($cl-desc, 1);
+        align-self: start;
     }
     &__title {
-        grid-column: 4/10;
+        grid-column: 4/11;
         grid-row: 1/2;
-        max-width: 54.9rem;
+        max-width: 55.5rem;
         margin-bottom: 21.2rem;
+        .line, span {
+            display: inline !important;
+        }
     }
     &__img {
         grid-column: 4/7;
@@ -89,10 +121,16 @@
         }
         &-h3 {
             margin-top: 4rem;
+            .line, span {
+                display: inline !important;
+            }
         }
         &-p {
             margin-top: 2rem;
             color: rgba($cl-body, 1);
+            .line, span {
+                display: inline !important;
+            }
         }
         &-link {
             margin-top: 2rem;
@@ -107,11 +145,15 @@
         grid-column: 2/4;
         grid-row: 1/2;
         color: rgba($cl-desc, 1);
+        align-self: start;
     }
     &__title {
         grid-column: 4/11;
         grid-row: 1/2;
         max-width: 69.2rem;
+        .line, span {
+            display: inline !important;
+        }
     }
     &__main {
         grid-column: 1/17;
@@ -131,6 +173,9 @@
             &-txt {
                 margin-top: 2rem;
                 color: rgba($cl-body, 1);
+                .line, span {
+                    display: inline !important;
+                }
             }
             &:nth-child(1) {
                 margin-top: 0;
@@ -211,12 +256,15 @@
         &-txt {
             p {
                 margin-bottom: 2rem;
-                &:last-child {
+                &.last-p {
                     margin-bottom: 0rem;
                 }
+                // &:last-child {
+                //     margin-bottom: 0rem;
+                // }
             }
         }
-        .line {
+        .p-line {
             width: min(.2rem, 2px);
             background-color: #EAEAEA;
             &-top {
@@ -256,6 +304,9 @@
             }
             &-txt {
                 color: rgba($cl-body, 1);
+                .line, span {
+                    display: inline !important;
+                }
             }
             &:nth-child(odd) {
                 justify-self: end;
@@ -335,7 +386,10 @@
         margin-bottom: 3.7rem;
     }
     &__title {
-        max-width: 50.7rem;
+        max-width: 51rem;
+        .line, span {
+            display: inline !important;
+        }
     }
     &__item {
         grid-column: 4/5;
