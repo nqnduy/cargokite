@@ -10,6 +10,7 @@ pipelines:
     - step:
         name: 'Install Dependencies'
         script:
+          - npm install parcel
           - npm install
     - step:
         name: 'Deployment to Production'
