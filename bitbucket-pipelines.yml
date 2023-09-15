@@ -1,0 +1,18 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+
+image: atlassian/default-image:3
+
+pipelines:
+  default:
+    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
+    - step:
+        name: 'Install Dependencies'
+        script:
+          - npm install "Your deployment to staging script goes here..."
+    - step:
+        name: 'Deployment to Production'
+        script:
+          - parcel index.html "Your deployment to production script goes here..."
