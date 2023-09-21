@@ -45,7 +45,7 @@
     }
     &__link {
         display: block;
-        color: rgba(var(--header-txt), .7);
+        color: rgba(var(--header-txt), .6);
         transition: color $dur-default ease;
         &:hover, &.active {
             color: rgba(var(--header-txt), 1);
@@ -61,6 +61,33 @@
         backdrop-filter: blur(10px);
         .header__logo {
             height: 2.6rem;
+        }
+    }
+
+    &.dark-mode {
+        --header-txt: 0,0,0;
+    }
+    &.mix-mode {
+        --header-txt: 0,0,0;
+        .header {
+            &__logo {
+                svg {
+                    path {
+                        fill: rgba(255,255,255, 1) !important;
+                    }
+                }
+            }
+        }
+        &.on-scroll {
+            .header {
+                &__logo {
+                    svg {
+                        path {
+                            fill: rgba(var(--header-txt), 1) !important;
+                        }
+                    }
+                }
+            }    
         }
     }
 }

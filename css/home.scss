@@ -1,6 +1,6 @@
 .home-hero {
     height: 100vh;
-    min-height: 106.4rem;
+    min-height: 90rem;
     background: url('../imgs/home-hero.jpg') center 64% no-repeat;
     background-size: cover;
     padding-bottom: max(8.5vh, 8.5rem);
@@ -55,21 +55,22 @@
         row-gap: 4rem;
         &-txt {
             max-width: 25rem;
-            .line, span {
-                display: inline !important;
-            }
         }
         &-caption {
             display: flex;
-            width: calc(26rem + .2rem);
+            width: calc(26rem + .4rem);
             flex-wrap: nowrap;
-            
             height: 2.56rem;
             overflow: hidden;
             color: rgba($cl-white, .7);
             &-item {
                 white-space: nowrap;
-                padding-right: .2rem;
+                .txt-hl {
+                    width: 1.4rem;
+                    text-align: center;
+                    display: inline-block;
+                    padding: 0 .4rem;
+                }
                 &.anim {
                     animation: rtl 14s infinite linear;
                 }
@@ -121,16 +122,12 @@
         }
         &-h3 {
             margin-top: 4rem;
-            .line, span {
-                display: inline !important;
-            }
+            
         }
         &-p {
             margin-top: 2rem;
             color: rgba($cl-body, 1);
-            .line, span {
-                display: inline !important;
-            }
+            
         }
         &-link {
             margin-top: 2rem;
@@ -141,6 +138,7 @@
     padding-top: 31.4rem;
     padding-bottom: 42.8rem;
     background-color: rgba($cl-bg, 1);
+    overflow: hidden;
     &__label {
         grid-column: 2/4;
         grid-row: 1/2;
@@ -148,12 +146,11 @@
         align-self: start;
     }
     &__title {
-        grid-column: 4/11;
+        grid-column: 4/12;
         grid-row: 1/2;
-        max-width: 69.2rem;
-        .line, span {
-            display: inline !important;
-        }
+        align-self: start;
+        // justify-self: start;
+        max-width: 72.2rem;
     }
     &__main {
         grid-column: 1/17;
@@ -386,10 +383,7 @@
         margin-bottom: 3.7rem;
     }
     &__title {
-        max-width: 51rem;
-        .line, span {
-            display: inline !important;
-        }
+        max-width: 51.6rem;
     }
     &__item {
         grid-column: 4/5;
@@ -527,7 +521,7 @@
         margin-bottom: 2rem;
     }
     &__title {
-        margin-bottom: 6.3rem;
+        margin-bottom: 6.2rem;
     }
     &__main {
         grid-column: 9/17;
@@ -701,7 +695,7 @@
             height: 100%;
             transform-origin: left;
             transform: scaleX(0);
-            transition: transform $dur-default ease;
+            transition: transform $dur-default ease, background-color $dur-default ease;
             background-color: rgba($cl-txt, .2);
         }
         &.active {
@@ -715,6 +709,19 @@
                 &__icon {
                     path:nth-child(1) {
                         transform: rotateZ(90deg);
+                    }
+                }
+            }
+        }
+        &:hover {
+            .faq-item {
+                &__line-inner {
+                    transform: scaleX(1);
+                    background-color: rgba($cl-orange, 1);
+                }
+                &__icon {
+                    path {
+                        stroke: rgba($cl-orange, 1);
                     }
                 }
             }

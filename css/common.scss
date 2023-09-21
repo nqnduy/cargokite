@@ -6,8 +6,10 @@
 }
 
 $cl-placeholder: #7A7A7A;
-$cl-sub: #BCBCBC;
+$cl-sub: #1D1D1D;
+$cl-dark-sub: #BCBCBC;
 $cl-txt: #000000;
+$cl-dark-txt: #E9E9E9;
 $cl-note: #B8B8B8;
 $cl-body: #4B4B4B;
 $cl-white: #ffffff;
@@ -15,6 +17,8 @@ $cl-orange: #ff471d;
 $cl-dark-orange: #EB2C00;
 $cl-desc: #9A9A9A;
 $cl-bg: #EAEEF0;
+$cl-dark-bg: #212121;
+$cl-disable: #DBDBDB;
 $dur-default: 400ms;
 
 $container-width: 172.8rem;
@@ -39,12 +43,7 @@ html {
         font-size: 2.667vw;
     }
 }
-.typejs {
-    //font-kerning: none;
-}
-.typejs.line {
-    //overflow: hidden;
-}
+
 a {
     text-decoration: none;
     color: inherit;

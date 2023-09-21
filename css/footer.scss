@@ -1,12 +1,14 @@
 //Footer
 .footer {
     background-color: rgba($cl-bg, 1);
+    position: relative;
+    z-index: 5;
     &__form {
         &-wrap {
             grid-column: 2/7;
             margin-top: -13.6rem;
             padding: 3.2rem 6rem 6rem;
-            background-color: #212121;
+            background-color: rgba($cl-dark-bg, 1);
         }
         &-icon {
             margin-bottom: 4rem;
@@ -16,7 +18,7 @@
             margin-bottom: 1.2rem;
         }
         &-sub {
-            color: rgba($cl-sub, 1);
+            color: rgba($cl-dark-sub, 1);
             margin-bottom: 2.4rem;
         }
         &-main {

@@ -1,0 +1,136 @@
+.priv-hero {
+    &__nav {
+        grid-column: 1/7;
+        background-color: rgba($cl-orange, 1);
+        position: relative;
+        &::after {
+            content: '';
+            background-color: rgba($cl-orange, 1);
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50vw;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        &-inner {
+            position: sticky;
+            display: flex;
+            flex-direction: column;
+            top: 14.8rem;
+            margin-bottom: 10rem;
+            max-width: 48.9rem;
+            z-index: 2;
+            height: calc(100vh - 24.8rem);
+        }
+        &-label {
+            color: rgba($cl-white, 1);
+            margin-bottom: 1.2rem;
+        }
+        &-toc {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            margin-right: -1.4rem;
+            padding-right: 1.4rem;
+            &-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 1.6rem;
+                padding-bottom: 1.6rem;
+                border-bottom: solid 1px rgba($cl-white, .2);
+                position: relative;
+                opacity: .8;
+                transition: opacity $dur-default ease;
+                &-txt {
+                    color: rgba($cl-white, .7);
+                    transition: color $dur-default ease;
+                    padding-right: 2.4rem;
+                }
+                &-num {
+                    color: rgba($cl-white, .7);
+                    transition: color $dur-default ease;
+                }
+                &-line {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 1px;
+                    background-color: rgba($cl-white, .75);
+                    transform-origin: left;
+                    transform: scaleX(0);
+                    transition: transform $dur-default ease;
+                }
+                &.active, &:hover {
+                    opacity: 1;
+                    .priv-hero__nav-toc-item {
+                        &-txt {
+                            color: rgba($cl-white, 1);
+                        }
+                        &-num {
+                            color: rgba($cl-white, 1);
+                        }
+                        &-line {
+                            transform: scaleX(1);
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+    }
+
+    &__content {
+        grid-column: 8/16;
+        max-width: 79.4rem;
+    }
+    &__title {
+        margin-top: 23.2rem;
+        color: rgba($cl-txt, 1);
+        margin-bottom: 12rem;
+    }
+    &__main {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 28.4rem;
+        &-richtext {
+            h2 {
+                padding-top: 3.2rem;
+                margin-bottom: 2.4rem;
+                color: rgba($cl-txt, 1);
+            }
+            p {
+                margin-top: 2.4rem;
+                margin-bottom: 2.4rem;
+                color: rgba($cl-body, 1);
+            }
+            ul {
+                margin-top: 2.4rem;
+                margin-bottom: 2.4rem;
+                margin-left: 0px;
+                list-style: none;
+                /* set to 0 if your not using a list-style-type */
+                padding-left: 2.6rem;
+                li {
+                    color: rgba($cl-body, 1);
+                    position: relative;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        display: block;
+                        width: .4rem;
+                        height: .4rem;
+                        top: 1.2rem;
+                        left: -1.5rem;
+                        background-color: rgba($cl-body, 1);
+                    }
+                }
+            }
+        }
+    }
+    
+}
