@@ -1,16 +1,20 @@
 import $ from "jquery";
+import lenis from './vendors/lenis';
 import barba from '@barba/core';
 import barbaPrefetch from '@barba/prefetch';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit } from './untils';
 
 import homeScript from './home';
 import aboutScript from './about';
+import techScript from './tech';
 import newsScript from './news';
-import newsScript from './privacy';
-import lenis from './vendors/lenis';
+import privacyScript from './privacy';
+
+if (history.scrollRestoration) {
+    history.scrollRestoration = "manual";
+}
 
 barba.use(barbaPrefetch);
 gsap.registerPlugin(ScrollTrigger, SplitText); 
@@ -36,12 +40,12 @@ function transitionOnce() {
     resetScroll()
     gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
     let tl = gsap.timeline({
-        delay: .6,
     })
     tl
-    .to('.trans__item', {scaleY: 0, duration: 1, stagger: {
+    .to('.trans__item', {delay: .4, scaleY: 0, duration: 1, stagger: {
         each: '.1',
-    }}, 0)
+    }, ease: "expo.in"}, 0)
+    .to('.trans__logo', {rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in'}, '<=.4')
 }
 
 function transitionLeave(data) {
@@ -50,6 +54,7 @@ function transitionLeave(data) {
         transformOrigin: 'top',
         scaleY: 0
     })
+    gsap.set('.trans__logo', {rotateZ: '7deg', autoAlpha: 0, yPercent: -40, ease: 'power2.out'})
     let tl = gsap.timeline({
         onComplete: () => {
             addNavActiveLink(data)
@@ -58,7 +63,8 @@ function transitionLeave(data) {
     tl
     .to('.trans__item', {scaleY: 1, duration: 1, stagger: {
         each: '.1',
-    }, ease: 'Power1.inOut'}, 0)
+    }, ease: "expo.out"}, 0)
+    .to('.trans__logo', {rotateZ: '0deg', autoAlpha: 1, duration: .6, yPercent: 0}, '>=-.8.5')
 
     return tl
 }
@@ -70,12 +76,13 @@ function transitionEnter(data) {
 
     gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
     let tl = gsap.timeline({
-        delay: .3,
+        delay: .5,
     })
     tl
     .to('.trans__item', {scaleY: 0, duration: 1, stagger: {
         each: '.1',
-    }}, 0)
+    }, ease: "expo.in"}, 0)
+    .to('.trans__logo', {rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in'}, '<=.4')
     return tl
 }
 
@@ -93,7 +100,6 @@ function addNavActiveLink(data) {
     $(`.header__link[data-link="${data.next.namespace}"]`).addClass('active')
     $(`.footer__link[data-link="${data.next.namespace}"]`).addClass('active')
 }
-
 function removeAllScrollTrigger() {
     console.log('remove scroll trigger')
     let triggers = ScrollTrigger.getAll();
@@ -106,21 +112,50 @@ function resetBeforeLeave(data) {
     addNavActiveLink(data);
 }
 function resetScroll() {
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "instant",
-    });
+    let locationHash = window.location.hash;
+    lenis.stop()
+    if ($(locationHash).length) {
+        console.log(locationHash)
+        lenis.scrollTo(locationHash, {
+            force: true,
+            immediate: true,
+        });
+    } else {
+        lenis.scrollTo(0, {
+            force: true,
+            immediate: true,
+        });   
+    }
+    lenis.start()
+}
+function handleScrollTo() {
+    $('[data-scrollto]').on('click', function(e) {
+        e.preventDefault();
+        let target = $(this).attr('href')
+        lenis.scrollTo(target)
+    })
+}
+const handlePopup = {
+    toggle: () => {
+        $('[data-popup="contact"]').on('click', function(e) {
+            e.preventDefault()
+            $('.popup').addClass('active')
+            lenis.stop()
+        })
+        $('[data-popup="close"]').on('click', function(e) {
+            e.preventDefault()
+            $('.popup').removeClass('active')
+            lenis.start()
+        })
+    }
 }
 const VIEWS = [
     homeScript,
     aboutScript,
-    newsScript
+    newsScript,
+    privacyScript,
+    techScript
 ]
-
-if (history.scrollRestoration) {
-    history.scrollRestoration = "manual";
-}
 
 barba.init({
     preventRunning: true,
@@ -129,13 +164,16 @@ barba.init({
         sync: true,
         once(data) {
             addNavActiveLink(data)
+            handleScrollTo()
             transitionOnce(data)
+            handlePopup.toggle()
         },
         async enter(data) {
             
         },
         async afterEnter(data) {
             await transitionEnter(data)
+            handleScrollTo()
         },
         async beforeLeave(data) {
             resetBeforeLeave(data)

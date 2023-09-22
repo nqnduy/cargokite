@@ -172,6 +172,12 @@
         &::placeholder {
             color: rgba($cl-placeholder, 1);
         }
+        &:not(:placeholder-shown) {
+            border: 1px solid rgba($cl-white, .2);
+        }
+        &:hover, &:focus {
+            border: 1px solid rgba($cl-white, .3);
+        }
     }
     &-submit {
         cursor: pointer;

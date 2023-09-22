@@ -5,7 +5,6 @@ import SplitText from "./vendors/SplitText";
 import { nestedLinesSplit } from './untils';
 
 function newsHero() {
-    $('.news-hero__logo-default-item').addClass('active')
     let newsHeroItem = $('.news-hero__main-item')
     newsHeroItem.on('mouseenter', function(e) {
         e.preventDefault();
@@ -18,6 +17,8 @@ function newsHero() {
         $('.news-hero__logo-ex-item').removeClass('active')
         $('.news-hero__logo-default-item').addClass('active')
     })
+    $('.news-hero__logo-default-item').addClass('active')
+
 }
 
 export default newsScript = {
@@ -26,6 +27,7 @@ export default newsScript = {
         console.log('enter news')
         setTimeout(() => {
             newsHero()
+            console.log('hello')
         }, 100);
     },
     beforeLeave() {

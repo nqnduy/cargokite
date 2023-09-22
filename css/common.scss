@@ -25,6 +25,7 @@ $container-width: 172.8rem;
 
 //Font
 html {
+    scroll-behavior: unset;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: 'HelveticaNowDisplay';
@@ -76,6 +77,35 @@ a {
             -webkit-transform: scaleX(1);
             transform: scaleX(1);
         }
+    }
+}
+.tag-wrap {
+    position: relative;
+}
+.tag-link {
+    position: absolute;
+    bottom: 100%;
+    left: 100%;
+    margin-bottom: .05rem;
+    margin-left: -1.7rem;
+    padding: .5rem .6rem;
+    background-color: rgba($cl-orange, 1);
+    border-radius: .2rem;
+    font-size: 1rem;
+    line-height: 1em;
+    color: rgba($cl-white, 1);
+    font-weight: 500;
+    text-wrap: nowrap;
+    &::after {
+        content: '';
+        display: block;
+        top: 100%;
+        left: .5rem;
+        position: absolute;
+        width: .8rem;
+        height: .5rem;
+        clip-path: polygon(0% 0%, 100% 0, 0% 100%);
+        background-color: rgba($cl-orange, 1);
     }
 }
 
@@ -132,7 +162,7 @@ a {
     margin: 0 auto;
     padding: 0 6rem;
     max-width: $container-width;
-    &.fuild {
+    &.fluid {
         max-width: none;
     }
     &.grid {

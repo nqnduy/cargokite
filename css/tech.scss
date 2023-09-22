@@ -1,0 +1,82 @@
+.tech-hero {
+    padding-top: 26.4rem;
+    &__head {
+        grid-column: 2/10;
+        display: flex;
+        flex-direction: column;
+        max-width: 79.4rem;
+    }
+    &__label {
+        color: rgba($cl-desc, 1);
+        margin-bottom: 2rem;
+    }
+    &__title {
+        color: rgba($cl-txt, 1);
+    }
+    &__sub {
+        grid-column: 13/17;
+        align-self: end;
+        color: rgba($cl-body, 1);
+    }
+    .p-line {
+        grid-column: 1/17;
+        margin-top: 8rem;
+        width: 100%;
+        height: 1px;
+        background-color: rgba($cl-txt, .1);
+    }
+}
+.tech-vid {
+    padding-top: 4.2rem;
+    padding-bottom: 14.8rem;
+    &__label {
+        grid-column: 2/4;
+        grid-row: 1/2;
+        align-self: start;
+    }
+    &__main {
+        grid-column: 2/16;
+        grid-row: 1/2;
+    }
+}
+.tech-demo {
+    background-color: rgba($cl-dark-bg, 1);
+    &__wrap {
+        position: relative;
+        display: grid;
+    }
+    &__main {
+        grid-column: 1/2;
+        grid-row: 1/2;
+        z-index: 2;
+        &-inner {
+            grid-column: 12/16;
+        }
+        &-item {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            &-title {
+                color: rgba($cl-white, 1);
+                margin-bottom: 3.2rem;
+            }
+            &-richtext {
+                color: rgba($cl-white, .7);
+                display: flex;
+                flex-direction: column;
+                row-gap: 1rem;
+            }
+        }
+    }
+    &__canvas {
+        grid-column: 1/2;
+        grid-row: 1/2;
+        z-index: 1;
+        pointer-events: none;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+    }
+}

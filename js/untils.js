@@ -1,5 +1,9 @@
+import $ from "jquery";
 import gsap from "gsap";
 import SplitText from "./vendors/SplitText";
+
+gsap.registerPlugin(SplitText)
+
 function nestedLinesSplit(target, vars) {
     target = gsap.utils.toArray(target);
     if (target.length > 1) {
@@ -30,9 +34,10 @@ function nestedLinesSplit(target, vars) {
     return split;
 }
 
-function createToc(lenis, richtextEl, tocEl) {
+function createToc(lenis, richtextEl, tocEl, htmlTemplate) {
     let headings = $(richtextEl).find('h2');
     let tocWrap = $(tocEl);
+    let tocItem = htmlTemplate.attr('class')
 
     if (headings.length <= 1) {
         tocWrap.parent().remove();
@@ -41,11 +46,13 @@ function createToc(lenis, richtextEl, tocEl) {
     tocWrap.html('');
     for (let i = 0; i < headings.length; i++) {
         headings.eq(i).attr('id', `toc-${i}`);
-        let tocItem = $('<a></a>').addClass('toc-item-link').attr('href', `#toc-${i}`);
-        let tocOrdinal = $('<div></div>').addClass('txt txt-12 toc-item-ordinal').text(`${i + 1 < 10 ? `0${i + 1}` : i + 1}`).appendTo(tocItem);
-        let [ordinal, ...[title]] = headings.eq(i).text().split('. ');
-        let tocName = $('<div></div>').addClass('txt txt-16 toc-item-txt').text(`${[ordinal].join('')}`).appendTo(tocItem);
+        let tocItem = htmlTemplate.clone();
 
+        let tocOrdinal = i + 1 < 10 ? `0${i + 1}` : i + 1;
+        let [ordinal, ...[title]] = headings.eq(i).text().split('. ');
+        tocItem.find('[data-toc="number"]').text(tocOrdinal);
+        tocItem.find('[data-toc="title"]').text(title);
+        tocItem.attr('href',`#toc-${i}`)
         tocWrap.append(tocItem);
     }
     //mobile
@@ -56,23 +63,23 @@ function createToc(lenis, richtextEl, tocEl) {
         for (let i = 0; i < headings.length; i++) {
             let top = headings.eq(i).get(0).getBoundingClientRect().top;
             if (top > 0 && top < ($(window).height() / 5)) {
-                $(`.toc-item-link[href="#toc-${i}"]`).addClass('active');
-                $(`.toc-item-link`).not(`[href="#toc-${i}"]`).removeClass('active');
+                $(`.${tocItem}[href="#toc-${i}"]`).addClass('active');
+                $(`.${tocItem}`).not(`[href="#toc-${i}"]`).removeClass('active');
                 //mobile
                 // $('.toc-head-txt').eq(index).text($(`.toc-item-link[href="#toc-${i}"]`).text());
             }
         }
     });
 
-    $('.toc-item-link').on('click', function (e) {
+    $(`.${tocItem}`).on('click', function (e) {
         e.preventDefault();
         let target = $(this).attr("href");
-
+        console.log($(this).attr)
         lenis.scrollTo(target, {
             offset: -100,
         })
 
-        history.replaceState({}, '', `${window.location.pathname + target}`)
+        //history.replaceState({}, '', `${window.location.pathname + target}`)
         return false;
     })
 
@@ -87,7 +94,7 @@ function createToc(lenis, richtextEl, tocEl) {
             history.replaceState({}, '', window.location.pathname)
         }
     }
-    updateToc();
+    //updateToc();
 }
 
 export { nestedLinesSplit, createToc }

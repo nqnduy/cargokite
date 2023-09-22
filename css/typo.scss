@@ -1,16 +1,19 @@
 @font-face {
     font-family: 'HelveticaNowDisplay';
     src: url('../fonts/HelveticaNowDisplay.otf');
+    font-display: swap;
 }
 @font-face {
     font-family: 'HelveticaNowDisplay';
     font-weight: 500;
     src: url('../fonts/HelveticaNowDisplayMedium.otf');
+    font-display: swap;
 }
 @font-face {
     font-family: 'HelveticaNowDisplay';
     font-weight: 700;
     src: url('../fonts/HelveticaNowDisplayBold.otf');
+    font-display: swap;
 }
 
 .txt {
@@ -103,27 +106,37 @@
         //border-radius: .2rem;
     }
 }
+.g-lines {
+    overflow: hidden;
+    margin-bottom: -.2em;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
 .heading {
     font-weight: 500;
     &-bold {
         font-weight: 700;
     }
+    &-reg {
+        font-weight: 400;
+    }
 }
 h1, .h1 {
     font-size: 10rem;
-    line-height: 1em;
+    line-height: 1.2em;
 }
 h2, .h2 {
     font-size: 8.4rem;
-    line-height: 1em;
+    line-height: 1.2em;
 }
 h3, .h3 {
     font-size: 7.2rem;
-    line-height: 1em;
+    line-height: 1.2em;
 }
 h4, .h4 {
     font-size: 6rem;
-    line-height: 1em;
+    line-height: 1.2em;
 }
 h6, .h6 {
     font-size: 3.2rem;
@@ -146,6 +159,10 @@ img {
             padding-bottom: var(--aspect);
             display: block;
         }
+    }
+    &-height {
+        width: auto;
+        height: 100%;
     }
     &-fill {
         height: 100%;

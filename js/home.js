@@ -19,7 +19,8 @@ $(window).on('resize', function(e) {
     calculate()
 })
 
-let typeOpts = { types: 'lines, chars, words'};
+let typeOpts = { types: 'lines, chars, words', linesClass: 'g-lines'};
+let linesOpts = { types: 'lines', linesClass: 'g-lines'};
 let gOpts = {
     ease: 'power2.easeOut'
 }
@@ -28,7 +29,7 @@ function homeHero() {
     const homeHeroTitle = new SplitText('.home-hero__title', typeOpts);
     const homeHeroLabel = new SplitText('.home-hero__backer-label', typeOpts);
     const homeHeroBacker = $('.home-hero__backer-item')
-    const homeHeroSub = nestedLinesSplit('.home-hero__sub-txt', {type:"lines, words"});
+    const homeHeroSub = nestedLinesSplit('.home-hero__sub-txt', {type:"lines, words", linesClass: 'g-lines'});
     const homeHeroCaption = new SplitText('.home-hero__sub-caption', typeOpts);
 
     let tl = gsap.timeline({
@@ -36,14 +37,17 @@ function homeHero() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homeHeroTitle.revert();
-            homeHeroLabel.revert();
+            // homeHeroTitle.revert();
+            // new SplitText('.home-hero__title', linesOpts);
+            // homeHeroLabel.revert();
+            // new SplitText('.home-hero__backer-label', linesOpts);
             homeHeroCaption.revert();
             $('.home-hero__sub-caption-item').addClass('anim')
-        }
+        },
+        delay: 1
     })
     tl
-    .from(homeHeroTitle.chars, {yPercent: 60, autoAlpha: 0, duration: 1, stagger: .02})
+    .from(homeHeroTitle.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .01})
     .from(homeHeroLabel.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
     .from(homeHeroBacker, {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .1}, '<=.2')
     .from(homeHeroSub.words, {yPercent: 60, autoAlpha: 0, duration: .7, stagger: .02}, '<=.2')
@@ -66,10 +70,10 @@ function homeHero() {
 
 function homeIntro() {
     const homeIntroLabel = new SplitText('.home-intro__label', typeOpts)
-    const homeIntroTitle = new SplitText('.home-intro__title', {types: 'words, lines'})
-    const homeIntroRichh3 = new SplitText('.home-intro__richtext-h3', { types: 'lines, words'})
-    const homeIntroRichp = new SplitText('.home-intro__richtext-p', { types: 'lines, words'})
-    const homeIntroRichlink = new SplitText('.home-intro__richtext-link', { types: 'lines, words'})
+    const homeIntroTitle = new SplitText('.home-intro__title', {types: 'words, lines', linesClass: 'g-lines'})
+    const homeIntroRichh3 = new SplitText('.home-intro__richtext-h3', { types: 'lines, words', linesClass: 'g-lines'})
+    const homeIntroRichp = new SplitText('.home-intro__richtext-p', { types: 'lines, words', linesClass: 'g-lines'})
+    const homeIntroRichlink = new SplitText('.home-intro__richtext-link', { types: 'lines, words', linesClass: 'g-lines'})
 
     gsap.set('.home-intro__richtext-img, .home-intro__img', {clipPath: 'inset(10%)'})
     gsap.set('.home-intro__richtext-img img, .home-intro__img img', {scale: 1.4, autoAlpha: 0})
@@ -83,11 +87,12 @@ function homeIntro() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homeIntroLabel.revert()
-            homeIntroTitle.revert()
-            homeIntroRichh3.revert()
-            homeIntroRichp.revert()
-            homeIntroRichlink.revert()
+            // homeIntroLabel.revert()
+            // homeIntroTitle.revert()
+            //new SplitText('.home-intro__title', linesOpts)
+            // homeIntroRichh3.revert()
+            // homeIntroRichp.revert()
+            // homeIntroRichlink.revert()
         }
     })
     tl
@@ -124,7 +129,7 @@ function homeIntro() {
 
 function homeProb() {
     const homeProbLabel = new SplitText('.home-prob__label', typeOpts)
-    const homeProbTitle = new SplitText('.home-prob__title', {types: 'words, lines', splitClass: 'typejs'})
+    const homeProbTitle = new SplitText('.home-prob__title', {types: 'words, lines', linesClass: 'g-lines'})
     //const homeProbTitle = nestedLinesSplit('.home-prob__title', {type: "words, lines"});
     
     let tl = gsap.timeline({
@@ -136,8 +141,8 @@ function homeProb() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homeProbLabel.revert()
-            homeProbTitle.revert()
+            // homeProbLabel.revert()
+            // homeProbTitle.revert()
         }
     })
     tl
@@ -156,8 +161,8 @@ function homeProb() {
                 start: 'top top+=50%',
             },
             onComplete: () => {
-                homeProbItemTitle.revert()
-                homeProbItemSub.revert()
+                // homeProbItemTitle.revert()
+                // homeProbItemSub.revert()
             }
         })
         homeProbItemTl
@@ -182,7 +187,7 @@ function homeProb() {
 
 function homeSolu() {
     const homeSoluLabel = new SplitText('.home-solu__label', typeOpts)
-    const homeSoluTitle = new SplitText('.home-solu__title', {types: 'words, lines', splitClass: 'typejs'})
+    const homeSoluTitle = new SplitText('.home-solu__title', {types: 'words, lines', linesClass: 'g-lines'})
 
     gsap.set('.home-solu .p-line-top, .home-solu .p-line-bottom', {transformOrigin: 'center top'})
 
@@ -191,8 +196,8 @@ function homeSolu() {
             trigger: '.home-solu__head',
             start: 'top top+=50%',
             onComplete: () => {
-                homeSoluLabel.revert()
-                homeSoluTitle.revert()
+                // homeSoluLabel.revert()
+                // homeSoluTitle.revert()
             }
         }
     })
@@ -215,7 +220,7 @@ function homeSolu() {
     .fromTo('.home-solu__head-txt-wrap', {yPercent: 14}, { yPercent: -6, ease: 'none'})
 
 
-    const homeSoluBody = new SplitText('.home-solu__body-txt', {types: 'words, lines, chars', splitClass: 'typejs'});
+    const homeSoluBody = new SplitText('.home-solu__body-txt', {types: 'words, lines, chars', linesClass: 'g-lines'});
 
     let tlScrubText = gsap.timeline({
         scrollTrigger: {
@@ -230,16 +235,16 @@ function homeSolu() {
 
     const homeSoluItems = $('.home-solu__main-item')
     homeSoluItems.each((index, el) => {
-        const homeSoluItemTitle = new SplitText(el.querySelector('.home-solu__main-item-title'), {types: 'words, lines', splitClass: 'typejs'})
-        const homeSoluItemSub = new SplitText(el.querySelector('.home-solu__main-item-txt'), {types: 'words, lines', splitClass: 'typejs'})
+        const homeSoluItemTitle = new SplitText(el.querySelector('.home-solu__main-item-title'), {types: 'words, lines', linesClass: 'g-lines'})
+        const homeSoluItemSub = new SplitText(el.querySelector('.home-solu__main-item-txt'), {types: 'words, lines', linesClass: 'g-lines'})
         const homeSoluItemTl = gsap.timeline({
             scrollTrigger: {
                 trigger: el,
                 start: 'top top+=50%',
             },
             onComplete: () => {
-                homeSoluItemTitle.revert()
-                homeSoluItemSub.revert()
+                // homeSoluItemTitle.revert()
+                // homeSoluItemSub.revert()
             }
         })
         homeSoluItemTl
@@ -257,16 +262,6 @@ function homeSolu() {
     })
     tlImg.fromTo('.home-solu__main-img-wrap img', {yPercent: 10}, {yPercent: -10, ease: 'none'})
 
-    let tlImgBg = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-solu__bg-img',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-        }
-    })
-    tlImgBg.fromTo('.home-solu__bg-img img', {objectPosition: '50% 0%'}, {objectPosition: '50% 100%', ease: 'none'})
-
     let tlBtn = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-solu__main-btn',
@@ -275,10 +270,63 @@ function homeSolu() {
     })
     tlBtn.from('.home-solu__main-btn', {yPercent: 100, autoAlpha: 0, duration: .6, ease: 'none'})
 }
+function homeShift() {
+    requestAnimationFrame(() => {
+        let scrollDistance = $(window).height() * 3.5;
+    
+        let bigShipPath = $('.home-shift__main-part--big-ship .home-shift__img-wrap').width() + $(window).width()
+        let smallShipPath = $('.home-shift__main-part--small-ship .home-shift__img-wrap').width() * .6092 + $(window).width() + $('.home-shift__small-txt').width() 
+        gsap.set('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'})
+        gsap.set('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'})
+        //gsap.set('.home-shift__main-part--small-txt .title-wrap .title-inner', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'})
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.home-shift__main',
+                start: 'top top',
+                end: `bottom bottom`,
+                scrub: true,
+            },
+            defaults: {
+                ease: 'none'
+            }
+        })
+        tl
+        .to('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', duration: 1})
+        .to('.home-shift__main-part--big-ship .home-shift__img-wrap', {x: -bigShipPath, duration: 1}, 0)
+        .to('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 1}, 0)
+        
+        .to('.home-shift__main-part--small-ship .home-shift__img-wrap', {x: -smallShipPath, duration: 1.2})
+        //.to('.home-shift__main-part--small-txt .title-wrap .title-inner', {clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', duration: .6}, '<=.2')
+    
+        requestAnimationFrame(() => {
+            let tlInit = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-shift__main-part--big-txt',
+                    start: 'top bottom',
+                    end: 'top top',
+                    scrub: true
+                }
+            })
+            requestAnimationFrame(() => {
+                tlInit.from('.home-shift__main-part--big-txt .title-wrap', {yPercent: -50, ease: 'none'})
+            })
 
+            let tlImgBg = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-ship__bg-img',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                }
+            })
+            tlImgBg.fromTo('.home-ship__bg-img img', {objectPosition: '50% 0%'}, {objectPosition: '50% 100%', ease: 'none'})
+        })
+    })
+    
+}
 function homeTech() {
     const homeTechLabel = new SplitText('.home-tech__label', typeOpts)
-    const homeTechTitle = new SplitText('.home-tech__title', {types: 'lines, words', splitClass: 'typejs'});
+    const homeTechTitle = new SplitText('.home-tech__title', {types: 'lines, words', linesClass: 'g-lines'});
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-tech__head',
@@ -288,8 +336,8 @@ function homeTech() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homeTechLabel.revert()
-            homeTechTitle.revert()
+            // homeTechLabel.revert()
+            // homeTechTitle.revert()
         }
     })
     tl
@@ -312,16 +360,18 @@ function homeTech() {
         scrollTrigger: {
             trigger: '.home-tech__ship',
             start: 'top bottom+=25%',
-            end: 'bottom top',
-            scrub: true,
+            end: 'bottom top-=25%',
+            scrub: .4,
         }
     })
-    tlShip.from('.home-tech__ship img', {xPercent: 55, yPercent: -35, ease: 'none'})
+    requestAnimationFrame(() => {
+        tlShip.fromTo('.home-tech__ship img', {xPercent: 55, yPercent: -35}, {xPercent: -55, yPercent: 35, ease: 'none'})
+    })
 }
 
 function homeWhy() {
     const homeWhyLabel = new SplitText('.home-why__label', typeOpts)
-    const homeWhyTitle = new SplitText('.home-why__title', {types: 'lines, words'});
+    const homeWhyTitle = new SplitText('.home-why__title', {types: 'lines, words', linesClass: 'g-lines'});
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-why__head',
@@ -331,8 +381,8 @@ function homeWhy() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homeWhyLabel.revert()
-            homeWhyTitle.revert()
+            // homeWhyLabel.revert()
+            // homeWhyTitle.revert()
         }
     })
     tl
@@ -366,7 +416,7 @@ function homeWhy() {
 
 function homePart() {
     const homePartLabel = new SplitText('.home-part__label', typeOpts)
-    const homePartTitle = new SplitText('.home-part__title', {types: 'lines, words', splitClass: 'typejs'});
+    const homePartTitle = new SplitText('.home-part__title', {types: 'lines, words', linesClass: 'g-lines'});
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-part__head',
@@ -376,8 +426,8 @@ function homePart() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homePartLabel.revert()
-            homePartTitle.revert()
+            // homePartLabel.revert()
+            // homePartTitle.revert()
         }
     })
     tl
@@ -395,8 +445,8 @@ function homePart() {
 }
 
 function homeFaq() {
-    const homeFaqTitle = new SplitText('.home-faq__title', {types: 'lines, words', splitClass: 'typejs'});
-    const homeFaqSub = new SplitText('.home-faq__sub', {types: 'lines, words', splitClass: 'typejs'});
+    const homeFaqTitle = new SplitText('.home-faq__title', {types: 'lines, words', linesClass: 'g-lines'});
+    const homeFaqSub = new SplitText('.home-faq__sub', {types: 'lines, words', linesClass: 'g-lines'});
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-faq__head',
@@ -406,8 +456,8 @@ function homeFaq() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            homeFaqTitle.revert()
-            homeFaqSub.revert()
+            // homeFaqTitle.revert()
+            // homeFaqSub.revert()
         }
     })
     tl
@@ -489,12 +539,13 @@ export default homeScript = {
             homeIntro()
             homeProb()
             homeSolu()
+            homeShift()
             homeTech()
             homeWhy()
             homePart()
             homeFaq()
         
-            homeTechInteraction()
+            //homeTechInteraction()
             homeWhyInteraction()
             homeFaqInteraction()
         }, 100);

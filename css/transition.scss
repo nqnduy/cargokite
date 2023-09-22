@@ -8,8 +8,18 @@
         overflow: hidden;
         z-index: 999;
         pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__logo {
+        width: 14.6rem;
+        height: 14.6rem;
+        position: absolute;
+        z-index: 2;
     }
     &__inner {
+        z-index: 1;
         position: absolute;
         top: 0;
         left: 0;

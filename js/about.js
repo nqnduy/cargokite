@@ -20,7 +20,8 @@ function abtHero() {
         onComplete: () => {
             abtHeroTitle.revert();
             abtHeroLabel.revert();
-        }
+        },
+        delay: 1
     })
     tl
     .from(abtHeroLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
@@ -68,9 +69,6 @@ function abtMiles() {
             end: `top top-=${scrollDistance}%`,
             scrub: true, 
             pin: '.abt-mil-pin-container',
-            onUpdate: () => {
-                console.log('scroll')
-            }
         }
     })
     tlMain
@@ -111,7 +109,7 @@ export default aboutScript = {
             abtHero()
             abtMiles()
             abtTeam()
-        }, 1000);
+        }, 100);
     },
     beforeLeave() {
         console.log('leave about')
