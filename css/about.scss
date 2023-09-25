@@ -340,7 +340,6 @@
             height: 63.4rem;
             align-self: start;
             overflow: hidden;
-            background-color: rgba($cl-white, 1);
             &-inner {
                 display: flex;
                 flex-direction: column;
@@ -353,6 +352,7 @@
                 //Additional, can be replace later
                 position: absolute;
                 top: 0;
+                background-color: rgba($cl-white, 1);
                 &.active {
                     opacity: 1;
                 }

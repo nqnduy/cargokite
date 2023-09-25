@@ -465,16 +465,16 @@ function homeFaq() {
     .from(homeFaqSub.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .06}, '<=.6')
     .from('.home-faq__link', {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .08}, '<=.2')
 
-    const tlHead = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-faq__head',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-        }
-    })
-    tlHead
-    .fromTo('.home-faq__head', {yPercent: 0}, {yPercent: 30, ease: 'none'})
+    // const tlHead = gsap.timeline({
+    //     scrollTrigger: {
+    //         trigger: '.home-faq__head',
+    //         start: 'top bottom',
+    //         end: 'bottom top',
+    //         scrub: true
+    //     }
+    // })
+    // tlHead
+    // .fromTo('.home-faq__head', {yPercent: 0}, {yPercent: 30, ease: 'none'})
 
     let tlItems = gsap.timeline({
         scrollTrigger: {

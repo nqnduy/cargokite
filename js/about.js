@@ -59,7 +59,7 @@ function abtMiles() {
     })
     tlShip
     .to('.abt-mil__ship-img', {y: shipDistance + $(window).height() * .35, ease: 'none'})
-    .from('.abt-mil__head', {yPercent: 20}, {yPercent: -20, ease: 'none'}, 0)
+    //.from('.abt-mil__head', {yPercent: 20}, {yPercent: -20, ease: 'none'}, 0)
 
     let mainDistance = $('.abt-mil__main-inner').height() - $(window).height() * .3;
     let tlMain = gsap.timeline({
@@ -79,7 +79,7 @@ function abtMiles() {
 function abtTeam() {
     const abtTeamItem = $('.abt-team__main-item');
     const abtTeamImgItem = $('.abt-team__main-img-item'); 
-    $('.abt-team__main-img-item').eq(0).addClass('active')
+    $('.abt-team__main-img-item').eq(0).addClass('active');
     abtTeamItem.on('mouseenter', function(e) {
         e.preventDefault()
         e.stopPropagation()
@@ -87,6 +87,11 @@ function abtTeam() {
         //gsap.to('.abt-team__main-img-inner', {yPercent: -index * (100 / abtTeamItem.length), duration: .6, ease: 'power2'})
         abtTeamImgItem.removeClass('active')
         abtTeamImgItem.eq(index).addClass('active')
+    })
+    abtTeamItem.on('mouseleave', function(e) {
+        e.preventDefault()
+        e.stopPropagation();
+        abtTeamImgItem.removeClass('active')
     })
 
     const tlTeamImg = gsap.timeline({
