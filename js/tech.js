@@ -1,5 +1,8 @@
 import $ from "jquery";
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
@@ -9,7 +12,15 @@ class techDemoWebGL {
     constructor() {
         this.container = $('.tech-demo__canvas-inner');
         this.scene = new THREE.Scene();
-        this.perspective = 1000;
+        this.hdri = new THREE.CubeTextureLoader()
+        .load([
+            new URL('../assets/map/px.png', import.meta.url),
+            new URL('../assets/map/nx.png', import.meta.url),
+            new URL('../assets/map/py.png', import.meta.url),
+            new URL('../assets/map/ny.png', import.meta.url),
+            new URL('../assets/map/pz.png', import.meta.url),
+            new URL('../assets/map/nz.png', import.meta.url)
+        ])
     }
 
     get viewport() {
@@ -28,8 +39,11 @@ class techDemoWebGL {
         window.addEventListener('resize', this.onWindowResize.bind(this))
         //camera
         let fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
-        this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 1000);
-        this.camera.position.set(0,0,this.perspective);
+        fov = 32.26880414280885;
+        this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 10000);
+        this.camera.position.set(74.63897705078125, 16.265151023864746, -51.48991394042969)
+        this.lookAtTarget = new THREE.Vector3(49.7516, 24.9304, -1.35464)
+        this.camera.lookAt(this.lookAtTarget)
 
         //renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -38,30 +52,123 @@ class techDemoWebGL {
         })
         this.renderer.setSize(this.viewport.width, this.viewport.height);
         this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.container.append(this.renderer.domElement);
         
+    }
+    createMesh() {
+        let url = new URL('../assets/cargo-demo-2.glb', import.meta.url)
+        url = "" + url;
+        this.loader = new GLTFLoader();
+        this.dracoLoader = new DRACOLoader();
+        
+        this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+        this.dracoLoader.setDecoderConfig({type: 'js'})
+        this.loader.setDRACOLoader( this.dracoLoader )
+        
+        this.loader.load(url, 
+        (glb) => {
+            console.log(glb)
+            this.model = glb.scene.children[0];
+            this.scene.environment = this.hdri;
+            //this.scene.fog = new THREE.Fog( 0x212121, 0, 120 );
+            let orangeMat = new THREE.MeshStandardMaterial({
+                color: new THREE.Color('#FF471D'),
+                envMapIntensity: 4,
+                roughness: .35,
+                metalness: 0
+            })
+            let darkMat = new THREE.MeshStandardMaterial({
+                color: new THREE.Color('#2B2C2F'),
+                envMapIntensity: 4,
+                roughness: .6,
+                metalness: 0
+            })
+            this.model.traverse((obj) => {
+                if (obj instanceof THREE.Mesh) {
+                    if (obj.name == 'kite' || obj.name == 'Propeller1' || obj.name == 'Propeller2') {
+                        obj.material = orangeMat;
+                    } else {
+                        obj.material = darkMat;
+                    }
+                }
+            })
+            console.log(this.model.children)
+            this.prop1 = this.model.children[3]
+            this.prop2 = this.model.children[4]
+            this.scene.add(this.model)
+            this.animate()
+            this.scrollAnimate()
+        },
+        (xhr) => {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+        },
+        (error) => {
+            console.log( error );
+        })
     }
     onWindowResize() {
         this.camera.aspect = this.viewport.aspectRatio;
-        this.camera.fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
         this.renderer.setSize(this.viewport.width, this.viewport.height)
         this.camera.updateProjectionMatrix();
     }
     animate() {
         if (!$('[data-barba-namespace="tech"]').length) {
 
-        } else {
+        } else {            
+            this.prop1.rotation.x += 0.05
+            this.prop2.rotation.x += 0.05
             this.renderer.render(this.scene, this.camera)
-            console.log('rendering')
         }
         requestAnimationFrame(this.animate.bind(this))
     }
+    scrollAnimate() {
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.tech-demo__main',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+                onUpdate: () => {
+                    this.camera.lookAt( this.lookAtTarget );
+                }
+            },
+            defaults: {
+                ease: 'none'
+            }
+        })
+        tl
+        .to(this.camera.position, {
+            x: -43.3858,
+            y: 3.16929,
+            z: -17.9227,
+            duration: 1
+        }, '0')
+        .to(this.lookAtTarget, {
+            x: -19.2134,
+            y: 5.46543,
+            z: -0.014547,
+            duration: 1
+        }, '<=0')
+        .to(this.camera.position, {
+            x: -36.182,
+            y: 28.6084,
+            z: 52.1051,
+            duration: 1
+        })
+        .to(this.lookAtTarget, {
+            x: 11.3448,
+            y: 6.2503,
+            z: 0.056603,
+            duration: 1
+        }, '<=0')
+    }
     init() {
         this.setupCamera()
-        this.animate()
+        this.createMesh()
+        //this.animate()
     }
     reset() {
         this.onWindowResize()
-        this.container.append(this.renderer.domElement);
     }
 }
 
@@ -70,9 +177,10 @@ function techHero() {
 }
 
 let techWebGL = new techDemoWebGL();
-techWebGL.init()
+
 function techDemo() {
-    techWebGL.reset()
+    techWebGL.init()
+    //techWebGL.reset()
 }
 
 export default techScript = {
@@ -80,9 +188,10 @@ export default techScript = {
     afterEnter() {
         console.log('enter tech')
         setTimeout(() => {
-            techHero()
-            techDemo()
             console.log('hello')
+            techHero()
+            
+            techDemo()
         }, 100);
     },
     beforeLeave() {

@@ -45,6 +45,22 @@
         position: relative;
         display: grid;
     }
+    &__overlay {
+        z-index: 3;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        &-inner {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba($cl-dark-bg, 1) 0%, rgba($cl-dark-bg, 0) 25vh, rgba($cl-dark-bg, 0) calc(100% - 25vh), rgba($cl-dark-bg, 1) 100%);
+        }
+    }
     &__main {
         grid-column: 1/2;
         grid-row: 1/2;
@@ -73,19 +89,22 @@
         grid-column: 1/2;
         grid-row: 1/2;
         z-index: 1;
+        
         pointer-events: none;
         position: sticky;
         top: 0;
         height: 100vh;
-        width: 100%;
         .container {
             height: 100%;
         }
         &-inner {
-            width: 100%;
+            margin-left: -6rem;
+            margin-right: -6rem;
+            width: calc(100% + 12rem);
             height: 100%;
         }
     }
+    
 }
 .tech-map {
     padding-top: 15.2rem;

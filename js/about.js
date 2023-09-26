@@ -79,7 +79,7 @@ function abtMiles() {
 function abtTeam() {
     const abtTeamItem = $('.abt-team__main-item');
     const abtTeamImgItem = $('.abt-team__main-img-item'); 
-    $('.abt-team__main-img-item').eq(0).addClass('active');
+    //$('.abt-team__main-img-item').eq(0).addClass('active');
     abtTeamItem.on('mouseenter', function(e) {
         e.preventDefault()
         e.stopPropagation()
