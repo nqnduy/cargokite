@@ -277,11 +277,6 @@ function homeSolu() {
 }
 function homeShift() {
     requestAnimationFrame(() => {
-<<<<<<< HEAD
-        let scrollDistance = $(window).height() * 3.5;
-
-=======
->>>>>>> master
         let bigShipPath = $('.home-shift__main-part--big-ship .home-shift__img-wrap').width() + $(window).width()
         let smallShipPath = $('.home-shift__main-part--small-ship .home-shift__img-wrap').width() * .6092 + $(window).width() + $('.home-shift__small-txt').width()
         gsap.set('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'})
