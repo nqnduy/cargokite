@@ -106,13 +106,7 @@
         //border-radius: .2rem;
     }
 }
-.g-lines {
-    overflow: hidden;
-    margin-bottom: -.2em;
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
+
 .heading {
     font-weight: 500;
     &-bold {
@@ -120,6 +114,13 @@
     }
     &-reg {
         font-weight: 400;
+    }
+    .g-lines {
+        overflow: hidden;
+        margin-bottom: -.2em;
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 h1, .h1 {

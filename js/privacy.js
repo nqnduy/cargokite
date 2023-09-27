@@ -5,8 +5,24 @@ import SplitText from "./vendors/SplitText";
 import { nestedLinesSplit, createToc } from './untils';
 import lenis from './vendors/lenis';
 
-function privSetup() {
-    
+let typeOpts = {
+    lines: { type: 'lines', linesClass: 'g-lines'},
+    words: { type: 'words,lines', linesClass: 'g-lines'},
+    chars: { type: 'chars,words,lines', linesClass: 'g-lines'}
+};
+let gOpts = {
+    ease: 'power2.easeOut'
+}
+
+function privHero() {
+    const newsPrivTitle = new SplitText('.priv-hero__title', typeOpts.words)
+    const tl = gsap.timeline({
+        delay: 1.4,
+    })
+    tl
+    .from(newsPrivTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+    .from('.priv-hero__nav-inner', {autoAlpha: 0, duration: .6}, '0')
+    .from('.priv-hero__main-richtext', {autoAlpha: 0, duration: .6}, '<=.2')
 }
 
 function privToc() {
@@ -18,7 +34,7 @@ export default privacyScript = {
     namespace: 'privacy',
     afterEnter() {
         console.log('enter privacy')
-        privSetup()
+        privHero()
         setTimeout(() => {
             privToc()
         }, 100);

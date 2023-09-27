@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-kerning: none;
 }
 
 $cl-placeholder: #7A7A7A;
@@ -28,6 +27,9 @@ html {
     scroll-behavior: unset;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-kerning: none;
+    -webkit-text-rendering: optimizeSpeed;
+    text-rendering: optimizeSpeed;
     font-family: 'HelveticaNowDisplay';
     font-size: 0.5787037037vw;
     color: rgba($cl-txt, 1);

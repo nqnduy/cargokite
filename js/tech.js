@@ -4,9 +4,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from "gsap";
+import Flip from "./vendors/Flip";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { nestedLinesSplit } from './untils';
+
+gsap.registerPlugin(ScrollTrigger, Flip); 
 
 class techDemoWebGL {
     constructor() {
@@ -33,7 +36,6 @@ class techDemoWebGL {
             aspectRatio
         }
     }
-
     setupCamera() {
         //Resize 
         window.addEventListener('resize', this.onWindowResize.bind(this))
@@ -52,8 +54,6 @@ class techDemoWebGL {
         })
         this.renderer.setSize(this.viewport.width, this.viewport.height);
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.container.append(this.renderer.domElement);
-        
     }
     createMesh() {
         let url = new URL('../assets/cargo-demo-2.glb', import.meta.url)
@@ -85,7 +85,7 @@ class techDemoWebGL {
             })
             this.model.traverse((obj) => {
                 if (obj instanceof THREE.Mesh) {
-                    if (obj.name == 'kite' || obj.name == 'Propeller1' || obj.name == 'Propeller2') {
+                    if (obj.name == 'kite') {
                         obj.material = orangeMat;
                     } else {
                         obj.material = darkMat;
@@ -168,6 +168,7 @@ class techDemoWebGL {
         //this.animate()
     }
     reset() {
+        this.container.append(this.renderer.domElement);
         this.onWindowResize()
     }
 }
@@ -175,12 +176,31 @@ class techDemoWebGL {
 function techHero() {
 
 }
+function techVideo() {
+    const container = $('.tech-vid')
+    const item = $('.tech-vid__main-inner');
+    container.addClass('end-state')
+    let state = Flip.getState(item)
+    container.removeClass('end-state')
+    Flip.to(state, {
+        simple: true,
+        scrollTrigger: {
+            trigger: '.tech-vid__main',
+            start: `top top+=${($(window).height() - $('.tech-vid__holder').height())  / 2}`,
+            end: 'top -=150%',
+            scrub: true,
+            pin: true,
+            // pinSpacing: true
+        }
+    })
+}
 
-let techWebGL = new techDemoWebGL();
+
 
 function techDemo() {
+    let techWebGL = new techDemoWebGL();
     techWebGL.init()
-    //techWebGL.reset()
+    techWebGL.reset()
 }
 
 export default techScript = {
@@ -190,7 +210,7 @@ export default techScript = {
         setTimeout(() => {
             console.log('hello')
             techHero()
-            
+            techVideo()
             techDemo()
         }, 100);
     },
