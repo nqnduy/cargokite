@@ -1,10 +1,10 @@
-import $ from "jquery";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import SplitText from "./vendors/SplitText";
+import $ from "jquery";
 import { nestedLinesSplit } from './untils';
+import SplitText from "./vendors/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, SplitText); 
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 //Home
 function calculate() {
@@ -55,7 +55,7 @@ function homeHero() {
     .from(homeHeroBacker, {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .1}, '<=.2')
     .from(homeHeroSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '.2')
     .from(homeHeroCaption.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    
+
     let tlScrub = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-hero',
@@ -132,7 +132,7 @@ function homeIntro() {
 function homeProb() {
     const homeProbLabel = new SplitText('.home-prob__label', typeOpts.chars)
     const homeProbTitle = new SplitText('.home-prob__title', typeOpts.words)
-    
+
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-prob',
@@ -169,22 +169,23 @@ function homeProb() {
             }
         })
         homeProbItemTl
-        .to(el.querySelector('.home-prob__main-item-img'), { clipPath: 'inset(0%)', duration: 1, ease: 'expo.out'})
-        .to(el.querySelector('.home-prob__main-item-img img'), { scale: 1, duration: 1, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '0')
-        .from(homeProbItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-        .from(homeProbItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .015}, '<=.2')
-
-        const homeProbItemTlScrub = gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-            }
-        })
-        let dir = index % 2 == 0 ? 1 : -1;
-        homeProbItemTlScrub
-        .fromTo(el, {yPercent: 10 * dir}, { yPercent: -10 * dir, ease: 'none'})
+        .to(el.querySelector('.home-prob__main-item-img'), { clipPath: 'inset(0%)', duration: 1.4, ease: 'expo.out'})
+        .to(el.querySelector('.home-prob__main-item-img img'), { scale: 1, duration: 1.4, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '0')
+        .from(homeProbItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
+        .from(homeProbItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
+        if ($(window).width > 991) {
+            const homeProbItemTlScrub = gsap.timeline({
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                }
+            })
+            let dir = index % 2 == 0 ? 1 : -1;
+            homeProbItemTlScrub
+            .fromTo(el, {yPercent: 10 * dir}, { yPercent: -10 * dir, ease: 'none'})
+        }
     })
 }
 function homeSolu() {
@@ -276,8 +277,13 @@ function homeSolu() {
 }
 function homeShift() {
     requestAnimationFrame(() => {
+<<<<<<< HEAD
+        let scrollDistance = $(window).height() * 3.5;
+
+=======
+>>>>>>> master
         let bigShipPath = $('.home-shift__main-part--big-ship .home-shift__img-wrap').width() + $(window).width()
-        let smallShipPath = $('.home-shift__main-part--small-ship .home-shift__img-wrap').width() * .6092 + $(window).width() + $('.home-shift__small-txt').width() 
+        let smallShipPath = $('.home-shift__main-part--small-ship .home-shift__img-wrap').width() * .6092 + $(window).width() + $('.home-shift__small-txt').width()
         gsap.set('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'})
         gsap.set('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'})
         let tl = gsap.timeline({
@@ -294,9 +300,9 @@ function homeShift() {
         tl
         .to('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', duration: 1.2})
         .to('.home-shift__main-part--big-ship .home-shift__img-wrap', {x: -bigShipPath, duration: 1.2}, 0)
-        .to('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 1}, 0)        
+        .to('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 1}, 0)
         .to('.home-shift__main-part--small-ship .home-shift__img-wrap', {x: -smallShipPath, duration: 1.2})
-    
+
         requestAnimationFrame(() => {
             let tlInit = gsap.timeline({
                 scrollTrigger: {
@@ -321,7 +327,7 @@ function homeShift() {
             tlImgBg.fromTo('.home-ship__bg-img img', {objectPosition: '50% 0%'}, {objectPosition: '50% 100%', ease: 'none'})
         })
     })
-    
+
 }
 function homeTech() {
     const homeTechLabel = new SplitText('.home-tech__label', typeOpts.chars)
@@ -534,7 +540,7 @@ export default homeScript = {
         setTimeout(() => {
             console.log('hello')
             calculate()
-            
+
             homeHero()
             homeIntro()
             homeProb()
@@ -544,7 +550,7 @@ export default homeScript = {
             homeWhy()
             homePart()
             homeFaq()
-        
+
             //homeTechInteraction()
             homeWhyInteraction()
             homeFaqInteraction()

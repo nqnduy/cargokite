@@ -1,0 +1,27 @@
+@mixin lg {
+	@media screen and (max-width: $lg-min) {
+		@content;
+	}
+}
+@mixin md {
+	@media screen and (max-width: $md-max) {
+		@content;
+	}
+}
+// tablet
+@mixin sm {
+	@media screen and (max-width: $sm-max) {
+		@content;
+	}
+}
+// mobile
+@mixin xs {
+	@media screen and (max-width: $xs-max) {
+		@content;
+	}
+}
+
+@mixin text($font-size, $line-height) {
+	font-size: $font-size;
+	line-height: $line-height;
+}

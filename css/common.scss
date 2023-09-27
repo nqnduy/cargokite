@@ -154,7 +154,7 @@ a {
     }
 }
 
-//Layout 
+//Layout
 .grid {
     display: grid;
     column-gap: 2rem;
@@ -168,6 +168,6 @@ a {
         max-width: none;
     }
     &.grid {
-        grid-template-columns: repeat(16, 1fr);
+        grid-template-columns: repeat(var(--grid-column), 1fr);
     }
 }

@@ -18,39 +18,11 @@
 
 .txt {
     font-family: 'HelveticaNowDisplay';
-    &-12 {
-        font-size: 1.2rem;
-        line-height: 1.6em;
+    @each $size in $txtSizes {
+        &-#{$size} {
+            @include text(var(--fs-#{$size}), var(--lh-#{$size}))
+        }
     }
-    &-14 {
-        font-size: 1.4rem;
-        line-height: 1.5em;
-    }
-    &-16 {
-        font-size: 1.6rem;
-        line-height: 1.6em;
-    }
-    &-18 {
-        font-size: 1.8rem;
-        line-height: 1.6em;
-    }
-    &-20 {
-        font-size: 2rem;
-        line-height: 1.3em;
-    }
-    &-24 {
-        font-size: 2.4rem;
-        line-height: 1.3em;
-    }
-    &-28 {
-        font-size: 2.8rem;
-        line-height: 1.35em;
-    }
-    &-36 {
-        font-size: 3.6rem;
-        line-height: 1.2em;
-    }
-    
     &-med {
         font-weight: 500;
     }
@@ -60,9 +32,15 @@
     &-hl {
         color: rgba($cl-orange, 1);
     }
-
     &-link {
         color: rgba($cl-orange, 1);
+    }
+}
+
+//heading
+@for $i from 1 through 6 {
+    h#{$i}, .h#{$i} {
+        @include text(var(--h#{$i}-fs), var(--h#{$i}-lh))
     }
 }
 
@@ -87,7 +65,6 @@
         height: 10rem;
     }
 }
-
 .btn {
     padding: 1.6rem 2rem;
     //border-radius: .4rem;
@@ -122,26 +99,6 @@
             margin-bottom: 0;
         }
     }
-}
-h1, .h1 {
-    font-size: 10rem;
-    line-height: 1.2em;
-}
-h2, .h2 {
-    font-size: 8.4rem;
-    line-height: 1.2em;
-}
-h3, .h3 {
-    font-size: 7.2rem;
-    line-height: 1.2em;
-}
-h4, .h4 {
-    font-size: 6rem;
-    line-height: 1.2em;
-}
-h6, .h6 {
-    font-size: 3.2rem;
-    line-height: 1.2em;
 }
 
 img {
