@@ -50,6 +50,7 @@ function transitionOnce() {
 
 function transitionLeave(data) {
     console.log('leaveTrans')
+    gsap.set(data.next.container, {display: 'none'})
     gsap.set('.trans__item', {
         transformOrigin: 'top',
         scaleY: 0
@@ -58,6 +59,7 @@ function transitionLeave(data) {
     let tl = gsap.timeline({
         onComplete: () => {
             addNavActiveLink(data)
+            gsap.set(data.next.container, {clearProps: 'display'})
         }
     })
     tl
@@ -87,13 +89,12 @@ function transitionEnter(data) {
 }
 
 function addNavActiveLink(data) {
+    header.removeClass('dark-mode')
+    header.removeClass('mix-mode')
     if ($(data.next.container).attr('data-header') == 'dark') {
         header.addClass('dark-mode')
     } else if ($(data.next.container).attr('data-header') == 'mix') {
         header.addClass('mix-mode')
-    } else {
-        header.removeClass('dark-mode')
-        header.removeClass('mix-mode')
     }
     
     $('.header__link, .footer__link').removeClass('active')

@@ -136,6 +136,14 @@
     &__load {
         margin-top: 10rem;
         margin-bottom: 11rem;
+        .btn {
+            transition: opacity $dur-default ease;
+            &.disable {
+                pointer-events: none;
+                opacity: 0;
+                
+            }
+        }
     }
     
 }
