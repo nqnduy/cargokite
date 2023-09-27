@@ -31,7 +31,6 @@
             color: rgba($cl-placeholder, 1);
         }
     }
-
     &__main {
         grid-column: 8/16;
         display: flex;
@@ -53,7 +52,6 @@
             color: rgba($cl-orange, 1);
         }
     }
-
     &__info {
         grid-template-columns: repeat(8, 1fr);
         &-addr {
@@ -88,7 +86,7 @@
             margin-top: auto;
         }
         &-legal {
-            grid-column: 6/9;   
+            grid-column: 6/9;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -188,5 +186,17 @@
         border: none;
         border-radius: none;
 
+    }
+}
+
+@include md {
+    .footer {
+        &__info {
+            &-contact {
+                &-link {
+                    font-size: 2rem;
+                }
+            }
+        }
     }
 }
