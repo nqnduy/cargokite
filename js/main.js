@@ -1,7 +1,7 @@
 import PopupComponent from "./components/popup";
 import LoaderComponent from "./components/loader";
-import FooterComponent from "./components/footer";
 import HeaderComponent from "./components/header";
+import FooterComponent from "./components/footer";
 
 import $ from "jquery";
 import lenis from './vendors/lenis';
@@ -24,6 +24,55 @@ if (history.scrollRestoration) {
 
 barba.use(barbaPrefetch);
 gsap.registerPlugin(ScrollTrigger, SplitText); 
+
+function debounce(func, delay = 100){
+    let timer;
+    return function(event) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(func, delay, event);
+    };
+}
+
+function refreshOnBreakpoint() {
+    let initialViewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    // portrait mobile viewport initial, any change refresh
+    if (initialViewportWidth < 480) {
+        $(window).on('resize', debounce(function() {
+            newViewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            if (newViewportWidth > 479) {
+                location.reload();
+            }
+        }))
+    }
+    // landscape mobile viewport initial, any change refresh
+    else if (initialViewportWidth < 768) {
+        $(window).on('resize', debounce(function() {
+            newViewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            if (newViewportWidth > 767) {
+                location.reload();
+            }
+        }))
+    }
+    // tablet viewport initial, any change refresh
+    else if (initialViewportWidth > 767 && initialViewportWidth < 992)  {
+        $(window).on('resize', debounce(function() {
+            newViewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            if (newViewportWidth < 768 || newViewportWidth > 991) {
+                location.reload();
+            }
+        }))
+    }
+    // web viewport initial, any change refresh
+    else if (initialViewportWidth > 991) {
+        $(window).on('resize', debounce(function() {
+            newViewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            if (newViewportWidth < 992) {
+                location.reload();
+            }
+        }))
+    }
+}
+refreshOnBreakpoint();
 
 //Header
 const header = $('.header')

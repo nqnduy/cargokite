@@ -98,7 +98,7 @@ export default class FooterComponent extends HTMLElement {
                             <a href="#" class="txt txt-14 footer__info-legal-link">
                                 Legal notice
                             </a>
-                            <a href="./privacy.html" class="txt txt-14 footer__info-legal-link">
+                            <a href="./privacy.html" data-link="privacy" class="txt txt-14 footer__info-legal-link">
                                 Privacy policy
                             </a>
                             <a href="#" class="txt txt-14 footer__info-legal-link">

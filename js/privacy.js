@@ -1,8 +1,7 @@
 import $ from "jquery";
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit, createToc } from './untils';
+import { createToc } from './untils';
 import lenis from './vendors/lenis';
 
 let typeOpts = {

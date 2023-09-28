@@ -52,7 +52,7 @@ a {
     color: inherit;
     display: inline-block;
 }
-.hover-un {
+.hover-un, .priv-hero__main-richtext a {
     position: relative;
     width: fit-content;
     cursor: pointer;
