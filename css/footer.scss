@@ -264,7 +264,7 @@
     .footer {
         &__form {
             &-wrap {
-                grid-column: 1/6;
+                grid-column: 1/3;
                 margin-top: -10.8rem;
                 padding: 3rem 4rem 4rem;
             }
@@ -273,7 +273,7 @@
             }
         }
         &__main {
-            grid-column: 1/7;
+            grid-column: 1/3;
         }
         &__link {
             font-size: 2rem;

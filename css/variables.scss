@@ -62,13 +62,21 @@
         --fs-18: 1.6rem;
     }
     @media only screen and (max-width: 767px) {
+        --h1-fs: 3.6rem;
 
         --h3-fs: 3.2rem;
 
         --h4-fs: 2.4rem;
+
+        --fs-20: 1.6rem;
     }
     @media only screen and (max-width: 476px) {
+        --h1-fs: 3.6rem;
+
+        --h3-fs: 3.2rem;
+
     }
+
 }
 
 $txtSizes: 12, 14, 16, 18, 20, 24, 28, 36;

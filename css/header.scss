@@ -180,3 +180,11 @@
         }
     }
 }
+
+@include sm {
+    .header {
+        &_act {
+            display: none;
+        }
+    }
+}
