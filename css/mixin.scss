@@ -25,3 +25,7 @@
 	font-size: $font-size;
 	line-height: $line-height;
 }
+@mixin size($width, $height) {
+	width: $width;
+	height: $height;
+}

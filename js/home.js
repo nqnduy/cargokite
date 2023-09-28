@@ -430,16 +430,18 @@ function homeWhy() {
         .from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
     })
 
-    const tlHead = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-why__head',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-        }
-    })
-    tlHead
-    .fromTo('.home-why__head', {yPercent: -10}, {yPercent: 25, ease: 'none'})
+    if ($(window).width() > 767) {
+        const tlHead = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.home-why__head',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        })
+        tlHead
+        .fromTo('.home-why__head', {yPercent: -10}, {yPercent: 25, ease: 'none'})
+    }
 }
 function homePart() {
     const homePartLabel = new SplitText('.home-part__label', typeOpts.chars)
@@ -562,7 +564,9 @@ export default homeScript = {
             homeFaq()
 
             //homeTechInteraction()
-            homeWhyInteraction()
+            if ($(window).width() > 991) {
+                homeWhyInteraction();
+            }
             homeFaqInteraction()
         }, 100);
     },

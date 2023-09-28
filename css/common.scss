@@ -39,7 +39,7 @@ html {
     @media only screen and (max-width: 991px) {
         font-size: 1vw;
     }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 767px) {
         font-size: 1.3vw;
     }
     @media only screen and (max-width: 476px) {
@@ -160,14 +160,27 @@ a {
     column-gap: 2rem;
 }
 .container {
+    --grid-column: 16;
+    --container-padding: 6rem;
+
     width: 100%;
     margin: 0 auto;
-    padding: 0 6rem;
+    padding: 0 var(--container-padding);
     max-width: $container-width;
     &.fluid {
         max-width: none;
     }
     &.grid {
         grid-template-columns: repeat(var(--grid-column), 1fr);
+    }
+    @include md {
+        --grid-column: 12;
+        --container-padding: 4rem;
+    }
+    @include sm {
+        --grid-column: 2;
+    }
+    @include xs {
+        --container-padding: 2rem;
     }
 }

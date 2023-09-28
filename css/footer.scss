@@ -191,12 +191,92 @@
 
 @include md {
     .footer {
+        &__form {
+            &-wrap {
+                grid-column: 1/7;
+                margin-top: -11rem;
+                padding: 3.2rem 4rem 4rem;
+            }
+            &-icon {
+                margin-bottom: 2.4rem;
+                @include size(6rem, 6rem);
+            }
+            &-sub {
+                margin-bottom: 3.2rem;
+            }
+            &-caption {
+                margin-top: 1.6rem;
+            }
+        }
+        &__main {
+            grid-column: 1/13;
+        }
+        &__links {
+            margin-bottom: 0;
+        }
+        &__link {
+            font-size: 2.2rem;
+        }
         &__info {
-            &-contact {
-                &-link {
-                    font-size: 2rem;
+            padding-top: 4rem;
+            grid-template-columns: repeat(12, 1fr);
+            &-addr {
+                grid-column: 1/7;
+                &-label {
+                    font-weight: 500;
+                    margin-bottom: 1.2rem;
                 }
             }
+            &-contact {
+                grid-column: 8/13;
+                margin-left: 4rem;
+                row-gap: 1.2rem;
+                &-label {
+                    margin-bottom: 0.2rem;
+                }
+                &-link {
+                    font-size: 2rem;
+                    font-weight: 500;
+                }
+            }
+            &-copy {
+                padding-top: 0;
+            }
+            &-legal {
+                padding-top: 0;
+                grid-column: 8/13;
+                margin-left: 2.5rem;
+            }
+        }
+        &__marquee {
+            &-wrap {
+                padding: 5rem 0;
+            }
+            &-item {
+                font-size: 10rem;
+                line-height: 1em;
+            }
+        }
+    }
+}
+
+@include sm {
+    .footer {
+        &__form {
+            &-wrap {
+                grid-column: 1/3;
+                margin-top: -10.8rem;
+                padding: 3rem 4rem 4rem;
+            }
+            &-icon {
+                @include size(4.8rem, 4.8rem);
+            }
+        }
+        &__main {
+            grid-column: 1/3;
+        }
+        &__link {
+            font-size: 2rem;
         }
     }
 }
