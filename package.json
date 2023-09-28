@@ -7,7 +7,8 @@
     "staticPath": "./assets"
   },
   "scripts": {
-    "dev": "npx parcel index.html",
+    "clear": "rm -rf .parcel-cache",
+    "dev": "npm run clear & npx parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,8 +16,8 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.9.3",
-    "parcel-reporter-static-files-copy": "^1.3.4",
     "parcel": "^2.9.3",
+    "parcel-reporter-static-files-copy": "^1.3.4",
     "sharp": "^0.31.3"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "@studio-freight/lenis": "^1.0.23",
     "gsap": "^3.12.2",
     "jquery": "^3.7.1",
+    "swiper": "^8.4.7",
     "three": "^0.156.1"
   }
 }

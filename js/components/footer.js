@@ -14,7 +14,7 @@ export default class FooterComponent extends HTMLElement {
                         </svg>
                     </div>
                     <div class="heading h4 footer__form-title">
-                        Subscribe to Newsletters
+                        Subscribe Newsletters
                     </div>
                     <div class="txt txt-16 footer__form-sub">
                         Want to stay up to date? Sign up for CargoKite's biannual update.

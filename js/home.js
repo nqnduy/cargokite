@@ -3,6 +3,8 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import $ from "jquery";
 import { nestedLinesSplit } from './untils';
 import SplitText from "./vendors/SplitText";
+import { childrenSelect } from './common/utils'
+import swiper from './components/swiper';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -441,6 +443,16 @@ function homeWhy() {
         })
         tlHead
         .fromTo('.home-why__head', {yPercent: -10}, {yPercent: 25, ease: 'none'})
+    }
+    else {
+        $('.home-why__main').addClass('swiper')
+        $('.home-why__main-wrapper').addClass('swiper-wrapper')
+        $('.home-why__main-item').addClass('swiper-slide')
+        const parent = childrenSelect('.home-why');
+        swiper.setup(parent, {
+            touchMove: true,
+            spaceBetween: 20,
+        })
     }
 }
 function homePart() {
