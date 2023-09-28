@@ -74,7 +74,6 @@ function createToc(lenis, richtextEl, tocEl, htmlTemplate) {
     $(`.${tocItem}`).on('click', function (e) {
         e.preventDefault();
         let target = $(this).attr("href");
-        console.log($(this).attr)
         lenis.scrollTo(target, {
             offset: -100,
         })
