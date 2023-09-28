@@ -547,7 +547,9 @@ export default homeScript = {
             homeFaq()
 
             //homeTechInteraction()
-            homeWhyInteraction()
+            if ($(window).width() > 991) {
+                homeWhyInteraction();
+            }
             homeFaqInteraction()
         }, 100);
     },

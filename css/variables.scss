@@ -1,6 +1,4 @@
 :root {
-    --grid-column: 16;
-
     --h1-fs: 10rem;
     --h1-lh: 1.2em;
 
@@ -44,11 +42,11 @@
     --lh-36: 1.2em;
 
     @media only screen and (max-width: 991px) {
-        --grid-column: 12;
+        --h1-fs: 7.2rem;
 
-        --h3-fs: 3.2rem;
+        --h3-fs: 3.4rem;
 
-        --h4-fs: 2.4rem;
+        --h4-fs: 2.6rem;
         --h4-lh: 1.5em;
 
         --h6-fs: 2rem;
@@ -64,10 +62,12 @@
         --fs-18: 1.6rem;
     }
     @media only screen and (max-width: 767px) {
-        --grid-column: 6;
+
+        --h3-fs: 3.2rem;
+
+        --h4-fs: 2.4rem;
     }
     @media only screen and (max-width: 476px) {
-        --grid-column: 2;
     }
 }
 
