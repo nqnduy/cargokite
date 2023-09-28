@@ -56,7 +56,7 @@ class techDemoWebGL {
         this.renderer.setPixelRatio(window.devicePixelRatio);
     }
     createMesh() {
-        let url = new URL('../assets/cargo-demo-2.glb', import.meta.url)
+        let url = new URL('../assets/cargo-demo-3.gltf', import.meta.url)
         url = "" + url;
         this.loader = new GLTFLoader();
         this.dracoLoader = new DRACOLoader();
@@ -68,7 +68,7 @@ class techDemoWebGL {
         this.loader.load(url, 
         (glb) => {
             console.log(glb)
-            this.model = glb.scene.children[0];
+            this.model = glb.scene;
             this.scene.environment = this.hdri;
             //this.scene.fog = new THREE.Fog( 0x212121, 0, 120 );
             let orangeMat = new THREE.MeshStandardMaterial({
@@ -85,16 +85,19 @@ class techDemoWebGL {
             })
             this.model.traverse((obj) => {
                 if (obj instanceof THREE.Mesh) {
-                    if (obj.name == 'kite') {
+                    if (obj.name === 'kite') {
                         obj.material = orangeMat;
+                    } else if (obj.name == 'Propeller1') {
+                        this.prop1 = obj
+                        obj.material = darkMat;
+                    } else if (obj.name == 'Propeller2') {
+                        this.prop2 = obj
+                        obj.material = darkMat;
                     } else {
                         obj.material = darkMat;
                     }
                 }
             })
-            console.log(this.model.children)
-            this.prop1 = this.model.children[3]
-            this.prop2 = this.model.children[4]
             this.scene.add(this.model)
             this.animate()
             this.scrollAnimate()
