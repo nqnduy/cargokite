@@ -345,7 +345,7 @@ function homeTech() {
     .from(homeTechLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
     .from(homeTechTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
-    const homeTechItems = $('.home-tech__item');
+    const homeTechItems = $('.home-tech__item:not(".home-tech__link")');
     homeTechItems.each((index, el) => {
         let homeTechItemTitle = new SplitText(el.querySelector('.home-tech__item-title'), typeOpts.words)
         let tlHomeTechItem = gsap.timeline({
@@ -362,6 +362,21 @@ function homeTech() {
         .from(el.querySelector('.home-tech__item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
         .from(homeTechItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
     })
+
+    let homeTechItemLinkTitle = new SplitText('.home-tech__link-title', {type: 'words, lines'})
+        let tlHomeTechItemLink = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.home-tech__link',
+                start: 'top top+=65%'
+            },
+            onComplete: () => {
+                homeTechItemLinkTitle.revert()
+            }
+        })
+        tlHomeTechItemLink
+        .from('.home-tech__link', {autoAlpha: 0, duration: .8})
+        .from('.home-tech__link .arr-wrap', {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
+        .from(homeTechItemLinkTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
     let tlShip = gsap.timeline({
         scrollTrigger: {
@@ -411,7 +426,7 @@ function homeWhy() {
         })
         tlHomeWhyItem
         .from(el, {autoAlpha: 0, duration: 1, delay: index == 0 ? 0 : index % 2 == 0 ? .3 : 0})
-        .from(el.querySelector('.home-why__main-item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
+        .from(el.querySelector('.home-why__main-item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4, clearProps: 'all'}, '<=.2')
         .from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
     })
 

@@ -1,3 +1,8 @@
+import PopupComponent from "./components/popup";
+import LoaderComponent from "./components/loader";
+import FooterComponent from "./components/footer";
+import HeaderComponent from "./components/header";
+
 import $ from "jquery";
 import lenis from './vendors/lenis';
 import barba from '@barba/core';
@@ -12,6 +17,7 @@ import techScript from './tech';
 import newsScript from './news';
 import privacyScript from './privacy';
 
+let CompArr = [PopupComponent, LoaderComponent, FooterComponent, HeaderComponent]
 if (history.scrollRestoration) {
     history.scrollRestoration = "manual";
 }
