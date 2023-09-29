@@ -145,5 +145,108 @@
             }
         }
     }
-    
+}
+@include md {
+    .news-hero  {
+        &__logo {
+            margin-left: -4rem;
+            grid-column: 1/5;
+            &-default, &-ex {
+                width: 100%;
+                max-width: 21.2rem;
+                margin: 0 auto;
+                &-item {
+                    max-width: 21.2rem;
+                    width: 100%;
+                }
+            }
+        }
+        &__content {
+            grid-column: 7/13;
+            margin-left: -2rem;
+        }
+        &__title {
+            margin-top: 16.4rem;
+            margin-bottom: 8rem;
+            margin-right: -1rem;
+        }
+        &__main {
+            &-item {
+                padding-top: 3.2rem;
+                padding-bottom: 3.2rem;
+                &-label {
+                    margin-bottom: 1.6rem;
+                }
+                &-title {
+                    margin-bottom: 1.6rem;
+                    margin-right: 2.4rem;
+                }
+                &-site {
+                    color: rgba($cl-note, 1);
+                }
+                &-year {
+                    font-size: 3.2rem;
+                }
+                &-icon {
+                    top: 3.2rem;
+                    width: 2.4rem;
+                    height: 2.4rem;
+                }
+            }
+        }
+        &__load {
+            margin-top: 6rem;
+            margin-bottom: 21rem;
+            .btn {
+                width: 17.3rem;
+                padding-top: 1.2rem;
+                padding-bottom: 1.2rem;
+            }
+        }
+    }
+}
+@include sm {
+    .news-hero  {
+        &__logo {
+            margin-top: 9.6rem;
+            margin-left: 0;
+            grid-column: 1/3;
+            grid-row: 1/2;
+            margin-left: -4rem;
+            margin-right: -4rem;
+            &::after {
+                content: '';
+                display: none
+            }
+            &-inner {
+                position: relative;
+                height: 16rem;
+                top: auto;
+            }
+            &-default, &-ex {
+                max-width: 12.8rem;
+                &-item {
+                    max-width: 12.8rem;
+                }
+            }
+        }
+        &__content {
+            grid-column: 1/3;
+            grid-row: 2/3;
+            margin-left: 0;
+        }
+        &__title {
+            margin-top: 4.4rem;
+            margin-bottom: 4.4rem;
+            margin-right: 0;
+        }
+        &__load {
+            margin-top: 6rem;
+            margin-bottom: 20.6rem;
+            text-align: center;
+            .btn {
+                width: 16rem;
+            }
+        }
+    }
 }
