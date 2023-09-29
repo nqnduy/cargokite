@@ -41,10 +41,10 @@ export default class HeaderComponent extends HTMLElement {
                     </a>
                     <nav class="header__nav" data-lenis-prevent>
                         <ul>
-                            <li class="header__nav-item" data-link="home"><a href="/" class="header__nav-link txt txt-16 txt-med">Home.</a></li>
-                            <li class="header__nav-item" data-link="about"><a href="/about.html" class="header__nav-link txt txt-16 txt-med">About.</a></li>
-                            <li class="header__nav-item" data-link="tech"><a href="/tech.html" class="header__nav-link txt txt-16 txt-med">Technology.</a></li>
-                            <li class="header__nav-item" data-link="news"><a href="/news.html" class="header__nav-link txt txt-16 txt-med">News & Media.</a></li>
+                            <li class="header__nav-item"><a href="/" data-link="home" class="header__nav-link txt txt-16 txt-med">Home.</a></li>
+                            <li class="header__nav-item"><a href="/about.html" data-link="about" class="header__nav-link txt txt-16 txt-med">About.</a></li>
+                            <li class="header__nav-item"><a href="/tech.html" data-link="tech" class="header__nav-link txt txt-16 txt-med">Technology.</a></li>
+                            <li class="header__nav-item"><a href="/news.html" data-link="news" class="header__nav-link txt txt-16 txt-med">News & Media.</a></li>
                             <li class="header__nav-item">
                                 <a href="#" class="header__nav-cta heading h6">
                                     Get<br/>in touch

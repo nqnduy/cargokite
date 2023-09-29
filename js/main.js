@@ -170,7 +170,7 @@ function addNavActiveLink(data) {
     $('.header__link, .footer__link, .header__nav-item').removeClass('active')
     $(`.header__link[data-link="${data.next.namespace}"]`).addClass('active')
     $(`.footer__link[data-link="${data.next.namespace}"]`).addClass('active')
-    $(`.header__nav-item[data-link="${data.next.namespace}"]`).addClass('active');
+    $(`.header__nav-link[data-link="${data.next.namespace}"]`).addClass('active');
 }
 function removeAllScrollTrigger() {
     console.log('remove scroll trigger')

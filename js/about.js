@@ -223,8 +223,10 @@ function abtTeam() {
     })
 
     const abtTeamItem = $('.abt-team__main-item');
+    const abtTeamImg = $('.abt-team__main-img');
     const abtTeamImgItem = $('.abt-team__main-img-item');
-    if ($(window).width > 991) {
+    const abtTeamInfo = $('.abt-team__main-img-info');
+    if ($(window).width() > 991) {
         abtTeamItem.on('mouseenter', function(e) {
             e.preventDefault()
             e.stopPropagation()
@@ -248,6 +250,39 @@ function abtTeam() {
         })
         tlTeamImg
         .to('.abt-team__main-img', {yPercent: 35, ease: 'none'})
+    }
+    else {
+        abtTeamItem.on('click', function () {
+            const info = {
+                name: $(this).find('.abt-team__main-item-name').text().trim(),
+                job: $(this).find('.abt-team__main-item-job').text().trim(),
+                icon: $(this).find('.abt-team__main-item-icon').attr('href')
+            }
+            const replaceInfo = (val) => {
+                if (val === 'icon') {
+                    abtTeamImg.find(`.abt-team__main-img-${val}`).attr('href', info[val])
+                }
+                else {
+                    abtTeamImg.find(`.abt-team__main-img-${val}`).html(info[val])
+                }
+            };
+            replaceInfo('name');
+            replaceInfo('job');
+            replaceInfo('link');
+            gsap.set('.abt-team__main-img-inner', { y: 0 });
+            gsap.from('.abt-team__main-img-inner', { y: 5 });
+            abtTeamImgItem.eq($(this).index()).addClass('selected');
+            abtTeamImg.addClass('active');
+        })
+        $('.abt-team__main-img-close').on('click', function(e){
+            e.preventDefault();
+            if (!abtTeamImg.hasClass('active')) return;
+
+            gsap.set('.abt-team__main-img-inner', { y: 0 });
+            gsap.to('.abt-team__main-img-inner', { y: 5 });
+            abtTeamImgItem.removeClass('selected');
+            abtTeamImg.removeClass('active');
+        })
     }
 
     const tlTeamList = gsap.timeline({
