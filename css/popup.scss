@@ -244,6 +244,14 @@
                 padding: 3.2rem;
             }
         }
+        &__close {
+            padding: 1.2rem;
+            color: rgba($cl-white, 1.0);
+            .icon {
+                width: 2.4rem;
+                height: 2.4rem;
+            }
+        }
     }  
 }
 
