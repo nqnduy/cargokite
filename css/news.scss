@@ -250,3 +250,11 @@
         }
     }
 }
+@include sm {
+    .news-hero  {
+        &__logo {
+            margin-left: -2rem;
+            margin-right: -2rem;
+        }
+    }
+}

@@ -148,7 +148,7 @@
             transition: all $dur-default ease;
             transition-delay: 0s;
             cursor: pointer;
-            .popup__main-submit-aspect {
+            &-aspect {
                 grid-column: 1/2;
                 grid-row: 1/2;
                 width: 100%;
@@ -156,7 +156,7 @@
                 padding-bottom: 100%;
                 pointer-events: none;
             }
-            .popup__main-submit-inner {
+            &-inner {
                 grid-column: 1/2;
                 grid-row: 1/2;
                 height: 100%;
@@ -184,4 +184,166 @@
             color: rgba($cl-white, 1);
         }
     }
+}
+
+@include md {
+    .popup {
+        &__main {
+            max-width: calc(100% - 8rem);
+            margin-top: 6rem;
+            margin-bottom: 6rem;
+            width: 100%;
+            padding: 6rem;
+            padding-bottom: 0;
+            &-form {
+                grid-template-columns: 4.8fr 5.2fr;
+            }
+            &-head {
+                grid-column: 1/2;
+                grid-row: 1/2;
+                padding: 3.2rem;
+                margin-top: -12rem;
+                width: 33rem;
+                min-height: 33rem;
+                &-title {
+                    margin-left: 0;
+                    margin-bottom: 2.4rem;
+                    font-size: 3.2rem;
+                }
+                .txt-18 {
+                    font-size: 1.8rem;
+                }
+            }
+            &-contact {
+                grid-column: 1/2;
+                grid-row: 3/4;
+                padding-left: 0rem;
+                padding-bottom: 4rem;
+                &-link {
+                    font-weight: 500;
+                }
+            }
+            &-form-inner{
+                grid-column: 1/3;
+                grid-row: 2/3;
+                .input-wrap {
+                    margin-left: 0rem;
+                    width: 100%;
+                }
+                .input-field {
+                    &::placeholder {
+                        color: rgba($cl-white, .8);
+                    }
+                }
+            }
+            &-submit {
+                grid-column: 2/3;
+                grid-row: 3/4;
+                justify-self: end;
+                width: 20rem;
+                padding: 3.2rem;
+            }
+        }
+        &__close {
+            padding: 1.2rem;
+            color: rgba($cl-white, 1.0);
+            .icon {
+                width: 2.4rem;
+                height: 2.4rem;
+            }
+        }
+    }  
+}
+
+@include sm {
+    .popup {
+        &__main {
+            max-width: calc(100% - 8rem);
+            margin-top: 6rem;
+            margin-bottom: 0rem;
+            padding: 2.4rem;
+            padding-top: 0rem;
+            padding-bottom: 2.2rem;
+            &-form {
+                grid-template-columns: 1fr;
+            }
+            &-head {
+                grid-column: 1/2;
+                grid-row: 1/2;
+                margin-top: -6rem;
+                margin-right: 3.2rem;
+                min-height: auto;
+                margin-bottom: 1.2rem;
+                width: calc(100% - 3.2rem);
+                &-title {
+                    margin-bottom: .8rem;
+                    font-size: 2.4rem;
+                }
+                .txt-18 {
+                    font-size: 1.4rem;
+                }
+            }
+            &-contact {
+                grid-column: 1/2;
+                grid-row: 4/5;
+                align-items: center;
+                text-align: center;
+                padding-bottom: 0;
+                &-label {
+                    font-size: 1.4rem;
+                }
+                &-link {
+                    font-size: 1.6rem;
+                }
+            }
+            &-form-inner{
+                grid-column: 1/2;
+                grid-row: 2/3;
+                margin-bottom: 2.4rem;
+                .input-field {
+                    padding-top: 1.6rem;
+                    padding-bottom: 1.6rem;
+                }
+            }
+            &-submit {
+                grid-column: 1/2;
+                grid-row: 3/4;
+                justify-self: center;
+                width: 100%; 
+                padding: 2.4rem 3.2rem;
+                margin-bottom: 1.2rem;
+                &-aspect {
+                    display: none;
+                }
+                &-inner {
+                    flex-direction: row;
+                    align-items: center;
+                    column-gap: 3.2rem;
+                    .arr-wrap {
+                        width: 2.4rem;
+                        height: 2.4rem;
+                    }
+                    .icon {
+                        width: 2.4rem;
+                        height: 2.4rem;
+                    }
+                }
+
+            }
+        }
+        &__close {
+            padding: 1.2rem;
+            .icon {
+                width: 2.4rem;
+                height: 2.4rem;
+            }
+        }
+    }  
+}
+@include sm {
+    .popup {
+        &__main {
+            max-width: calc(100% - 4rem);
+        }
+    }  
 }
