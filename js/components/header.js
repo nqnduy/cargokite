@@ -48,7 +48,31 @@ export default class HeaderComponent extends HTMLElement {
                     </ul>
                 </nav>
             </div>
-        </header>
+            <a href="#" class="header__toggle">
+                <span class="header__toggle-icon header__toggle-icon-1"></span>
+                <span class="header__toggle-icon header__toggle-icon-2"></span>
+                <span class="header__toggle-icon header__toggle-icon-3"></span>
+            </a>
+            <nav class="header__nav">
+                <ul>
+                    <li><a href="/" class="header__nav-link txt txt-16 txt-med" data-link="home">Home.</a></li>
+                    <li><a href="/about.html" class="header__nav-link txt txt-16 txt-med" data-link="about">About.</a></li>
+                    <li><a href="/tech.html" class="header__nav-link txt txt-16 txt-med" data-link="tech">Technology.</a></li>
+                    <li><a href="/news.html" class="header__nav-link txt txt-16 txt-med" data-link="news">News & Media.</a></li>
+                    <li>
+                        <a href="#" class="header__nav-cta heading h6">
+                            Get<br/>in touch
+                            <div class="icon arr-ic-main">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M30.4401 3.68089L3.00001 31.121L0.878693 28.9997L28.3188 1.55957L30.4401 3.68089Z" fill="white"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 1.5H30.5V27.5H27.5V4.5H4.5V1.5Z" fill="white"/>
+                                </svg>
+                            </div>
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
         `
     }
 }

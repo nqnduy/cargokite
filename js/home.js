@@ -445,10 +445,10 @@ function homeWhy() {
         .fromTo('.home-why__head', {yPercent: -10}, {yPercent: 25, ease: 'none'})
     }
     else {
-        $('.home-why__main').addClass('swiper')
-        $('.home-why__main-wrapper').addClass('swiper-wrapper')
+        $('.home-why__main-wrapper').addClass('swiper')
+        $('.home-why__main-list').addClass('swiper-wrapper')
         $('.home-why__main-item').addClass('swiper-slide')
-        const parent = childrenSelect('.home-why');
+        const parent = childrenSelect('.home-why__main');
         swiper.setup(parent, {
             touchMove: true,
             spaceBetween: 20,

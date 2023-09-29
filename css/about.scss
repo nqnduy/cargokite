@@ -280,7 +280,7 @@
             justify-content: center;
             padding-top: 4rem;
             padding-bottom: 4rem;
-            height: 50vh;
+            min-height: 50vh;
             &-label {
                 color: rgba($cl-white, 1);
                 margin-bottom: .4rem;
@@ -547,8 +547,8 @@
     }
     .abt-info {
         &__quote {
-            column-gap: 2rem;
             padding: 5.2rem 4rem 4.8rem 3.2rem;
+            column-gap: 2rem;
             margin-top: -23.2rem;
             margin-right: -2rem;
             &-icon {
@@ -564,8 +564,7 @@
         &__richtext {
             grid-column: 7/13;
             &-decor {
-                width: 8.4rem;
-                height: 9.8rem;
+                @include size(8.4rem, 9.8rem);
                 left: auto;
                 right: -4rem;
                 &::after {
@@ -605,6 +604,294 @@
             margin-top: 4.4rem;
             &-title {
                 margin-bottom: 1.2rem;
+            }
+        }
+    }
+    .abt-mil {
+        &__ship {
+            &-img {
+                margin-right: auto;
+                margin-left: 28vw;
+            }
+        }
+        &__head {
+            grid-column: 1/3;
+            margin-right: -2rem;
+        }
+        &__title {
+            font-size: 3.2rem;
+            margin-bottom: 2.2rem;
+        }
+        &__label {
+            margin-bottom: 1.2rem;
+        }
+        &__main {
+            grid-column: 7/13;
+            &-item {
+                &-title {
+                    font-size: 4rem;
+                }
+            }
+        }
+    }
+    .abt-team {
+        padding: 8rem 0;
+        &__title {
+            grid-column: 1/5;
+            margin-right: -2rem;
+        }
+        &__richtext {
+            margin-top: 0;
+            grid-column: 7/13;
+            &-p {
+                margin-bottom: 3.2rem;
+            }
+        }
+        .p-line {
+            grid-column: 1/13;
+            margin-top: 4rem;
+        }
+        &__main {
+            grid-column: 1/13;
+            margin-top: 3.2rem;
+            display: block;
+            &-img {
+                display: none;
+            }
+            &-list {
+                padding-bottom: 2rem;
+            }
+            &-item {
+                padding: 2.4rem 0;
+                grid-template-columns: 39.77fr 57.42fr 2.563fr;
+                &-name,
+                &-job,
+                &-icon {
+                    grid-column: span 1;
+                }
+                &-icon {
+                    @include size(1.9rem, 1.9rem)
+                }
+            }
+        }
+    }
+    .abt-job {
+        padding: 10rem 0 23rem;
+        &__label {
+            grid-column: 1/3;
+        }
+        &__title {
+            grid-column: 4/10;
+        }
+        &__main {
+            grid-column: 1/13;
+            margin-top: 6rem;
+            grid-template-columns: repeat(12, 1fr);
+            &::before {
+                content: '';
+                grid-column: span 3;
+                display: block;
+                visibility: hidden;
+            }
+            &-item {
+                grid-column: span 4;
+                padding: 3.2rem;
+                height: 31.17vw;
+                &-title {
+                    font-size: 2.2rem;
+                }
+                &:nth-child(2) {
+                    grid-column: span 5;
+                }
+                &:nth-child(6n + 3),
+                &:nth-child(6n + 5),
+                &:nth-child(6n + 8) {
+                    grid-column: 4 span;
+                }
+            }
+        }
+    }
+}
+
+@include sm {
+    .abt-hero {
+        padding-top: 13.6rem;
+        &__label {
+            grid-column: 1/3;
+            margin-top: 0;
+            margin-bottom: 1.2rem;
+        }
+        &__title {
+            grid-column: 1/3;
+            padding-bottom: 7.8rem;
+        }
+        &__bg-wrap {
+            height: 51rem;
+        }
+    }
+    .abt-info {
+        &__quote {
+            padding: 6rem 3.2rem 4rem;
+            grid-column: 1/3;
+            margin-right: 0;
+            margin-top: -38.3rem;
+            flex-direction: column;
+            &-txt {
+                font-size: 2rem;
+                margin: 2rem 0 2.4rem;
+            }
+        }
+        &__richtext {
+            grid-column: 1/3;
+            grid-row: 3/4;
+            &-decor {
+                @include size(6rem);
+                right: 0;
+            }
+            &-img {
+                width: 82%;
+                margin-right: 6rem;
+            }
+        }
+        &__add {
+            grid-column: 1/3;
+            grid-row: 2/3;
+            margin-right: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3.2rem 2rem;
+            margin: 5rem 0;
+            &-item {
+                &-label,
+                &-txt {
+                    font-size: 1.4rem;
+                    line-height: 1.5em;
+                }
+                &:nth-child(2) {
+                    grid-row: 2/3;
+                }
+            }
+            &-member {
+                &-label {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+        &__vis {
+            grid-column: 1/3;
+            grid-row: 4/5;
+            margin-bottom: 22.8rem;
+            &-title {
+                font-size: 1.8rem;
+            }
+        }
+    }
+    .abt-mil {
+        &__ship {
+            &-img {
+                margin-left: 2rem;
+                max-width: 8.238rem;
+            }
+        }
+        &__head,
+        &__main {
+            grid-column: 2/3;
+            margin-left: -4rem;
+        }
+        &__head {
+            padding-top: 8rem;
+            margin-top: -0.1rem;
+            background-color: $cl-dark-bg;
+            z-index: 2;
+            grid-row: 1/2;
+        }
+        &__main {
+            grid-row: 1/3;
+            z-index: 1;
+            &-item {
+                &-label {
+                    font-size: 1.4rem;
+                }
+                &-title {
+                    font-size: 3.2rem;
+                }
+                &-richtext-p {
+                    font-size: 1.4rem;
+                }
+            }
+            &::before {
+                top: 25vh;
+            }
+            &::before,
+            &::after {
+                height: 10vh;
+            }
+        }
+        &__progress {
+            display: none;
+        }
+    }
+    .abt-team {
+        padding-top: 6rem;
+        &__title {
+            grid-column: 1/3;
+            margin-right: 0;
+            max-width: none;
+            margin-bottom: 2.4rem;
+        }
+        &__richtext {
+            grid-column: 1/3;
+        }
+        .p-line {
+            grid-column: 1/3;
+        }
+        &__main {
+            grid-column: 1/3;
+            margin-top: 1rem;
+            &-item {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem 0;
+                &-name {
+                    margin-bottom: 0.4rem;
+                }
+                &-job {
+                    font-size: 1.4rem;
+                    line-height: 1.5em;
+                }
+                &-icon {
+                    display: none;
+                }
+            }
+        }
+    }
+    .abt-job {
+        padding: 8rem 0 20.6rem;
+        &__label {}
+        &__title {
+            grid-column: 1/3;
+            br {
+                display: none;
+            }
+        }
+        &__main {
+            grid-column: 1/3;
+            display: flex;
+            flex-direction: column;
+            margin-top: 4.8rem;
+            &-item {
+                height: 20rem;
+                &-title {
+                    font-size: 2rem;
+                    margin-top: 0;
+                }
+                &-head {
+                    margin-bottom: 0;
+                }
+                &-icon {
+                    display: none;
+                }
             }
         }
     }
