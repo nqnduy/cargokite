@@ -29,8 +29,17 @@
     }
     &__item {
         display: block;
-        width: 100%;
+        width: calc(100% + 2px);
         height: 100%;
         background-color: #eb2c00;
+        margin: 0 -1px;
+    }
+}
+@include md {
+    .trans {
+        &__logo {
+            width: 12rem;
+            height: 12rem;
+        }
     }
 }
