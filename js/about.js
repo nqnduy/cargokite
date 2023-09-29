@@ -4,7 +4,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { nestedLinesSplit } from './untils';
 
-gsap.registerPlugin(ScrollTrigger, SplitText); 
+gsap.registerPlugin(ScrollTrigger, SplitText);
 let typeOpts = {
     lines: { type: 'lines', linesClass: 'g-lines'},
     words: { type: 'words,lines', linesClass: 'g-lines'},
@@ -32,7 +32,7 @@ function abtHero() {
     tl
     .from(abtHeroLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
     .from(abtHeroTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '<=.2')
-    
+
     let tlScrub = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-hero',
@@ -173,7 +173,7 @@ function abtMiles() {
             trigger: '.abt-mil__wrap',
             start: 'top top',
             end: `top top-=${scrollDistance}%`,
-            scrub: true, 
+            scrub: true,
             pin: '.abt-mil-pin-container',
         }
     })
@@ -221,21 +221,34 @@ function abtTeam() {
         .from(abtTeamTxt.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
         .from(abtTeamLink.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '>=-.2')
     })
-    
+
     const abtTeamItem = $('.abt-team__main-item');
-    const abtTeamImgItem = $('.abt-team__main-img-item'); 
-    abtTeamItem.on('mouseenter', function(e) {
-        e.preventDefault()
-        e.stopPropagation()
-        let index = $(this).index()
-        abtTeamImgItem.removeClass('active')
-        abtTeamImgItem.eq(index).addClass('active')
-    })
-    abtTeamItem.on('mouseleave', function(e) {
-        e.preventDefault()
-        e.stopPropagation();
-        abtTeamImgItem.removeClass('active')
-    })
+    const abtTeamImgItem = $('.abt-team__main-img-item');
+    if ($(window).width > 991) {
+        abtTeamItem.on('mouseenter', function(e) {
+            e.preventDefault()
+            e.stopPropagation()
+            let index = $(this).index()
+            abtTeamImgItem.removeClass('active')
+            abtTeamImgItem.eq(index).addClass('active')
+        })
+        abtTeamItem.on('mouseleave', function(e) {
+            e.preventDefault()
+            e.stopPropagation();
+            abtTeamImgItem.removeClass('active')
+        })
+
+        const tlTeamImg = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.abt-team__main-list',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+            }
+        })
+        tlTeamImg
+        .to('.abt-team__main-img', {yPercent: 35, ease: 'none'})
+    }
 
     const tlTeamList = gsap.timeline({
         scrollTrigger: {
@@ -245,17 +258,6 @@ function abtTeam() {
     })
     tlTeamList
     .from('.abt-team__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .15, clearProps: 'all'})
-
-    const tlTeamImg = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.abt-team__main-list',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-        }
-    })
-    tlTeamImg
-    .to('.abt-team__main-img', {yPercent: 35, ease: 'none'})
 }
 
 function abtJob() {

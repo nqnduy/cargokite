@@ -563,6 +563,7 @@
         }
         &__richtext {
             grid-column: 7/13;
+            overflow: hidden;
             &-decor {
                 @include size(8.4rem, 9.8rem);
                 left: auto;
@@ -636,6 +637,9 @@
     }
     .abt-team {
         padding: 8rem 0;
+        &.open-popup {
+            z-index: 100;
+        }
         &__title {
             grid-column: 1/5;
             margin-right: -2rem;
@@ -657,6 +661,28 @@
             display: block;
             &-img {
                 display: none;
+                position: fixed;
+                inset: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: black;
+                &-inner {
+                    width: 50%;
+                    margin: 0 auto;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    @include transform(translate(-50%, -50%));
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    padding: 4.8rem 2.4rem 3.2rem;
+                    background-color: $cl-white;
+                }
+                &-item {
+                    opacity: 1;
+                    position: relative;
+                    grid-area: 1/1/2/2;
+                }
             }
             &-list {
                 padding-bottom: 2rem;
@@ -820,7 +846,7 @@
                 }
             }
             &::before {
-                top: 25vh;
+                top: 21rem;
             }
             &::before,
             &::after {
