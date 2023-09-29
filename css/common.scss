@@ -184,6 +184,11 @@ a {
         --container-padding: 2rem;
     }
 }
-.swiper {
+.swiper,
+.swiper-wrapper,
+.swiper-slide {
     width: 100%;
+}
+.swiper-slide {
+    height: auto;
 }
