@@ -23,7 +23,7 @@ if (history.scrollRestoration) {
 }
 
 barba.use(barbaPrefetch);
-gsap.registerPlugin(ScrollTrigger, SplitText); 
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function debounce(func, delay = 100){
     let timer;
@@ -76,6 +76,7 @@ refreshOnBreakpoint();
 
 //Header
 const header = $('.header')
+const hamburger = $('.header__toggle');
 lenis.on('scroll', function(inst) {
     if (inst.scroll > header.height()) {
         header.addClass('on-scroll')
@@ -90,6 +91,18 @@ lenis.on('scroll', function(inst) {
         header.removeClass('on-scroll on-hide')
     };
 })
+hamburger.on('click', function (e) {
+    e.preventDefault();
+    if (header.hasClass('open-nav')) {
+        header.removeClass('open-nav');
+        lenis.start();
+    }
+    else {
+        header.addClass('open-nav');
+        lenis.stop();
+    }
+})
+
 
 function transitionOnce() {
     resetScroll()
@@ -114,7 +127,9 @@ function transitionLeave(data) {
     let tl = gsap.timeline({
         onComplete: () => {
             addNavActiveLink(data)
-            gsap.set(data.next.container, {clearProps: 'display'})
+            gsap.set(data.next.container, { clearProps: 'display' })
+            header.removeClass('open-nav');
+            lenis.start();
         }
     })
     tl
@@ -151,10 +166,11 @@ function addNavActiveLink(data) {
     } else if ($(data.next.container).attr('data-header') == 'mix') {
         header.addClass('mix-mode')
     }
-    
-    $('.header__link, .footer__link').removeClass('active')
+
+    $('.header__link, .footer__link, .header__nav-item').removeClass('active')
     $(`.header__link[data-link="${data.next.namespace}"]`).addClass('active')
     $(`.footer__link[data-link="${data.next.namespace}"]`).addClass('active')
+    $(`.header__nav-item[data-link="${data.next.namespace}"]`).addClass('active');
 }
 function removeAllScrollTrigger() {
     console.log('remove scroll trigger')
@@ -180,7 +196,7 @@ function resetScroll() {
         lenis.scrollTo(0, {
             force: true,
             immediate: true,
-        });   
+        });
     }
     lenis.start()
 }
@@ -225,7 +241,7 @@ barba.init({
             handlePopup.toggle()
         },
         async enter(data) {
-            
+
         },
         async afterEnter(data) {
             await transitionEnter(data)

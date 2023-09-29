@@ -109,7 +109,7 @@
         &__toggle {
             z-index: 4;
             margin-left: .5rem;
-            @include size(5rem, 5rem);
+            @include size(5rem);
             background-color: rgba($cl-white, .05);
             position: relative;
             display: flex;
@@ -124,7 +124,6 @@
                     transform: translate(0, -0.6rem);
                 }
                 &-2 {
-
                 }
                 &-3 {
                     width: 25%;
@@ -133,19 +132,24 @@
             }
         }
         &__nav {
-            display: none;
+            display: block;
             z-index: 3;
             position: absolute;
+            pointer-events: none;
             right: 2rem;
             top: 2rem;
             color: $cl-white;
             background-color: $cl-sub;
             padding: 2rem;
+            opacity: 0;
+            @include transform(scale(0.9));
+            @include transform-origin(right top);
+            @include transition(0.3s ease-out);
             ul {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
             }
-            li {
+            &-item {
                 list-style: none;
                 width: 15rem;
                 display: flex;
@@ -170,12 +174,38 @@
                 &:nth-child(3) {
                     grid-column: 2/3;
                     grid-row: 2/3;
-                    background-color: $cl-orange;
                 }
                 &:nth-child(4) {
                     grid-column: 3/4;
                     grid-row: 3/4;
                 }
+                &:nth-child(5) {
+                    display: none;
+                }
+                &.active {
+                    background-color: $cl-orange;
+                }
+            }
+        }
+        &.dark-mode,
+        &.on-scroll {
+            .header__toggle-icon {
+                background-color: black;
+            }
+        }
+        &.open-nav {
+            &.dark-mode,
+            &.on-scroll {
+                .header__toggle-icon {
+                    background-color: rgba($cl-white, .4);
+                }
+            }
+            .header__nav {
+                opacity: 1;
+                pointer-events: auto;
+                @include transform-origin(right top);
+                @include transform(scale(1));
+                @include transition(0.3s ease-out);
             }
         }
     }
@@ -183,14 +213,20 @@
 
 @include sm {
     .header {
+        padding: 2.4rem 0;
         &_act {
             display: none;
+        }
+        &__toggle {
+            @include size(4rem);
         }
         &__nav {
             position: fixed;
             inset: 0;
             padding: 4rem 2rem;
-            li {
+            overflow-y: auto;
+            height: 100vh;
+            &-item {
                 padding: 8.9%;
                 width: 100%;
                 .txt-16 {
@@ -200,6 +236,7 @@
                     background-color: rgba($cl-white, .05);
                 }
                 &:nth-child(5) {
+                    display: flex;
                     grid-column: 1/4;
                     grid-row: 5/6;
                     margin-top: 8.31vh;
