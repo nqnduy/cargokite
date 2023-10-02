@@ -58,18 +58,20 @@ function homeHero() {
     .from(homeHeroSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '.2')
     .from(homeHeroCaption.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
-    let tlScrub = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: .4
-        }
-    })
-    tlScrub
-    .to('.home-hero', {backgroundPositionY: '-150%', ease: 'none'})
-    .to('.home-hero__title', {yPercent: 25, ease: 'none'}, '0')
-    .to('.home-hero__sub', {yPercent: -25, ease: 'none'}, '0')
+    if ($(window).width() > 767) {
+        let tlScrub = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.home-hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: .4
+            }
+        })
+        tlScrub
+            .to('.home-hero', {backgroundPositionY: '-150%', ease: 'none'})
+            .to('.home-hero__title', {yPercent: 25, ease: 'none'}, '0')
+            .to('.home-hero__sub', { yPercent: -25, ease: 'none' }, '0')
+    }
 
 }
 function homeIntro() {
@@ -432,7 +434,7 @@ function homeWhy() {
         .from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
     })
 
-    if ($(window).width() > 767) {
+    if ($(window).width() > 991) {
         const tlHead = gsap.timeline({
             scrollTrigger: {
                 trigger: '.home-why__head',
@@ -443,6 +445,9 @@ function homeWhy() {
         })
         tlHead
         .fromTo('.home-why__head', {yPercent: -10}, {yPercent: 25, ease: 'none'})
+    }
+    else if ($(window).width() > 767){
+
     }
     else {
         $('.home-why__main-wrapper').addClass('swiper')

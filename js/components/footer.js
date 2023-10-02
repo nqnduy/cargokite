@@ -19,7 +19,7 @@ export default class FooterComponent extends HTMLElement {
                     <div class="txt txt-16 footer__form-sub">
                         Want to stay up to date? Sign up for CargoKite's biannual update.
                     </div>
-                    <form class="footer__form-main">
+                    <form class="footer__form-main" action="https://formbold.com/s/oeQmR" method="POST">
                         <div class="input-wrap">
                             <input type="email" class="txt txt-16 input-field" placeholder="Enter your email">
                         </div>

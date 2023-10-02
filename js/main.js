@@ -74,10 +74,9 @@ function refreshOnBreakpoint() {
 }
 refreshOnBreakpoint();
 
-//Header
 const header = $('.header')
 const hamburger = $('.header__toggle');
-lenis.on('scroll', function(inst) {
+lenis.on('scroll', function (inst) {
     if (inst.scroll > header.height()) {
         header.addClass('on-scroll')
         if (inst.direction == 1) {
@@ -91,24 +90,39 @@ lenis.on('scroll', function(inst) {
         header.removeClass('on-scroll on-hide')
     };
 })
+
 hamburger.on('click', function (e) {
     e.preventDefault();
     if (header.hasClass('open-nav')) {
-        header.removeClass('open-nav');
-        lenis.start();
+        if ($(window).width() <= 476) {
+            let scrollY = $("body").css('top');
+            $("body").css({
+                'position': 'relative',
+                'top': ''
+            });
+            lenis.start();
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+        header.removeClass('open-nav force');
     }
     else {
-        header.addClass('open-nav');
-        lenis.stop();
+        if ($(window).width() <= 476) {
+            setTimeout(() => {
+                $("body").css({
+                    'position': 'fixed',
+                    'top': `-${window.scrollY}px`
+                });
+            }, 500)
+            lenis.stop();
+        }
+        header.addClass('open-nav force');
     }
 })
-
 
 function transitionOnce() {
     resetScroll()
     gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
-    let tl = gsap.timeline({
-    })
+    let tl = gsap.timeline({})
     tl
     .to('.trans__item', {delay: .4, scaleY: 0, duration: 1, stagger: {
         each: '.1',
@@ -128,6 +142,10 @@ function transitionLeave(data) {
         onComplete: () => {
             addNavActiveLink(data)
             gsap.set(data.next.container, { clearProps: 'display' })
+            $("body").css({
+                'position': 'relative',
+                'top': ''
+            });
             header.removeClass('open-nav');
             lenis.start();
         }
@@ -167,7 +185,7 @@ function addNavActiveLink(data) {
         header.addClass('mix-mode')
     }
 
-    $('.header__link, .footer__link, .header__nav-item').removeClass('active')
+    $('.header__link, .footer__link, .header__nav-link').removeClass('active')
     $(`.header__link[data-link="${data.next.namespace}"]`).addClass('active')
     $(`.footer__link[data-link="${data.next.namespace}"]`).addClass('active')
     $(`.header__nav-link[data-link="${data.next.namespace}"]`).addClass('active');
