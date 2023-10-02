@@ -76,7 +76,7 @@ function newsMainInteraction() {
     })
 }
 
-export default newsScript = {
+const newsScript = {
     namespace: 'news',
     afterEnter() {
         console.log('enter news')
@@ -91,3 +91,5 @@ export default newsScript = {
         console.log('leave news')
     }
 }
+
+export default newsScript

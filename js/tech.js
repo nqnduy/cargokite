@@ -206,7 +206,7 @@ function techDemo() {
     techWebGL.reset()
 }
 
-export default techScript = {
+const techScript = {
     namespace: 'tech',
     afterEnter() {
         console.log('enter tech')
@@ -221,3 +221,5 @@ export default techScript = {
         console.log('leave tech')
     }
 }
+
+export default techScript

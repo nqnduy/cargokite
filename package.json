@@ -2,16 +2,22 @@
   "name": "cargokite",
   "version": "1.0.0",
   "description": "",
+  "source": "index.html",
   "staticFiles": {
     "staticOutPath": "./assets",
     "staticPath": "./assets"
   },
+  "targets": {
+    "main": false
+  },
   "scripts": {
-    "clear": "rm -rf .parcel-cache",
-    "dev": "npm run clear & npx parcel index.html",
+    "clear": "rm -rf dist .parcel-cache",
+    "dev": "npm run clear && parcel",
+    "build": "npm run clear && parcel build --no-cache --no-content-hash --public-url ./ --no-optimize",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "devDependencies": {

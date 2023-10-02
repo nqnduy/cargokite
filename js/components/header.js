@@ -58,7 +58,7 @@ export default class HeaderComponent extends HTMLElement {
                         </ul>
                     </nav>
                 </div>
-        </header>
+            </header>
         `
     }
 }

@@ -321,8 +321,7 @@ function abtJob() {
         .from(abtJobItems, {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .1, clearProps: 'all'})
     })
 }
-
-export default aboutScript = {
+const aboutScript = {
     namespace: 'about',
     afterEnter() {
         console.log('enter about')
@@ -338,3 +337,5 @@ export default aboutScript = {
         console.log('leave about')
     }
 }
+
+export default aboutScript

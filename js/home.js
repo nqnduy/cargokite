@@ -3,7 +3,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import $ from "jquery";
 import { nestedLinesSplit } from './untils';
 import SplitText from "./vendors/SplitText";
-import { childrenSelect } from './common/utils'
+import { childrenSelect } from './common/utils/childrenSelector'
 import swiper from './components/swiper';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -562,7 +562,7 @@ function homeFaqInteraction() {
     })
 }
 
-export default homeScript = {
+const homeScript = {
     namespace: 'home',
     afterEnter() {
         console.log('enter home')
@@ -591,4 +591,5 @@ export default homeScript = {
         console.log('leave home')
     }
 }
+export default homeScript
 

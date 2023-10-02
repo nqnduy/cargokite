@@ -29,7 +29,7 @@ function privToc() {
     createToc(lenis, '.priv-hero__main-richtext','.priv-hero__nav-toc', html)
 }
 
-export default privacyScript = {
+const privacyScript = {
     namespace: 'privacy',
     afterEnter() {
         console.log('enter privacy')
@@ -42,3 +42,4 @@ export default privacyScript = {
         console.log('leave privacy')
     }
 }
+export default privacyScript
