@@ -53,7 +53,7 @@ function abtInfo() {
     let tlQuote = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-info__quote',
-            start: 'top top+=50%',
+            start: `top top+=${$(window).width > 767 ? 50 : 70}%`,
         },
         defaults: {
             ease: gOpts.ease
@@ -63,7 +63,8 @@ function abtInfo() {
             new SplitText('.abt-info__quote-txt', typeOpts.lines);
             abtInfoQuoteAuthor.revert()
             abtInfoQuoteJob.revert()
-        }
+        },
+        delay: `${$(window).width > 767 ? 0 : 1.2}`
     })
     tlQuote
     .from('.abt-info__quote-icon', {yPercent: 60, autoAlpha: 0, duration: .6})
