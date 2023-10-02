@@ -55,7 +55,7 @@
         display: none;
     }
     &.on-hide {
-        transform: translateY(-100%);
+        @include transform(translateY(-100%));
     }
     &.on-scroll {
         padding-top: 1.2rem;
@@ -93,6 +93,9 @@
             }
         }
     }
+    &.force {
+        transform: none !important;
+    }
 }
 
 @include md {
@@ -112,22 +115,30 @@
             @include size(5rem);
             background-color: rgba($cl-white, .05);
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: block;
+            @include transition(top 0.3s ease-out);
+            top: 0;
             &-icon {
                 position: absolute;
-                width: 45.45%;
-                height: 1.5px;
+                height: 0.15rem;
                 background-color: $cl-white;
+                margin: auto;
+                width: 100%;
+                right: 0;
+                left: 0;
+                @include transition(all 0.49s cubic-bezier(0.7, 0.1, 0.1, 1.5));
                 &-1 {
-                    transform: translate(0, -0.6rem);
+                    width: 45.45%;
+                    top: calc(50% - ((10%)) + -0.2rem);
                 }
                 &-2 {
+                    width: 45.45%;
+                    top: calc(50% - ((10%)) + 0.35rem);
                 }
                 &-3 {
-                    width: 25%;
-                    transform: translate(39%, 0.6rem);
+                    width: 28.97%;
+                    left: 16.03%;
+                    top: calc(50% - ((10%)) + 0.9rem);
                 }
             }
         }
@@ -179,6 +190,13 @@
                 &:nth-child(5) {
                     display: none;
                 }
+                @for $i from 1 through 4 {
+                    &:nth-child(#{$i}) {
+                        .header__nav-link::before {
+                            transition-delay: (0.125s - $i * 0.04);
+                        }
+                    }
+                }
             }
             &-link {
                 position: absolute;
@@ -186,9 +204,24 @@
                 padding: 14.28%;
                 display: flex;
                 align-items: flex-end;
-                background-color: rgba($cl-white, .05);
+                &::before {
+                    content: '';
+                    z-index: -1;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    width: 2rem;
+                    background-color: rgba($cl-white, .05);
+                    opacity: 0;
+                    @include transform(scaleY(0));
+                    @include transform-origin(bottom);
+                    @include transition(0.3s ease-out);
+                }
                 &.active {
-                    background-color: $cl-orange;
+                    &::before {
+                        background-color: $cl-orange;
+                    }
                 }
             }
         }
@@ -197,6 +230,7 @@
         &.mix-mode {
             .header__toggle-icon {
                 background-color: black;
+                @include transition(0.3s ease-out);
             }
         }
         &.open-nav {
@@ -204,7 +238,18 @@
             &.on-scroll,
             &.mix-mode {
                 .header__toggle-icon {
-                    background-color: rgba($cl-white, .4);
+                    background-color: $cl-white;
+                    @include transition(0.3s ease-out);
+                }
+            }
+            &.on-scroll {
+                .header__toggle {
+                    top: 2rem;
+                    @include transition(top 0.3s ease-out);
+                }
+                .header__nav {
+                    top: 1.2rem;
+                    @include transition(0.3s ease-out);
                 }
             }
             .header__nav {
@@ -213,6 +258,44 @@
                 @include transform-origin(right top);
                 @include transform(scale(1));
                 @include transition(0.3s ease-out);
+                &-item {
+                    @for $i from 1 through 4 {
+                        &:nth-child(#{$i}) {
+                            .header__nav-link::before {
+                                transition: transform 0.3s cubic-bezier(0.3, 0, 0.2, 1) (0.125s + $i * 0.08), width 0.35s cubic-bezier(0.3, 0, 0.2, 1) (0.35s + $i * 0.08), opacity 0.35s ease-out (0.125s + $i * 0.04);
+                            }
+                        }
+                    }
+                }
+                &-link {
+                    &::before {
+                        width: 100%;
+                        opacity: 1;
+                        @include transform(scaleY(1));
+                    }
+                }
+            }
+            .header__toggle {
+                &-icon {
+                    &-2 {
+                        opacity: 0;
+                        left: 50%;
+                        @include transform(scaleX(0.5));
+                        @include transform-origin(right);
+                    }
+                    &-1 {
+                        top: 50%;
+                        @include transition-delay(0.04s);
+                        @include transform(rotate(45deg));
+                    }
+                    &-3 {
+                        left: 0;
+                        width: 45.45%;
+                        top: 50%;
+                        @include transition-delay(0.1s);
+                        @include transform(rotate(-45deg));
+                    }
+                }
             }
         }
     }
@@ -230,7 +313,7 @@
         &__nav {
             position: fixed;
             inset: 0;
-            padding: 4rem 2rem;
+            padding: 2.4rem 2rem;
             overflow-y: auto;
             height: 100vh;
             @include transform(scale(1) translateX(2.5rem));
@@ -239,9 +322,6 @@
                 width: 100%;
                 .txt-16 {
                     font-size: 1.4rem;
-                }
-                &:nth-child(3) {
-                    background-color: rgba($cl-white, .05);
                 }
                 &:nth-child(5) {
                     display: flex;
@@ -270,7 +350,27 @@
                 }
             }
         }
+        &.mix-mode {
+            .header {
+                &__logo {
+                    svg {
+                        path {
+                            fill: rgba(var(--header-txt), 1) !important;
+                        }
+                    }
+                }
+            }
+        }
         &.open-nav {
+            &.on-scroll {
+                .header__nav {
+                    top: 0;
+                }
+                .header__toggle {
+                    top: 1.2rem;
+                    @include transition(top 0.3s ease-out);
+                }
+            }
             .header__nav {
                 @include transform(scale(1) translateX(0));
                 @include transition(0.5s ease-out);
