@@ -28,6 +28,9 @@ function privToc() {
     let html = $('.priv-hero__nav-toc-item').eq(0).clone();
     createToc(lenis, '.priv-hero__main-richtext','.priv-hero__nav-toc', html)
 }
+function removeRichtextContent(data) {
+    console.log(data)
+}
 
 const privacyScript = {
     namespace: 'privacy',
@@ -38,8 +41,10 @@ const privacyScript = {
             privToc()
         }, 100);
     },
-    beforeLeave() {
+    beforeLeave(data) {
+        removeRichtextContent(data)
         console.log('leave privacy')
+        
     }
 }
 export default privacyScript

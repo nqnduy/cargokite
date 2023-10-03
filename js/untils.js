@@ -47,11 +47,16 @@ function createToc(lenis, richtextEl, tocEl, htmlTemplate) {
     for (let i = 0; i < headings.length; i++) {
         headings.eq(i).attr('id', `toc-${i}`);
         let tocItem = htmlTemplate.clone();
-
+        
         let tocOrdinal = i + 1 < 10 ? `0${i + 1}` : i + 1;
-        let [ordinal, ...[title]] = headings.eq(i).text().split('. ');
         tocItem.find('[data-toc="number"]').text(tocOrdinal);
-        tocItem.find('[data-toc="title"]').text(title);
+
+        if (headings.eq(i).text().includes('. ')) {
+            let [ordinal, ...[title]] = headings.eq(i).text().split('. ');
+            tocItem.find('[data-toc="title"]').text(title);
+        } else {
+            tocItem.find('[data-toc="title"]').text(headings.eq(i).text());
+        }
         tocItem.attr('href',`#toc-${i}`)
         tocWrap.append(tocItem);
     }

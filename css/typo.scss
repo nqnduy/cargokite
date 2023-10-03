@@ -48,6 +48,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    &-20 {
+        @include size(2rem);
+    }
     &-24 {
         @include size(2.4rem);
     }
@@ -67,6 +70,9 @@
 .btn {
     padding: 1.6rem 2rem;
     //border-radius: .4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     background-color: rgba($cl-orange, 1);
     color: rgba($cl-white, 1);

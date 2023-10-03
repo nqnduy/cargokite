@@ -13,7 +13,7 @@
   "scripts": {
     "clear": "rm -rf dist .parcel-cache",
     "dev": "npm run clear && parcel",
-    "build": "npm run clear && parcel build --no-cache --no-content-hash --public-url ./ --no-optimize",
+    "build": "npm run clear && parcel build --no-cache --no-content-hash --public-url ./ --no-scope-hoist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -181,10 +181,8 @@ const scripts = () => {
             header.addClass('mix-mode')
         }
     
-        $('.header__link, .footer__link, .header__nav-link').removeClass('active')
-        $(`.header__link[data-link="${data.next.namespace}"]`).addClass('active')
-        $(`.footer__link[data-link="${data.next.namespace}"]`).addClass('active')
-        $(`.header__nav-link[data-link="${data.next.namespace}"]`).addClass('active');
+        $('[data-link]').removeClass('active')
+        $(`[data-link="${$(data.next.container).attr('data-namespace')}"]`).addClass('active')
     }
     function removeAllScrollTrigger() {
         console.log('remove scroll trigger')
@@ -235,6 +233,234 @@ const scripts = () => {
             })
         }
     }
+
+    function handleForm() {
+        //Form utils
+        function mapFormToObject(ele) {
+            return (parsedFormData = [...new FormData(ele).entries()].reduce(
+                (prev, cur) => {
+                    const name = cur[0];
+                    const val = cur[1];
+                    return { ...prev, [name]: val };
+                },
+                {}
+            ));
+        }
+        function initForm(form, options) {
+            const { submitEle = {}, onSuccess, onError, handleSubmit, prepareMap, fields, pageName = "Form", hubspot } = options;
+            const { ele, textEle } = submitEle;
+    
+            let submitBtn = $(form).find('button[type=submit]');
+            if (ele) {
+                submitBtn = $(form).find(ele);
+            }
+            let defaultText = submitBtn.clone().val();
+            if (textEle) {
+                defaultText = submitBtn.find(textEle).clone().text();
+            }
+    
+            let url = $(form).attr('action');
+    
+            if (hubspot) {
+                const { portalId, formId } = hubspot;
+                url = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+            }
+    
+            const setLoading = (isLoading) => {
+                console.log(isLoading)
+                if (isLoading) {
+                    if (textEle) {
+                        submitBtn.find(textEle).text('Please wait ...');
+                    } else {
+                        submitBtn.val('Please wait ...');
+                    }
+    
+                    submitBtn.css({ 'pointer-events': 'none' })
+                }
+                else {
+                    if (textEle) {
+                        submitBtn.find(textEle).text(defaultText);
+                    } else {
+                        submitBtn.val(defaultText)
+                    }
+                    submitBtn.css({ 'pointer-events': '' })
+                }
+            }
+    
+            const showError = (message = "Something error") => {
+                alert(message)
+            }
+            const mapField = (data) => {
+                if (!fields.length) return [];
+    
+                const result = fields.map((field) => {
+                    const { name, value } = field;
+                    if (!value) {
+                        return {
+                            name,
+                            value: data[name] || ""
+                        }
+                    }
+                    else {
+                        const getValue = value(data);
+                        return {
+                            name,
+                            value: getValue || ''
+                        }
+                    }
+                })
+                return result;
+            }
+            const sendSubmission = (data) => {
+                const mappedFields = mapField(data);
+                const dataSend = {
+                    fields: mappedFields,
+                    context: {
+                        pageUri: window.location.href,
+                        pageName: pageName,
+                    },
+                };
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: JSON.stringify(dataSend),
+                    dataType: 'json',
+                    headers: {
+                        accept: 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $(form).get(0).reset()
+                        if (onSuccess) onSuccess(data);
+                        setLoading(false);
+                    },
+                    error: function (error) {
+                        if (error.readyState === 4) {
+                            const errors = error.responseJSON.errors
+                            const errorArr = errors[0].message.split('.')
+                            const errorMess = errorArr[errorArr.length - 1]
+    
+                            showError(errorMess);
+                        }
+                        else {
+                            showError('Something error');
+                        }
+                        setLoading(false)
+                    },
+                });
+            }
+    
+            $(form).on("submit", function (e) {
+                e.preventDefault();
+                // setLoading(true);
+                // if (prepareMap) {
+                //     prepareMap($(this));
+                // }
+                // const data = mapFormToObject(e.target);
+                // if (handleSubmit) handleSubmit(data);
+                // sendSubmission(data);
+                // return false;
+
+            });
+        }
+        
+        //form contact popup
+        //$('.input-field').on('change keyup blur input', hanldeInput);
+        $('.popup__main-form .popup__main-submit').on('click', function (e) {
+            e.preventDefault();
+            $('.popup__main-form').trigger('submit');
+        })
+
+        const formContact = initForm('.popup__main-form', {
+            onSuccess: (data) => {
+                // success form callback
+                $('.popup__main-form').find('.popup__main-form-success-txt [data-form-name]').text(data.name)
+                $('.popup__main-form').find('.popup__main-submit').addClass('on-complete')
+                $('.popup__main-form').find('.popup__main-form-inner').addClass('hidden')
+                $('.popup__main-form').find('.popup__main-form-success').removeClass('hidden')
+            },
+            hubspot: {
+                portalId: '22164009',
+                formId: 'f86cc368-6d7e-4114-9475-635711b656a7'
+            },
+            submitEle: {
+                ele: '.popup__main-submit',
+                textEle: '.popup__main-submit-inner-default .popup__main-submit-inner-txt',
+            },
+            pageName: document.title,
+            prepareMap: (ele) => {
+            },
+            fields: [
+                {
+                    name: 'firstname',
+                    value: (data) => data.name,
+                },
+                {
+                    name: 'email',
+                    value: (data) => data.email,
+                },
+                {
+                    name: 'message',
+                    value: (data) => data.message
+                },
+            ]
+        })
+
+        // function hanldeInput() {
+        //     if ($(this).val()) {
+        //         $(this).prev().addClass('show')
+        //     } else if ($(this).val() == '') {
+        //         $(this).prev().removeClass('show')
+        //     }
+        // };
+
+        $('.footer__form-main .input-submit').on('click', function (e) {
+            e.preventDefault();
+            $('.footer__form-main').trigger('submit');
+        })
+
+        //form subscribe footer
+        const formSubscribe = initForm('.footer__form-main', {
+            onSuccess: (data) => {
+                // success form callback
+                $('.footer').find('.footer__form-title').text('Thanks for subscribing')
+                $('.footer').find('.footer__form-sub').text("Congratulations! You're now on our list to stay informed about the latest news.")
+                $('.footer__form-main').find('.input-submit').addClass('on-complete')
+                $('.footer__form-main').find('footer__form-title')
+                $('.footer__form-main').css('pointer-events', 'none')
+
+                setTimeout(() => {
+                    $('.footer').find('.footer__form-title').text('Subscribe to Newsletters')
+                    $('.footer').find('.footer__form-sub').text("Want to stay up to date? Sign up for CargoKite's biannual update.")
+                    $('.footer__form-main').css('pointer-events', 'auto')
+                    $('.footer__form-main').trigger('reset')
+                    $('.footer__form-main').find('.input-submit').removeClass('on-complete')
+                }, 4000);
+            },
+            hubspot: {
+                portalId: '22164009',
+                formId: 'f86cc368-6d7e-4114-9475-635711b656a7'
+            },
+            submitEle: {
+                ele: '.input-submit',
+                textEle: '.input-submit-txt',
+            },
+            pageName: document.title,
+            prepareMap: (ele) => {
+            },
+            fields: [
+                {
+                    name: 'email',
+                    value: (data) => data.email,
+                },
+            ]
+        })
+
+
+    }
+    handleForm()
+
     const VIEWS = [
         homeScript,
         aboutScript,
