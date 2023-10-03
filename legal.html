@@ -32,15 +32,15 @@
                     </div>
                     <div class="popup__main-form-inner">
                         <div class="input-wrap">
-                            <input type="text" class="txt txt-18 input-field" placeholder="Your name">
+                            <input type="text" class="txt txt-18 input-field" name="name" placeholder="Your name" required="required">
                             <div class="input-field-line"></div>
                         </div>
                         <div class="input-wrap">
-                            <input type="email" class="txt txt-18 input-field" placeholder="Your email">
+                            <input type="email" class="txt txt-18 input-field" name="email" placeholder="Your email" required="required">
                             <div class="input-field-line"></div>
                         </div>
                         <div class="input-wrap textarea-wrap">
-                            <textarea name="message" cols="30" rows="3" class="txt txt-18 input-field" placeholder="Message"></textarea>
+                            <textarea name="message" cols="30" rows="3" name="message" class="txt txt-18 input-field" placeholder="Message"></textarea>
                             <div class="input-field-line"></div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                         </p>
                     </div>
                     <button type="submit" class="popup__main-submit arr-hover">
-                        <div class="popup__main-submit-inner">
+                        <div class="popup__main-submit-inner popup__main-submit-inner-default">
                             <div class="heading h6 heading-bold popup__main-submit-inner-txt">Send message</div>
                             <div class="arr-wrap arr-wrap-32">
                                 <div class="icon icon-32 arr-ic-main">
@@ -70,6 +70,14 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="#" class="popup__main-submit-inner popup__main-submit-inner-success" data-popup="close">
+                            <div class="heading h6 heading-bold popup__main-submit-inner-txt">Close the modal</div>
+                            <div class="icon icon-32">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.00005 0.736328L16.0001 13.7364L29.0001 0.736328L31.2629 2.99907L18.2628 15.9991L31.2629 28.9992L29.0001 31.2619L16.0001 18.2619L3.00005 31.2619L0.737305 28.9992L13.7373 15.9991L0.737305 2.99907L3.00005 0.736328Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </a>
                         <div class="popup__main-submit-aspect"></div>
                     </button>
                 </form>
@@ -79,7 +87,6 @@
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M25.1924 6.80664L6.80762 25.1914M6.80762 6.80664L25.1924 25.1914" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-
                     </div>
                 </a>
             </div>
@@ -261,14 +268,24 @@
                     <div class="txt txt-16 footer__form-sub">
                         Want to stay up to date? Sign up for CargoKite's biannual update.
                     </div>
-                    <form class="footer__form-main">
+                    <form action="#" class="footer__form-main">
                         <div class="input-wrap">
-                            <input type="email" class="txt txt-16 input-field" placeholder="Enter your email">
+                            <input type="email" name="email" class="txt txt-16 input-field" placeholder="Enter your email" required="required">
                         </div>
                         <button class="btn btn-pri btn-lg input-submit" type="submit">
-                            <div class="txt txt-18 txt-med">
-                                Subscribe
+                            <div class="input-submit-icon">
+                                <div class="icon icon-20">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.59961 9.40169L8.39974 13.2018L16 5.60156" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
                             </div>
+                            <span class="txt txt-18 txt-med input-submit-txt">
+                                Subscribe
+                            </span>
+                            <span class="txt txt-18 txt-med input-submit-txt-tail">
+                                d
+                            </span>
                         </button>
                     </form>
                     <div class="txt txt-12 footer__form-caption">
