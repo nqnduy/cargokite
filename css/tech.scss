@@ -273,8 +273,7 @@
             margin-top: 3rem;
             position: relative;
             &-icon {
-                position: absolute;
-                left: 2.4rem;
+                width: 0rem;
                 opacity: 0;
                 transition: all $dur-default ease;
                 .icon {
@@ -285,6 +284,7 @@
             &.loading {
                 .tech-map__submit-icon {
                     opacity: 1;
+                    width: 3rem;
                 }
             }
             @keyframes animRot {

@@ -426,6 +426,7 @@ function homeWhy() {
             },
             onComplete: () => {
                 homeWhyItemTitle.revert()
+                new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.lines)
             }
         })
         tlHomeWhyItem
