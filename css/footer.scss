@@ -74,7 +74,7 @@
             }
             &-link {
                 transition: color $dur-default ease;
-                &:hover {
+                &:hover, &.active {
                     color: rgba($cl-orange, 1);
                 }
             }
@@ -95,7 +95,7 @@
             &-link {
                 color: rgba($cl-note, 1);
                 transition: color $dur-default ease;
-                &:hover {
+                &:hover, &.active {
                     color: rgba($cl-txt, 1);
                 }
             }
@@ -185,7 +185,28 @@
         outline: none;
         border: none;
         border-radius: none;
-
+        &-icon {
+            width: 0rem;
+            opacity: 0;
+            transition: all $dur-default ease;
+            .icon {
+                margin-right: 1rem;
+            }
+        }
+        .input-submit-txt-tail {
+            width: 0;
+            overflow: hidden;
+            transition: all $dur-default ease;
+        }
+        &.on-complete {
+            .input-submit-icon {
+                width: 3rem;
+                opacity: 1;
+            }
+            .input-submit-txt-tail {
+                width: 1.2rem;
+            }
+        }
     }
 }
 
