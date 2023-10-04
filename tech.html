@@ -256,25 +256,72 @@
             </section>
             <section class="tech-map">
                 <div class="container grid">
-                    <h2 class="heading h2 tech-map__title">
-                        Route Planning Tool
-                    </h2>
-                    <div class="tech-map__richtext">
-                        <p class="txt txt-16 tech-map__richtext-p">
-                            Our in-house-developed system calculates the optimal routes for CargoKite ships based on real-time weather conditions, ensuring efficient and safe navigation. 
-                        </p>
-                        <p class="txt txt-16 tech-map__richtext-p">
-                            Additionally, it excels in providing highly accurate Estimated Time of Arrival (ETA) predictions, allowing for precise planning and scheduling.
-                        </p>
-                        <a href="#" class="btn btn-lg tech-map__richtext-btn">
-                            <div class="txt txt-18">
-                                Try our Demo for Free
+                    <div class="tech-map__main">
+                        <div class="tech-map__map">
+                            <div class="tech-map__map-inner" id="techMap"></div>
+                        </div>
+                        <div class="tech-map__head">
+                            <h2 class="heading h3 tech-map__title">
+                                Route <br>Planning Tool
+                            </h2>
+                            <p class="txt txt-16 tech-map__sub">
+                                Our in-house-developed system calculates the optimal routes for CargoKite ships based on real-time weather conditions, ensuring efficient and safe navigation. Additionally, it excels in providing highly accurate Estimated Time of Arrival (ETA) predictions, allowing for precise planning and scheduling.
+                            </p>
+                            <div class="tech-map__form">
+                                <div class="input-wrap input-wrap-start">
+                                    <div class="icon icon-24 input-icon">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10 17C10 17 16 12 16 7.71429C16 4.55837 13.3137 2 10 2C6.68629 2 4 4.55837 4 7.71429C4 12 10 17 10 17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10.0002 10.3002C11.2705 10.3002 12.3002 9.27045 12.3002 8.0002C12.3002 6.72994 11.2705 5.7002 10.0002 5.7002C8.72994 5.7002 7.7002 6.72994 7.7002 8.0002C7.7002 9.27045 8.72994 10.3002 10.0002 10.3002Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <input type="text" class="input-hidden" id="startPort">
+                                    <input type="text" class="txt txt-16 input-field" placeholder="Start route">
+                                    <div class="input-field-line"></div>
+                                    <div class="input-drop" data-lenis-prevent="">
+                                        <div class="input-drop-inner">
+                                            <a href="#" class="port-item">
+                                                <div class="txt txt-16 port-item-name">Lagos</div>
+                                                <div class="port-item-id">46130</div>
+                                            </a>
+                                        </div>
+                                        <div class="txt txt-16 port-item-empty-txt">No port found</div>
+                                    </div>
+                                </div>
+                                <div class="input-wrap input-wrap-end">
+                                    <div class="icon icon-24 input-icon">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10 17C10 17 16 12 16 7.71429C16 4.55837 13.3137 2 10 2C6.68629 2 4 4.55837 4 7.71429C4 12 10 17 10 17Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10.0002 10.3002C11.2705 10.3002 12.3002 9.27045 12.3002 8.0002C12.3002 6.72994 11.2705 5.7002 10.0002 5.7002C8.72994 5.7002 7.7002 6.72994 7.7002 8.0002C7.7002 9.27045 8.72994 10.3002 10.0002 10.3002Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <input type="text" class="input-hidden" id="endPort">
+                                    <input type="text" class="txt txt-16 input-field" placeholder="End route">
+                                    <div class="input-field-line"></div>
+                                    <div class="input-drop" data-lenis-prevent="">
+                                        <div class="input-drop-inner">
+                                            <a href="#" class="port-item">
+                                                <div class="txt txt-16 port-item-name">Lagos</div>
+                                                <div class="port-item-id">46130</div>
+                                            </a>
+                                        </div>
+                                        <div class="txt txt-16 port-item-empty-txt">No port found</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-pri btn-lg tech-map__submit" id="updateRoute">
+                                    <div class="tech-map__submit-icon">
+                                        <div class="icon icon-20">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17 10C17 6.13401 13.866 3 10 3C6.13401 3 3 6.13401 3 10C3 13.866 6.13401 17 10 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span class="txt txt-18">See the route</span>
+                                </button>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <div class="tech-map__main"></div>
                 </div>
-                <div class="tech-map__bg"></div>
             </section>
             <section class="tech-control">
                 <div class="container grid">
@@ -410,7 +457,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#" class="footer__marquee">
+            <a href="#" class="footer__marquee" data-popup="contact">
                 <div class="footer__marquee-wrap">
                     <div class="heading footer__marquee-item">
                         Are you interested? Let's discuss today!

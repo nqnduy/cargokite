@@ -108,7 +108,7 @@ export default class FooterComponent extends HTMLElement {
                     </div>
                 </div>
             </div>
-            <a href="#" class="footer__marquee">
+            <a href="#" class="footer__marquee" data-popup="contact">
                 <div class="footer__marquee-wrap">
                     <div class="heading footer__marquee-item">
                         Are you interested? Let's discuss today!

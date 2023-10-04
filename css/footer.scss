@@ -178,13 +178,9 @@
         }
     }
     &-submit {
-        cursor: pointer;
-        appearance: none;
-        -webkit-appearance: none;
         width: 100%;
-        outline: none;
         border: none;
-        border-radius: none;
+        border-radius: 0;
         &-icon {
             width: 0rem;
             opacity: 0;

@@ -1,5 +1,7 @@
 import $ from "jquery";
 import * as THREE from 'three';
+import * as L from 'leaflet';
+import portData from '../data/port.json'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -11,6 +13,12 @@ import { nestedLinesSplit } from './untils';
 
 gsap.registerPlugin(ScrollTrigger, Flip); 
 
+function convertToTitleCase(str) {
+    if (!str) {
+        return ""
+    }
+    return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
+}
 class techDemoWebGL {
     constructor() {
         this.container = $('.tech-demo__canvas-inner');
@@ -198,7 +206,207 @@ function techVideo() {
     })
 }
 
+function techMap() {
+    function reverseLineStringCoordinates(lineString) {
+        const reversedCoordinates = lineString.coordinates.map(coord => [coord[1], coord[0]]);
+        return {
+            type: 'Feature',
+            geometry: {
+                type: 'LineString',
+                coordinates: reversedCoordinates,
+            },
+        };
+    }
 
+    let routeLayer;
+
+    // Plot the route on the map
+    function plotRoute(map, geojsonData) {
+        // Add a GeoJSON layer to the map
+        const reversedGeoJson = reverseLineStringCoordinates(geojsonData.geometry);
+
+        if (!routeLayer) {
+            routeLayer = L.layerGroup().addTo(map);
+        } else {
+            routeLayer.clearLayers();
+        }
+
+        const geoJsonLayer = L.geoJSON(reversedGeoJson, {
+            style: {
+                color: '#0074D9',
+                weight: 4,
+            },
+        }).addTo(routeLayer);
+
+        // Fit the map to the route's bounding box
+        const bounds = L.geoJSON(reversedGeoJson).getBounds();
+        map.fitBounds(bounds, {
+            padding: [20, 20],
+        });
+
+        const popup = L.popup();
+
+        // Add mousemove event handler to the GeoJSON layer
+        geoJsonLayer.on('mousemove', handleMouseMove);
+
+        // Remove popup when mouse leaves the GeoJSON layer
+        geoJsonLayer.on('mouseout', handleMouseOut);
+
+        function handleMouseMove(e) {
+            const { duration_hr, distance_km, average_speed_km_h } = geojsonData.properties;
+            const days = Math.floor(duration_hr / 24);
+            const hours = Math.floor(duration_hr % 24);
+            const minutes = Math.floor(((duration_hr % 24) % 1) * 60);
+
+            const popupContent = `
+            <div class="txt txt-16">
+            <span class="txt-bold">Estimated Median Duration:</span> ${days} days ${hours} hours ${minutes} minutes<br>
+            <span class="txt-bold">Estimated Median Distance:</span> ${distance_km.toFixed(2)} km<br>
+            <span class="txt-bold">Estimated Average Speed:</span> ${average_speed_km_h.toFixed(2)} km/h
+            </div>
+        `;
+
+            popup.setLatLng(e.latlng)
+                .setContent(popupContent)
+                .openOn(map);
+        }
+
+        function handleMouseOut() {
+            map.closePopup();
+        }
+    }
+
+    async function getRouteData(startPortId, endPortId) {
+        const backendUrl = 'https://qqezpzkio3.execute-api.eu-central-1.amazonaws.com/prod/route-planner/median-route'; // Replace with your actual backend endpoint
+
+        // Construct the URL with query parameters
+        const queryParams = `?startPortId=${startPortId}&destinationPortId=${endPortId}`;
+        const routeUrl = backendUrl + queryParams;
+
+        const response = await fetch(routeUrl);
+
+        if (response.status === 204) {
+            // No route available (HTTP 204)
+            alert('No route available for the selected ports.');
+            return null;
+        } else if (response.status >= 300) {
+            // Something went wrong (HTTP 300+)
+            alert('An error occurred while fetching the route data.');
+            return null;
+        } else {
+            // Valid response, update the map
+            const geojsonData = await response.json();
+            return geojsonData;
+        }
+    }
+
+    // Initialize Leaflet map
+    let map = L.map('techMap').setView([0, 20], 2);
+    // Default center coordinates and zoom level
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 1,
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map); // Replace with your desired tile layer
+                                                    
+    const updateButton = document.getElementById('updateRoute');
+
+    // Event listener for the button click
+    updateButton.addEventListener('click', async () => {
+        // Get the start and end port IDs from the input fields
+        const startPortId = document.getElementById('startPort').value;
+        const endPortId = document.getElementById('endPort').value;
+
+        // Check if both input fields are filled
+        if (!startPortId || !endPortId) {
+            alert('Please enter both start and end port IDs.');
+            return;
+        }
+        $(updateButton).addClass('loading')
+        const geojsonData = await getRouteData(startPortId, endPortId);
+
+        if (geojsonData) {
+            $(updateButton).removeClass('loading')
+            plotRoute(map, geojsonData);
+        }
+    });
+
+    function createPortItem(item, template) {
+        let html = template.clone()
+        html.find('.port-item-id').text(item.id)
+        html.find('.port-item-name').text(convertToTitleCase(item.portName))
+        return html;
+    }
+    function updatePortList() {
+        let template = $('.port-item').eq(0).clone();
+        $('.input-drop-inner').html('');
+        let portList = portData.ports
+        
+        portList.forEach((el) => {
+            createPortItem(el, template).appendTo('.input-drop-inner')
+        })
+
+        $('.port-item').on('click', function(e) {
+            e.preventDefault();
+            let name = $(this).find('.port-item-name').text();
+            let id = $(this).find('.port-item-id').text();
+            $(this).closest('.input-wrap').find('.input-field').val(name)
+            $(this).closest('.input-wrap').find('.input-hidden').val(id)
+
+            if ($(this).closest('.input-wrap').hasClass('input-wrap-start')) {
+                console.log('start')
+                $('.input-wrap-end .port-item').removeClass('hidden-dup')
+                $('.input-wrap-end .port-item').each((idx, el) => {
+                    if ($(el).find('.port-item-id').text() === id) {
+                        $(el).addClass('hidden-dup')
+                    }
+                })
+            } else {
+                console.log('end')
+                $('.input-wrap-start .port-item').removeClass('hidden-dup')
+                $('.input-wrap-start .port-item').each((idx, el) => {
+                    if ($(el).find('.port-item-id').text() === id) {
+                        $(el).addClass('hidden-dup')
+                    }
+                })
+            }
+        })
+    }
+    updatePortList()
+
+    $('.tech-map .input-field').on('keyup', function(e) {
+        let itemList = $(this).closest('.input-wrap').find('.port-item');
+        let value = $(this).val().toLowerCase().trim();
+        if (value == '') {
+            itemList.removeClass('hidden-srch')
+            itemList.each((el) => console.log(el))
+        } else {
+            itemList.each((idx, el) => {       
+                let compVal = $(el).find('.port-item-name').text()
+                if (compVal.toLowerCase().includes(value)) {
+                    $(el).removeClass('hidden-srch');
+                    $(el).slideDown()
+                } else {
+                    $(el).addClass('hidden-srch');
+                    $(el).slideUp()
+                }
+            })
+            if ($(this).closest('.input-wrap').find('.port-item:not(".hidden-srch"):not(".hidden-dup")').length == 0) {
+                $(this).closest('.input-wrap').find('.port-item-empty-txt').slideDown()
+            } else {
+                $(this).closest('.input-wrap').find('.port-item-empty-txt').slideUp()
+            }
+        }
+    })
+    $('.tech-map .input-field').on('focus', function(e) {
+        $(this).parent('.input-wrap').find('.input-drop').slideDown()
+    })
+    $('.tech-map .input-field').on('blur', function(e) {
+        $(this).parent('.input-wrap').find('.input-drop').slideUp()
+        $(this).closest('.input-wrap').find('.port-item').removeClass('hidden-srch')
+    })
+    
+}
 
 function techDemo() {
     let techWebGL = new techDemoWebGL();
@@ -215,6 +423,7 @@ const techScript = {
             techHero()
             techVideo()
             techDemo()
+            techMap()
         }, 100);
     },
     beforeLeave() {
