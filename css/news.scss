@@ -139,6 +139,7 @@
     &__load {
         margin-top: 10rem;
         margin-bottom: 11rem;
+        display: inline-block;
         .btn {
             transition: opacity $dur-default ease;
             &.disable {

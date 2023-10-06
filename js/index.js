@@ -1,3 +1,5 @@
+import 'swiper/swiper-bundle.min.css'
+import 'leaflet/dist/leaflet.css'
 import $ from "jquery";
 import lenis from './vendors/lenis';
 import barba from '@barba/core';

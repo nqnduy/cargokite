@@ -8,7 +8,7 @@ export default class PopupComponent extends HTMLElement {
             <div class="popup__main">
                 <form action="#" class="popup__main-form">
                     <div class="popup__main-head">
-                        <h3 class="heading h4 popup__main-head-title">
+                        <h3 class="heading h4 popup__main-head-title heading-f-lh">
                             Get in touch with us!
                         </h3>
                         <div class="txt txt-18 popup__main-head-txt">

@@ -16,6 +16,7 @@ $cl-orange: #ff471d;
 $cl-dark-orange: #EB2C00;
 $cl-desc: #9A9A9A;
 $cl-bg: #EAEEF0;
+$cl-bg-grey: #f5f5f5;
 $cl-dark-bg: #212121;
 $cl-disable: #DBDBDB;
 $dur-default: 400ms;
@@ -51,6 +52,16 @@ a {
     text-decoration: none;
     color: inherit;
     display: inline-block;
+}
+button, input, textarea {
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    font-family: 'HelveticaNowDisplay';
+}
+button {
+    cursor: pointer;
 }
 .hover-un, .priv-hero__main-richtext a {
     position: relative;

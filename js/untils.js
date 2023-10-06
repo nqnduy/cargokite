@@ -101,4 +101,26 @@ function createToc(lenis, richtextEl, tocEl, htmlTemplate) {
     //updateToc();
 }
 
-export { nestedLinesSplit, createToc }
+const lerp = (a,b,t = 0.08) => {
+    return a + (b - a) * t;
+}
+const isTouchDevice = () => {
+    return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0));
+}
+let pointer = {x: 0, y: 0};
+$(window).on('pointermove', function(e) {
+    pointer.x = e.clientX;
+    pointer.y = e.clientY;
+})
+const pointerCurr = () => {
+    return pointer
+}
+const xSetter = (el) => gsap.quickSetter(el, 'x', `px`);
+const ySetter = (el) => gsap.quickSetter(el, 'y', `px`);
+
+const xGetter = (el) => gsap.getProperty(el, 'x')
+const yGetter = (el) => gsap.getProperty(el, 'y')
+
+export { nestedLinesSplit, createToc, lerp, isTouchDevice, pointerCurr, xSetter, ySetter, xGetter, yGetter }
