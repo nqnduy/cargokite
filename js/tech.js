@@ -105,8 +105,17 @@ class techDemoWebGL {
                 color: new THREE.Color('#2B2C2F'),
                 envMapIntensity: 3,
                 roughness: .70,
-                metalness: 1
+                metalness: 1,
+                transparent: true
             })
+            let darkContMat = new THREE.MeshStandardMaterial({
+                color: new THREE.Color('#2B2C2F'),
+                envMapIntensity: 3,
+                roughness: .70,
+                metalness: 1,
+                transparent: true
+            })
+
             this.model.traverse((obj) => {
                 if (obj instanceof THREE.Mesh) {
                     if (obj.name === 'kite') {
@@ -117,6 +126,8 @@ class techDemoWebGL {
                     } else if (obj.name == 'Propeller2') {
                         this.prop2 = obj
                         obj.material = darkMat;
+                    } else if (obj.name.includes('container')) {
+                        obj.material = darkContMat;
                     } else {
                         obj.material = darkMat;
                     }
@@ -162,7 +173,6 @@ class techDemoWebGL {
                 start: 'top top',
                 end: 'bottom bottom',
                 scrub: true,
-                markers: true,
                 onUpdate: () => {
                     this.camera.lookAt( this.lookAtTarget );
                 }
@@ -200,10 +210,15 @@ class techDemoWebGL {
             z: 0.056603,
             duration: 1
         }, '<=0')
+        console.log(this.containerGrp)
         this.containerGrp.forEach((el, idx) => {
             tl.to(el.position, {
-                y: `${7 + 2 * (Math.random() - .5) * 2}`,
+                y: `${10 + 3 * (Math.random() - .5) * 2}`,
                 duration: 1,
+            }, '<=0')
+            .to(el.material, {
+                opacity: 0,
+                duration: 1
             }, '<=0')
         })
         tl.to('.tech-demo__main-inner .tech-demo__main-item', {
@@ -426,7 +441,7 @@ function techMap() {
 
         if (response.status === 204) {
             // No route available (HTTP 204)
-            alert('No route available for the selected ports.');
+            alert('No route available for the selected ports yet.');
             return null;
         } else if (response.status >= 300) {
             // Something went wrong (HTTP 300+)
