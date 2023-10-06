@@ -76,7 +76,7 @@ class techDemoWebGL {
         this.renderer.setPixelRatio(window.devicePixelRatio);
     }
     createMesh() {
-        let url = new URL('../assets/cargo-demo-3.gltf', import.meta.url)
+        let url = new URL('../assets/cargo-demo-cont.gltf', import.meta.url)
         url = "" + url;
         this.loader = new GLTFLoader();
         this.dracoLoader = new DRACOLoader();
@@ -100,7 +100,7 @@ class techDemoWebGL {
             let darkMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
                 envMapIntensity: 4,
-                roughness: .65,
+                roughness: .75,
                 metalness: 0
             })
             this.model.traverse((obj) => {
@@ -117,7 +117,13 @@ class techDemoWebGL {
                         obj.material = darkMat;
                     }
                 }
+                if (obj.name === 'container-grp') {
+                    this.containerGrp = obj.children;
+                }
             })
+            const light = new THREE.PointLight(new THREE.Color('white'), 10, 10, 2)
+            light.position.set(10, 10, 10)
+            this.scene.add(light)
             this.scene.add(this.model)
             this.animate()
             this.scrollAnimate()
@@ -151,6 +157,7 @@ class techDemoWebGL {
                 start: 'top top',
                 end: 'bottom bottom',
                 scrub: true,
+                markers: true,
                 onUpdate: () => {
                     this.camera.lookAt( this.lookAtTarget );
                 }
@@ -172,18 +179,33 @@ class techDemoWebGL {
             z: -0.014547,
             duration: 1
         }, '<=0')
+        .to('.tech-demo__main-inner .tech-demo__main-item', {
+            yPercent: -100,
+            duration: .75
+        }, '<=.25')
         .to(this.camera.position, {
             x: -36.182,
             y: 28.6084,
             z: 52.1051,
-            duration: 1
+            duration: 1.25
         })
         .to(this.lookAtTarget, {
             x: 11.3448,
             y: 6.2503,
             z: 0.056603,
-            duration: 1
+            duration: 1.25
         }, '<=0')
+        this.containerGrp.forEach((el, idx) => {
+            tl.to(el.position, {
+                y: `${7 + 2 * (Math.random() - .5) * 2}`,
+                duration: 1.25,
+            }, '<=0')
+        })
+        tl.to('.tech-demo__main-inner .tech-demo__main-item', {
+            yPercent: -200,
+            duration: .75
+        }, '<=.25')
+
     }
     init() {
         this.setupCamera()
@@ -230,7 +252,6 @@ function techVideo() {
         onComplete: () => {
             techVidLabel.revert()
         },
-        delay: 1.2
     })
     tl
     .from(techVidLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
@@ -416,7 +437,7 @@ function techMap() {
     // Initialize Leaflet map
     const key = 'foURK5elDM5gPh7BhbIO';
     map = L.map('techMap').setView([0, 20], 2);
-
+    map.scrollWheelZoom.disable()
     // Default center coordinates and zoom level
     L.tileLayer(`https://api.maptiler.com/maps/dataviz-dark/{z}/{x}/{y}.png?key=${key}`, {
         minZoom: 1,

@@ -1,8 +1,6 @@
 import $ from "jquery";
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit } from './untils';
 
 let typeOpts = {
     lines: { type: 'lines', linesClass: 'g-lines'},
