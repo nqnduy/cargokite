@@ -104,6 +104,9 @@
             margin-bottom: 0;
         }
     }
+    &-f-lh {
+        line-height: 1em !important;
+    }
 }
 @include md {
     .heading {

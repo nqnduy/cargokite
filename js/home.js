@@ -385,8 +385,8 @@ function homeTech() {
     let tlShip = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-tech__ship',
-            start: 'top bottom+=25%',
-            end: 'bottom top-=25%',
+            start: 'top bottom+=35%',
+            end: 'bottom top-=35%',
             scrub: .4,
         }
     })

@@ -305,7 +305,6 @@
     position: relative;
     z-index: 3;
     padding-top: 15rem;
-    min-height: 100vh;
     &__title {
         grid-column: 2/10;
         max-width: 49.8rem;
@@ -357,6 +356,9 @@
                 }
             }
             &-info {
+                display: none;
+            }
+            &-close {
                 display: none;
             }
         }
@@ -685,11 +687,16 @@
                     background-color: $cl-white;
                 }
                 &-close {
+                    display: flex;
+                    color: rgba($cl-body, 1);
                     position: absolute;
                     z-index: 3;
-                    top: 0;
-                    right: 0;
+                    top: 2rem;
+                    right: 2rem;
                     padding: 2rem;
+                    margin: -2rem;
+                    width: 6rem;
+                    height: 6rem;
                 }
                 &-item {
                     position: relative;

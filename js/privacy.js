@@ -29,7 +29,7 @@ function privToc() {
     createToc(lenis, '.priv-hero__main-richtext','.priv-hero__nav-toc', html)
 }
 function removeRichtextContent(data) {
-    console.log(data)
+    $(data.current.container).find('.priv-hero__main-richtext > *').remove()
 }
 
 const privacyScript = {

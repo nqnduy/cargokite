@@ -13,7 +13,7 @@ export default class FooterComponent extends HTMLElement {
                             <path d="M53.3333 46.667L65 58.3337" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <div class="heading h4 footer__form-title">
+                    <div class="heading h4 footer__form-title heading-f-lh">
                         Subscribe Newsletters
                     </div>
                     <div class="txt txt-16 footer__form-sub">

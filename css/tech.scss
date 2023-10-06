@@ -51,8 +51,46 @@
         &-inner {
             width: calc(28.5714% - 1.42857rem);
             margin-right: calc(-7.14286% - .142857rem);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
+    &__play-btn {
+        position: absolute;
+        width: 12rem;
+        height: 12rem;
+        &-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba($cl-white, .1);
+            border-radius: 50%;
+            border: solid 1px rgba($cl-white, .1);
+            color: rgba($cl-white, 1);
+            backdrop-filter: blur(3px);
+            transition: all $dur-default ease;
+            svg {
+                transition: transform $dur-default ease;
+            }
+        }
+        &:hover {
+            .tech-vid__play-btn-inner {
+                background-color: rgba($cl-white, .2);
+                transform: scale(.9);
+                svg {
+                    transform: scale(1.2);
+                }
+            }
+            
+        }
+        
+    }
+
     &.end-state {
         .tech-vid {
             &__main {
@@ -143,7 +181,7 @@
     }
     &__map {
         grid-column: 1/9;
-        background-color: rgba(#1B1B1D, .1);
+        background-color: rgba(#141414, 1);
         position: relative;
         z-index: 1;
         &-inner {
@@ -155,9 +193,46 @@
         path.leaflet-interactive {
             stroke: rgba($cl-orange, 1);
         }
+        .leaflet-container {
+            background-color: rgba(#141414, 1);
+        }
+        
+        .leaflet-control-container {
+            .leaflet-top.leaflet-left {
+                top: 0;
+                right: 0;
+                left: auto;
+                .leaflet-control-zoom.leaflet-bar.leaflet-control {
+                    margin-left: 0;
+                    margin-right: 2rem;
+                    margin-top: 2rem;
+                    border-radius: .4rem;
+                    border: none;
+                    overflow: hidden;
+                    .leaflet-control-zoom-in, .leaflet-control-zoom-out {
+                        width: 3.2rem;
+                        height: 3.2rem;
+                    }
+                }
+            }
+        }
         .leaflet-popup-content {
+            min-width: 23rem;
             padding: 1.4rem 2rem;
             margin: 0;
+            &-wrapper {
+                border-radius: 0;
+                background: rgba($cl-white, 1);
+                color: rgba($cl-txt, 1);
+            }
+            &-inner {
+                display: flex;
+                flex-direction: column;
+                row-gap: .6rem;
+            }
+        }
+        .leaflet-popup-tip {
+            background: rgba($cl-white, 1);
         }
     }
     &__head {

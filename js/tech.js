@@ -2,14 +2,14 @@ import $ from "jquery";
 import * as THREE from 'three';
 import * as L from 'leaflet';
 import portData from '../data/port.json'
+import lenis from './vendors/lenis';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from "gsap";
 import Flip from "./vendors/Flip";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit } from './untils';
+import { lerp, isTouchDevice, xGetter, yGetter, xSetter, ySetter, pointerCurr } from './untils';
 
 gsap.registerPlugin(ScrollTrigger, Flip); 
 
@@ -19,6 +19,18 @@ function convertToTitleCase(str) {
     }
     return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
 }
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+let typeOpts = {
+    lines: { type: 'lines', linesClass: 'g-lines'},
+    words: { type: 'words,lines', linesClass: 'g-lines'},
+    chars: { type: 'chars,words,lines', linesClass: 'g-lines'}
+};
+let gOpts = {
+    ease: 'power2.easeOut'
+}
+
+let map;
 class techDemoWebGL {
     constructor() {
         this.container = $('.tech-demo__canvas-inner');
@@ -82,13 +94,13 @@ class techDemoWebGL {
             let orangeMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#FF471D'),
                 envMapIntensity: 4,
-                roughness: .35,
+                roughness: .45,
                 metalness: 0
             })
             let darkMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
                 envMapIntensity: 4,
-                roughness: .6,
+                roughness: .65,
                 metalness: 0
             })
             this.model.traverse((obj) => {
@@ -185,9 +197,46 @@ class techDemoWebGL {
 }
 
 function techHero() {
+    const techHeroLabel = new SplitText('.tech-hero__label', typeOpts.chars);
+    const techHeroTitle = new SplitText('.tech-hero__title', typeOpts.words);
+    const techHeroSub = new SplitText('.tech-hero__sub', typeOpts.words);
 
+    let tl = gsap.timeline({
+        defaults: {
+            ease: gOpts.ease
+        },
+        onComplete: () => {
+            techHeroTitle.revert();
+            new SplitText('.tech-hero__title', typeOpts.lines);
+            techHeroLabel.revert();
+        },
+        delay: 1.2
+    })
+    tl
+    .from(techHeroLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
+    .from(techHeroTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '<=.2')
+    .from(techHeroSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 }
 function techVideo() {
+    const techVidLabel = new SplitText('.tech-vid__label', typeOpts.chars);
+    let tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.tech-vid__label',
+            start: 'top top+=75%',
+        },
+        defaults: {
+            ease: gOpts.ease
+        },
+        onComplete: () => {
+            techVidLabel.revert()
+        },
+        delay: 1.2
+    })
+    tl
+    .from(techVidLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
+    .from('.tech-vid__main-inner', {yPercent: 60, autoAlpha: 0, duration: .6}, '<=.2')
+}
+function techVideoInteraction() {
     const container = $('.tech-vid')
     const item = $('.tech-vid__main-inner');
     container.addClass('end-state')
@@ -201,11 +250,67 @@ function techVideo() {
             end: 'top -=150%',
             scrub: true,
             pin: true,
-            // pinSpacing: true
         }
     })
+
+    let playBtn = '.tech-vid__play-btn'
+    $(playBtn).on('click', function(e) {
+        e.preventDefault();
+        let target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height();
+        lenis.scrollTo(target)
+    })
+    if ($(window).width() > 991) {
+        if (!isTouchDevice()) {
+            function moveCursor() {
+                let iconsX = xGetter(playBtn);
+                let iconsY = yGetter(playBtn);
+                let vidBoundary = $('.tech-vid__main-inner').get(0);
+                if ($('.tech-vid__main-inner').length) {
+                    if ($('.tech-vid__main-inner:hover').length) {
+                        xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidBoundary.getBoundingClientRect().left - vidBoundary.getBoundingClientRect().width / 2), 0.01);
+                        ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidBoundary.getBoundingClientRect().top - vidBoundary.getBoundingClientRect().height / 2), 0.01);
+                    } else {
+                        xSetter(playBtn)(lerp(iconsX, 0), 0.01);
+                        ySetter(playBtn)(lerp(iconsY, 0), 0.01);
+                    }
+                }
+                requestAnimationFrame(moveCursor)
+            }
+            requestAnimationFrame(moveCursor)
+        }
+    }
+}
+function removeTechMap() {
+    map.remove();
 }
 
+function techDemo() {
+    let techWebGL = new techDemoWebGL();
+    techWebGL.init()
+    techWebGL.reset()
+
+    let techDemoItems = $('.tech-demo__main-item')
+    requestAnimationFrame(() => {
+        techDemoItems.each((idx, el) => {
+            const techDemoItemTitle = new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.words)
+            const techDemoItemSub = new SplitText(el.querySelector('.tech-demo__main-item-richtext'), typeOpts.words)
+            const techDemoItemTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: $(el).find('.tech-demo__main-item-title'),
+                    start: 'top top+=75%',
+                },
+                onComplete: () => {
+                    techDemoItemTitle.revert()
+                    new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.lines)
+                    techDemoItemSub.revert()
+                }
+            })
+            techDemoItemTl
+            .from(techDemoItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '0')
+            .from(techDemoItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+        })
+    })
+}
 function techMap() {
     function reverseLineStringCoordinates(lineString) {
         const reversedCoordinates = lineString.coordinates.map(coord => [coord[1], coord[0]]);
@@ -217,7 +322,6 @@ function techMap() {
             },
         };
     }
-
     let routeLayer;
 
     // Plot the route on the map
@@ -259,10 +363,19 @@ function techMap() {
             const minutes = Math.floor(((duration_hr % 24) % 1) * 60);
 
             const popupContent = `
-            <div class="txt txt-16">
-            <span class="txt-bold">Estimated Median Duration:</span> ${days} days ${hours} hours ${minutes} minutes<br>
-            <span class="txt-bold">Estimated Median Distance:</span> ${distance_km.toFixed(2)} km<br>
-            <span class="txt-bold">Estimated Average Speed:</span> ${average_speed_km_h.toFixed(2)} km/h
+            <div class="txt txt-14 leaflet-popup-content-inner">
+            <div class="route-info-item">
+            Estimated Median Duration:<br>
+            <span class="txt-bold">${days} days ${hours} hours ${minutes} minutes</span>
+            </div>
+            <div class="route-info-item">
+            Estimated Median Distance:<br>
+            <span class="txt-bold">${distance_km.toFixed(2)} km</span>
+            </div>
+            <div class="route-info-item">
+            Estimated Average Speed:<br>
+            <span class="txt-bold">${average_speed_km_h.toFixed(2)} km/h</span>
+            </div
             </div>
         `;
 
@@ -301,13 +414,16 @@ function techMap() {
     }
 
     // Initialize Leaflet map
-    let map = L.map('techMap').setView([0, 20], 2);
+    const key = 'foURK5elDM5gPh7BhbIO';
+    map = L.map('techMap').setView([0, 20], 2);
+
     // Default center coordinates and zoom level
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer(`https://api.maptiler.com/maps/dataviz-dark/{z}/{x}/{y}.png?key=${key}`, {
         minZoom: 1,
-        maxZoom: 19,
+        maxZoom: 17,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map); // Replace with your desired tile layer
+
                                                     
     const updateButton = document.getElementById('updateRoute');
 
@@ -374,7 +490,9 @@ function techMap() {
     }
     updatePortList()
 
-    $('.tech-map .input-field').on('keyup', function(e) {
+    let techMapInput = $('.tech-map .input-field');
+
+    techMapInput.on('keyup', function(e) {
         let itemList = $(this).closest('.input-wrap').find('.port-item');
         let value = $(this).val().toLowerCase().trim();
         if (value == '') {
@@ -398,20 +516,66 @@ function techMap() {
             }
         }
     })
-    $('.tech-map .input-field').on('focus', function(e) {
+    techMapInput.on('focus', function(e) {
         $(this).parent('.input-wrap').find('.input-drop').slideDown()
     })
-    $('.tech-map .input-field').on('blur', function(e) {
+    techMapInput.on('blur', function(e) {
         $(this).parent('.input-wrap').find('.input-drop').slideUp()
         $(this).closest('.input-wrap').find('.port-item').removeClass('hidden-srch')
     })
     
 }
+function techMapInteraction() {
+    const techMapTitle = new SplitText('.tech-map__title', typeOpts.words)
+    const techMapSub = new SplitText('.tech-map__sub', typeOpts.words)
+    const techMapTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.tech-map__head',
+            start: 'top top+=75%',
+        },
+        onComplete: () => {
+            techMapTitle.revert()
+            new SplitText('.tech-map__title', typeOpts.lines)
+            techMapSub.revert()
+        }
+    })
+    techMapTl
+    .from(techMapTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
+    .from(techMapSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+    .from('.tech-map__form > *', {yPercent: 25, autoAlpha: 0, duration: .6, stagger: .2, clearProps: 'all'}, '>=-.2')
+}
+function techControl() {
+    const techControlTitle = new SplitText('.tech-control__title', typeOpts.words)
+    const techControlSub = new SplitText('.tech-control__richtext', typeOpts.words)
+    const techControlTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.tech-control__head',
+            start: 'top top+=65%',
+        },
+        onComplete: () => {
+            techControlTitle.revert()
+            new SplitText('.tech-control__title', typeOpts.lines)
+            techControlSub.revert()
+        }
+    })
+    techControlTl
+    .from(techControlTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
+    .from(techControlSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
-function techDemo() {
-    let techWebGL = new techDemoWebGL();
-    techWebGL.init()
-    techWebGL.reset()
+    const tlScrub = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.tech-control__img',
+            start: 'top bottom',
+            endTrigger: '.footer',
+            end: 'bottom bottom',
+            scrub: true,
+        }
+    })
+
+    requestAnimationFrame(() => {
+        tlScrub
+        .from('.tech-control__img', {yPercent: 35, ease: 'none'})
+    })
 }
 
 const techScript = {
@@ -424,10 +588,14 @@ const techScript = {
             techVideo()
             techDemo()
             techMap()
+            techVideoInteraction()
+            techMapInteraction()
+            techControl()
         }, 100);
     },
     beforeLeave() {
         console.log('leave tech')
+        removeTechMap()
     }
 }
 
