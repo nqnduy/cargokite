@@ -30,6 +30,7 @@
     "@barba/core": "^2.9.7",
     "@barba/prefetch": "^2.1.10",
     "@studio-freight/lenis": "^1.0.23",
+    "axios": "^1.5.1",
     "gsap": "^3.12.2",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
