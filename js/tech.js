@@ -5,6 +5,7 @@ import portData from '../data/port.json'
 import lenis from './vendors/lenis';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+
 import gsap from "gsap";
 import Flip from "./vendors/Flip";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -37,12 +38,12 @@ class techDemoWebGL {
         this.scene = new THREE.Scene();
         this.hdri = new THREE.CubeTextureLoader()
         .load([
-            new URL('../assets/map/px.png', import.meta.url),
-            new URL('../assets/map/nx.png', import.meta.url),
-            new URL('../assets/map/py.png', import.meta.url),
-            new URL('../assets/map/ny.png', import.meta.url),
-            new URL('../assets/map/pz.png', import.meta.url),
-            new URL('../assets/map/nz.png', import.meta.url)
+            new URL('../assets/map/high/px.png', import.meta.url),
+            new URL('../assets/map/high/nx.png', import.meta.url),
+            new URL('../assets/map/high/py.png', import.meta.url),
+            new URL('../assets/map/high/ny.png', import.meta.url),
+            new URL('../assets/map/high/pz.png', import.meta.url),
+            new URL('../assets/map/high/nz.png', import.meta.url)
         ])
     }
 
@@ -89,19 +90,22 @@ class techDemoWebGL {
         (glb) => {
             console.log(glb)
             this.model = glb.scene;
+            //this.scene.add( new THREE.AmbientLight( 0xffffff ) );
+            //this.scene.add( new THREE.DirectionalLight( 0xffffff, 4 ) );
             this.scene.environment = this.hdri;
-            //this.scene.fog = new THREE.Fog( 0x212121, 0, 120 );
+            //this.scene.background = this.hdri;
+            //this.scene.fog = new THREE.Fog( 0x212121, 10, 120 );
             let orangeMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#FF471D'),
                 envMapIntensity: 4,
-                roughness: .45,
+                roughness: .35,
                 metalness: 0
             })
             let darkMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
-                envMapIntensity: 4,
-                roughness: .75,
-                metalness: 0
+                envMapIntensity: 3,
+                roughness: .70,
+                metalness: 1
             })
             this.model.traverse((obj) => {
                 if (obj instanceof THREE.Mesh) {
@@ -146,6 +150,7 @@ class techDemoWebGL {
         } else {            
             this.prop1.rotation.x += 0.05
             this.prop2.rotation.x += 0.05
+            //this.composer.render()
             this.renderer.render(this.scene, this.camera)
         }
         requestAnimationFrame(this.animate.bind(this))
@@ -181,30 +186,30 @@ class techDemoWebGL {
         }, '<=0')
         .to('.tech-demo__main-inner .tech-demo__main-item', {
             yPercent: -100,
-            duration: .75
-        }, '<=.25')
+            duration: 1
+        }, '<=0')
         .to(this.camera.position, {
             x: -36.182,
             y: 28.6084,
             z: 52.1051,
-            duration: 1.25
+            duration: 1
         })
         .to(this.lookAtTarget, {
             x: 11.3448,
             y: 6.2503,
             z: 0.056603,
-            duration: 1.25
+            duration: 1
         }, '<=0')
         this.containerGrp.forEach((el, idx) => {
             tl.to(el.position, {
                 y: `${7 + 2 * (Math.random() - .5) * 2}`,
-                duration: 1.25,
+                duration: 1,
             }, '<=0')
         })
         tl.to('.tech-demo__main-inner .tech-demo__main-item', {
             yPercent: -200,
-            duration: .75
-        }, '<=.25')
+            duration: 1
+        }, '<=0')
 
     }
     init() {
