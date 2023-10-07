@@ -12,7 +12,9 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { lerp, isTouchDevice, xGetter, yGetter, xSetter, ySetter, pointerCurr } from './untils';
 
-gsap.registerPlugin(ScrollTrigger, Flip); 
+import { viewport, viewportBreak } from "./common/helpers/viewport";
+
+gsap.registerPlugin(ScrollTrigger, Flip);
 
 function convertToTitleCase(str) {
     if (!str) {
@@ -58,14 +60,22 @@ class techDemoWebGL {
         }
     }
     setupCamera() {
-        //Resize 
+        //Resize
         window.addEventListener('resize', this.onWindowResize.bind(this))
         //camera
         let fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
         fov = 32.26880414280885;
         this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 10000);
-        this.camera.position.set(74.63897705078125, 16.265151023864746, -51.48991394042969)
-        this.lookAtTarget = new THREE.Vector3(49.7516, 24.9304, -1.35464)
+        this.camera.position.set(
+            viewportBreak({ md: 74.63897705078125, sm: 85.63897705078125 }),
+            viewportBreak({ md: 16.265151023864746, sm: 10.265151023864746 }),
+            viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 })
+        )
+        this.lookAtTarget = new THREE.Vector3(
+            viewportBreak({ md: 49.7516, sm: 45.7516 }),
+            viewportBreak({ md: 24.93049, sm: 21.9304 }),
+            -1.35464
+        )
         this.camera.lookAt(this.lookAtTarget)
 
         //renderer
@@ -81,12 +91,12 @@ class techDemoWebGL {
         url = "" + url;
         this.loader = new GLTFLoader();
         this.dracoLoader = new DRACOLoader();
-        
+
         this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
         this.dracoLoader.setDecoderConfig({type: 'js'})
         this.loader.setDRACOLoader( this.dracoLoader )
-        
-        this.loader.load(url, 
+
+        this.loader.load(url,
         (glb) => {
             console.log(glb)
             this.model = glb.scene;
@@ -158,7 +168,7 @@ class techDemoWebGL {
     animate() {
         if (!$('[data-barba-namespace="tech"]').length) {
 
-        } else {            
+        } else {
             this.prop1.rotation.x += 0.05
             this.prop2.rotation.x += 0.05
             //this.composer.render()
@@ -281,14 +291,14 @@ function techVideoInteraction() {
     const container = $('.tech-vid')
     const item = $('.tech-vid__main-inner');
     container.addClass('end-state')
-    let state = Flip.getState(item)
+    let state = Flip.getState(item);
     container.removeClass('end-state')
     Flip.to(state, {
         simple: true,
         scrollTrigger: {
             trigger: '.tech-vid__main',
             start: `top top+=${($(window).height() - $('.tech-vid__holder').height())  / 2}`,
-            end: 'top -=150%',
+            end: `top -=${viewportBreak({ md: 150, sm: 40 })}%`,
             scrub: true,
             pin: true,
         }
@@ -465,7 +475,7 @@ function techMap() {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map); // Replace with your desired tile layer
 
-                                                    
+
     const updateButton = document.getElementById('updateRoute');
 
     // Event listener for the button click
@@ -498,7 +508,7 @@ function techMap() {
         let template = $('.port-item').eq(0).clone();
         $('.input-drop-inner').html('');
         let portList = portData.ports
-        
+
         portList.forEach((el) => {
             createPortItem(el, template).appendTo('.input-drop-inner')
         })
@@ -540,7 +550,7 @@ function techMap() {
             itemList.removeClass('hidden-srch')
             itemList.each((el) => console.log(el))
         } else {
-            itemList.each((idx, el) => {       
+            itemList.each((idx, el) => {
                 let compVal = $(el).find('.port-item-name').text()
                 if (compVal.toLowerCase().includes(value)) {
                     $(el).removeClass('hidden-srch');
@@ -564,7 +574,7 @@ function techMap() {
         $(this).parent('.input-wrap').find('.input-drop').slideUp()
         $(this).closest('.input-wrap').find('.port-item').removeClass('hidden-srch')
     })
-    
+
 }
 function techMapInteraction() {
     const techMapTitle = new SplitText('.tech-map__title', typeOpts.words)
@@ -603,20 +613,22 @@ function techControl() {
     .from(techControlTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
     .from(techControlSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
-    const tlScrub = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.tech-control__img',
-            start: 'top bottom',
-            endTrigger: '.footer',
-            end: 'bottom bottom',
-            scrub: true,
-        }
-    })
+    // if (viewport.width > 767) {
+        const tlScrub = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.tech-control__img',
+                start: 'top bottom',
+                endTrigger: '.footer',
+                end: 'bottom bottom',
+                scrub: true,
+            }
+        })
 
-    requestAnimationFrame(() => {
-        tlScrub
-        .from('.tech-control__img', {yPercent: 35, ease: 'none'})
-    })
+        requestAnimationFrame(() => {
+            tlScrub
+            .from('.tech-control__img', {yPercent: 35, ease: 'none'})
+        })
+    // }
 }
 
 const techScript = {
@@ -629,7 +641,9 @@ const techScript = {
             techVideo()
             techDemo()
             techMap()
-            techVideoInteraction()
+            if (viewport.width > 767) {
+                techVideoInteraction();
+            }
             techMapInteraction()
             techControl()
         }, 100);
