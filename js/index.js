@@ -7,6 +7,7 @@ import barbaPrefetch from '@barba/prefetch';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
+import { initCookie, cookieConsent, cookieAccepted } from './components/cookieconsent-init';
 
 import homeScript from './home';
 import aboutScript from './about';
@@ -18,10 +19,11 @@ const scripts = () => {
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
     }
-    
+    initCookie();
+
     barba.use(barbaPrefetch);
     gsap.registerPlugin(ScrollTrigger, SplitText);
-    
+
     function debounce(func, delay = 100){
         let timer;
         return function(event) {
@@ -29,7 +31,7 @@ const scripts = () => {
             timer = setTimeout(func, delay, event);
         };
     }
-    
+
     function refreshOnBreakpoint() {
         let initialViewportWidth = window.innerWidth || document.documentElement.clientWidth;
         let newViewportWidth;
@@ -71,7 +73,7 @@ const scripts = () => {
         }
     }
     refreshOnBreakpoint();
-    
+
     const header = $('.header')
     const hamburger = $('.header__toggle');
     lenis.on('scroll', function (inst) {
@@ -88,7 +90,7 @@ const scripts = () => {
             header.removeClass('on-scroll on-hide')
         };
     })
-    
+
     hamburger.on('click', function (e) {
         e.preventDefault();
         if (header.hasClass('open-nav')) {
@@ -116,7 +118,7 @@ const scripts = () => {
             header.addClass('open-nav force');
         }
     })
-    
+
     function transitionOnce() {
         resetScroll()
         gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
@@ -127,7 +129,7 @@ const scripts = () => {
         }, ease: "expo.in"}, 0)
         .to('.trans__logo', {rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in'}, '<=.4')
     }
-    
+
     function transitionLeave(data) {
         console.log('leaveTrans')
         gsap.set(data.next.container, {display: 'none'})
@@ -153,27 +155,32 @@ const scripts = () => {
             each: '.1',
         }, ease: "expo.out"}, 0)
         .to('.trans__logo', {rotateZ: '0deg', autoAlpha: 1, duration: .6, yPercent: 0}, '>=-.8.5')
-    
+
         return tl
     }
-    
+
     function transitionEnter(data) {
         resetScroll()
         console.log('enterTrans')
         gsap.set(data.current.container, {opacity: 0, display: 'none'})
-    
+
         gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
         let tl = gsap.timeline({
             delay: .5,
+            onComplete: () => {
+                if (!cookieAccepted) {
+                    cookieConsent?.show(1);
+                }
+            }
         })
         tl
         .to('.trans__item', {scaleY: 0, duration: 1, stagger: {
             each: '.1',
         }, ease: "expo.in"}, 0)
-        .to('.trans__logo', {rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in'}, '<=.4')
+            .to('.trans__logo', { rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in' }, '<=.4')
         return tl
     }
-    
+
     function addNavActiveLink(data) {
         header.removeClass('dark-mode')
         header.removeClass('mix-mode')
@@ -182,7 +189,7 @@ const scripts = () => {
         } else if ($(data.next.container).attr('data-header') == 'mix') {
             header.addClass('mix-mode')
         }
-    
+
         $('[data-link]').removeClass('active')
         $(`[data-link="${$(data.next.container).attr('data-namespace')}"]`).addClass('active')
     }
@@ -233,6 +240,24 @@ const scripts = () => {
                 $('.popup').removeClass('active')
                 lenis.start()
             })
+        },
+        cookie: () => {
+            $('[data-close-cookie]').on('click', function (e) {
+                if ($(this).attr('href') === '#') {
+                    e.preventDefault();
+                }
+                cookieConsent?.hideSettings();
+            })
+            let closeBtn = $('#s-c-bn').clone();
+            closeBtn.css({
+                position: 'absolute',
+                top: "8px",
+                right: "8px"
+            })
+            closeBtn.on('click', function (e) {
+                cookieConsent?.hide();
+            })
+            $('#cm').append(closeBtn);
         }
     }
 
@@ -251,7 +276,7 @@ const scripts = () => {
         function initForm(form, options) {
             const { submitEle = {}, onSuccess, onError, handleSubmit, prepareMap, fields, pageName = "Form", hubspot } = options;
             const { ele, textEle } = submitEle;
-    
+
             let submitBtn = $(form).find('button[type=submit]');
             if (ele) {
                 submitBtn = $(form).find(ele);
@@ -260,14 +285,14 @@ const scripts = () => {
             if (textEle) {
                 defaultText = submitBtn.find(textEle).clone().text();
             }
-    
+
             let url = $(form).attr('action');
-    
+
             if (hubspot) {
                 const { portalId, formId } = hubspot;
                 url = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
             }
-    
+
             const setLoading = (isLoading) => {
                 console.log(isLoading)
                 if (isLoading) {
@@ -276,7 +301,7 @@ const scripts = () => {
                     } else {
                         submitBtn.val('Please wait ...');
                     }
-    
+
                     submitBtn.css({ 'pointer-events': 'none' })
                 }
                 else {
@@ -288,13 +313,13 @@ const scripts = () => {
                     submitBtn.css({ 'pointer-events': '' })
                 }
             }
-    
+
             const showError = (message = "Something error") => {
                 alert(message)
             }
             const mapField = (data) => {
                 if (!fields.length) return [];
-    
+
                 const result = fields.map((field) => {
                     const { name, value } = field;
                     if (!value) {
@@ -342,7 +367,7 @@ const scripts = () => {
                             const errors = error.responseJSON.errors
                             const errorArr = errors[0].message.split('.')
                             const errorMess = errorArr[errorArr.length - 1]
-    
+
                             showError(errorMess);
                         }
                         else {
@@ -352,7 +377,7 @@ const scripts = () => {
                     },
                 });
             }
-    
+
             $(form).on("submit", function (e) {
                 e.preventDefault();
                 // setLoading(true);
@@ -366,7 +391,7 @@ const scripts = () => {
 
             });
         }
-        
+
         //form contact popup
         //$('.input-field').on('change keyup blur input', hanldeInput);
         $('.popup__main-form .popup__main-submit').on('click', function (e) {
@@ -470,7 +495,7 @@ const scripts = () => {
         privacyScript,
         techScript
     ]
-    
+
     barba.init({
         preventRunning: true,
         transitions: [{
@@ -480,10 +505,11 @@ const scripts = () => {
                 addNavActiveLink(data)
                 handleScrollTo()
                 transitionOnce(data)
-                handlePopup.toggle()
+                handlePopup.toggle();
+                handlePopup.cookie();
             },
             async enter(data) {
-    
+
             },
             async afterEnter(data) {
                 await transitionEnter(data)
@@ -493,6 +519,7 @@ const scripts = () => {
                 resetBeforeLeave(data)
             },
             async leave(data) {
+                cookieConsent?.hide();
                 await transitionLeave(data).then(() => {
                     removeAllScrollTrigger()
                 })
