@@ -332,9 +332,12 @@
         &-p {
             color: rgba($cl-body, 1);
         }
+        @include md {
+            max-width: none;
+        }
     }
     &__img {
-        grid-column: 7/17;
+        grid-column: 8/16;
         align-self: end;
         display: flex;
         flex-direction: column;
@@ -344,6 +347,7 @@
         }
         @include sm {
             grid-column: span 2;
+            margin-top: 8rem;
         }
     }
 }
@@ -394,6 +398,16 @@
                 padding-top: 160%;
             }
         }
+
+        &:hover {
+            .leaflet-control-container {
+                .leaflet-top.leaflet-left {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        }
+        
         //Leaflet custom
         path.leaflet-interactive {
             stroke: rgba($cl-orange, 1);
@@ -404,9 +418,16 @@
 
         .leaflet-control-container {
             .leaflet-top.leaflet-left {
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all $dur-default ease;
                 top: 0;
                 right: 0;
                 left: auto;
+                @include md {
+                    opacity: 1;
+                    transform: none;
+                }
                 @include sm {
                     top: 50%;
                     @include transform(translateY(-50%));

@@ -268,7 +268,7 @@ function abtTeam() {
             };
             replaceInfo('name');
             replaceInfo('job');
-            replaceInfo('link');
+            replaceInfo('icon');
             gsap.set('.abt-team__main-img-inner', { y: 0 });
             gsap.from('.abt-team__main-img-inner', { y: 5 });
             abtTeamImgItem.eq($(this).index()).addClass('selected');

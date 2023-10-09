@@ -4,7 +4,7 @@
         grid-column: 3/5;
         align-self: start;
         color: rgba($cl-desc, 1);
-        margin-top: .8rem;
+        margin-top: 1.8rem;
     }
     &__title {
         grid-column: 5/15;
@@ -417,6 +417,9 @@
                 &:hover {
                     color: rgba($cl-sub, 1);
                 }
+                &[href="#"] {
+                    visibility: hidden;
+                }
             }
         }
     }
@@ -427,7 +430,7 @@
     &__label {
         grid-column: 2/5;
         align-self: start;
-        margin-top: .8rem;
+        margin-top: 1.4rem;
         color: rgba($cl-desc, 1);
     }
     &__title {
@@ -683,7 +686,7 @@
                     @include transform(translate(-50%, -50%));
                     display: grid;
                     grid-template-columns: 1fr;
-                    padding: 4.8rem 2.4rem 3.2rem;
+                    padding: 6rem 2.4rem 3.2rem;
                     background-color: $cl-white;
                 }
                 &-close {
@@ -729,6 +732,9 @@
                     align-items: center;
                     background-color: $cl-orange;
                     aspect-ratio: 1;
+                    &[href="#"] {
+                        visibility: hidden;
+                    }
                 }
                 &.active {
                     opacity: 1;
@@ -946,9 +952,12 @@
                 background-color: black;
                 &-inner {
                     width: calc(100% - 8rem);
+                    padding-top: 4.8rem;
                 }
                 &-close {
                     padding: 1.4rem;
+                    width: 4.8rem;
+                    height: 4.8rem;
                 }
                 &-name {
                     font-size: 1.8rem;

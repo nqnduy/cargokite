@@ -209,10 +209,12 @@ const scripts = () => {
         lenis.stop()
         if ($(locationHash).length) {
             console.log(locationHash)
-            lenis.scrollTo(locationHash, {
-                force: true,
-                immediate: true,
-            });
+            setTimeout(() => {
+                lenis.scrollTo(locationHash, {
+                    force: true,
+                    immediate: true,
+                });    
+            }, 300);
         } else {
             lenis.scrollTo(0, {
                 force: true,
@@ -223,7 +225,7 @@ const scripts = () => {
     }
     function handleScrollTo() {
         $('[data-scrollto]').on('click', function(e) {
-            e.preventDefault();
+            //e.preventDefault();
             let target = $(this).attr('href')
             lenis.scrollTo(target)
         })
