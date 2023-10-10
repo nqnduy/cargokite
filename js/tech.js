@@ -11,6 +11,8 @@ import Flip from "./vendors/Flip";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { lerp, isTouchDevice, xGetter, yGetter, xSetter, ySetter, pointerCurr } from './untils';
+import swiper from "./components/swiper";
+import { childrenSelect } from "./common/utils/childrenSelector";
 
 import { viewport, viewportBreak } from "./common/helpers/viewport";
 
@@ -48,7 +50,6 @@ class techDemoWebGL {
             new URL('../assets/map/high/nz.png', import.meta.url)
         ])
     }
-
     get viewport() {
         let width = this.container.width();
         let height = this.container.height();
@@ -64,18 +65,10 @@ class techDemoWebGL {
         window.addEventListener('resize', this.onWindowResize.bind(this))
         //camera
         let fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
-        fov = 32.26880414280885;
+        fov = this.viewport.width > 767 ? 32.26880414280885 : 32.26880414280885 * 1.1;
         this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 10000);
-        this.camera.position.set(
-            viewportBreak({ md: 74.63897705078125, sm: 85.63897705078125 }),
-            viewportBreak({ md: 16.265151023864746, sm: 10.265151023864746 }),
-            viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 })
-        )
-        this.lookAtTarget = new THREE.Vector3(
-            viewportBreak({ md: 49.7516, sm: 45.7516 }),
-            viewportBreak({ md: 24.93049, sm: 21.9304 }),
-            -1.35464
-        )
+        this.camera.position.set(74.63897705078125, 16.265151023864746, -51.48991394042969)
+        this.lookAtTarget = new THREE.Vector3(49.7516, 24.93049, -1.35464)
         this.camera.lookAt(this.lookAtTarget)
 
         //renderer
@@ -177,65 +170,146 @@ class techDemoWebGL {
         requestAnimationFrame(this.animate.bind(this))
     }
     scrollAnimate() {
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.tech-demo__main',
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: true,
-                onUpdate: () => {
-                    this.camera.lookAt( this.lookAtTarget );
+        if (viewport.width > 767) {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.tech-demo__main',
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: true,
+                    onUpdate: () => {
+                        this.camera.lookAt( this.lookAtTarget );
+                    }
+                },
+                defaults: {
+                    ease: 'none'
                 }
-            },
-            defaults: {
-                ease: 'none'
-            }
-        })
-        tl
-        .to(this.camera.position, {
-            x: -43.3858,
-            y: 3.16929,
-            z: -17.9227,
-            duration: 1
-        }, '0')
-        .to(this.lookAtTarget, {
-            x: -19.2134,
-            y: 5.46543,
-            z: -0.014547,
-            duration: 1
-        }, '<=0')
-        .to('.tech-demo__main-inner .tech-demo__main-item', {
-            yPercent: -100,
-            duration: 1
-        }, '<=0')
-        .to(this.camera.position, {
-            x: -36.182,
-            y: 28.6084,
-            z: 52.1051,
-            duration: 1
-        })
-        .to(this.lookAtTarget, {
-            x: 11.3448,
-            y: 6.2503,
-            z: 0.056603,
-            duration: 1
-        }, '<=0')
-        console.log(this.containerGrp)
-        this.containerGrp.forEach((el, idx) => {
-            tl.to(el.position, {
-                y: `${10 + 3 * (Math.random() - .5) * 2}`,
-                duration: 1,
-            }, '<=0')
-            .to(el.material, {
-                opacity: 0,
+            })
+            tl
+            .to(this.camera.position, {
+                x: -43.3858,
+                y: 3.16929,
+                z: -17.9227,
+                duration: 1
+            }, '0')
+            .to(this.lookAtTarget, {
+                x: -19.2134,
+                y: 5.46543,
+                z: -0.014547,
                 duration: 1
             }, '<=0')
-        })
-        tl.to('.tech-demo__main-inner .tech-demo__main-item', {
-            yPercent: -200,
-            duration: 1
-        }, '<=0')
+            tl.to('.tech-demo__main-inner .tech-demo__main-item', {
+                yPercent: -100,
+                duration: 1
+            }, '<=0')
+            tl.to(this.camera.position, {
+                x: -36.182,
+                y: 28.6084,
+                z: 52.1051,
+                duration: 1
+            })
+            .to(this.lookAtTarget, {
+                x: 11.3448,
+                y: 6.2503,
+                z: 0.056603,
+                duration: 1
+            }, '<=0')
 
+            this.containerGrp.forEach((el, idx) => {
+                tl.to(el.position, {
+                    y: `${10 + 3 * (Math.random() - .5) * 2}`,
+                    duration: 1,
+                }, '<=0')
+                .to(el.material, {
+                    opacity: 0,
+                    duration: 1
+                }, '<=0')
+            })
+            tl.to('.tech-demo__main-inner .tech-demo__main-item', {
+                yPercent: -200,
+                duration: 1
+            }, '<=0')
+        }
+        else {
+            const parent = childrenSelect('.tech-demo__main');
+            let pointer = [
+                {
+                    position: {
+                        x: 85.63897705078125,
+                        y: 10.265151023864746,
+                        z: -68.48991394042969
+                    },
+                    lookAt: {
+                        x: 55.7516,
+                        y: 12.9304,
+                        z: -1.35464
+                    }
+                },
+                {
+                    position: {
+                        x: -60.3858,
+                        y: 0.16929,
+                        z: -40.9227,
+                    },
+                    lookAt: {
+                        x: -11.2134,
+                        y: -3.46543,
+                        z: -1.014547,
+                    }
+                },
+                {
+                    position: {
+                        x: -72.182,
+                        y: 50.6084,
+                        z: 90.1051
+                    },
+                    lookAt: {
+                        x: 0.3448,
+                        y: -12.2503,
+                        z: 0.056603
+                    }
+                }
+            ]
+            swiper.initClassName(parent);
+            swiper.setup(parent, {
+                touchMove: true,
+                on: {
+                    slideChange: (slide) => {
+                        let index = slide.activeIndex;
+
+                        let tlSwiper = gsap.timeline({
+                            onUpdate: () => {
+                                this.camera.lookAt( this.lookAtTarget );
+                            }
+                        })
+                        tlSwiper
+                            .to(this.camera.position, {
+                                ...pointer[index].position,
+                                duration: 1,
+                        }, '0')
+                            .to(this.lookAtTarget, {
+                                ...pointer[index].lookAt,
+                                duration: 1,
+                                onUpdate: () => {
+                                    this.camera.lookAt( this.lookAtTarget );
+                                }
+                            }, '<=0')
+
+                        this.containerGrp.forEach((el, idx) => {
+                            tlSwiper.to(el.position, {
+                                y: `${index === 2 ? (10 + 3 * (Math.random() - .5) * 2) : 0}`,
+                                duration: 1,
+                            }, '<=0')
+                        })
+                    },
+                    beforeInit: () => {
+                        this.camera.position.set(pointer[0].position.x, pointer[0].position.y, pointer[0].position.z)
+                        this.lookAtTarget = new THREE.Vector3(pointer[0].lookAt.x, pointer[0].lookAt.y, pointer[0].lookAt.z)
+                        this.camera.lookAt(this.lookAtTarget)
+                    }
+                }
+            })
+        }
     }
     init() {
         this.setupCamera()
@@ -340,27 +414,30 @@ function techDemo() {
     techWebGL.init()
     techWebGL.reset()
 
-    let techDemoItems = $('.tech-demo__main-item')
-    requestAnimationFrame(() => {
-        techDemoItems.each((idx, el) => {
-            const techDemoItemTitle = new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.words)
-            const techDemoItemSub = new SplitText(el.querySelector('.tech-demo__main-item-richtext'), typeOpts.words)
-            const techDemoItemTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: $(el).find('.tech-demo__main-item-title'),
-                    start: 'top top+=75%',
-                },
-                onComplete: () => {
-                    techDemoItemTitle.revert()
-                    new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.lines)
-                    techDemoItemSub.revert()
-                }
+    let techDemoItems = $('.tech-demo__main-item');
+
+    if (viewport.width > 767) {
+        requestAnimationFrame(() => {
+            techDemoItems.each((idx, el) => {
+                const techDemoItemTitle = new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.words)
+                const techDemoItemSub = new SplitText(el.querySelector('.tech-demo__main-item-richtext'), typeOpts.words)
+                const techDemoItemTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: $(el).find('.tech-demo__main-item-title'),
+                        start: 'top top+=75%',
+                    },
+                    onComplete: () => {
+                        techDemoItemTitle.revert()
+                        new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.lines)
+                        techDemoItemSub.revert()
+                    }
+                })
+                techDemoItemTl
+                .from(techDemoItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '0')
+                .from(techDemoItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
             })
-            techDemoItemTl
-            .from(techDemoItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '0')
-            .from(techDemoItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
         })
-    })
+    }
 }
 function techMap() {
     function reverseLineStringCoordinates(lineString) {

@@ -3,6 +3,7 @@ import '../vendors/cookieconsent';
 
 let cookieConsent = initCookieConsent();
 let cookieAccepted = false;
+
 const initCookie = () => {
     cookieConsent.run({
         current_lang: 'en',
@@ -129,13 +130,6 @@ const initCookie = () => {
         }
     });
 }
-
-// run plugin with your configuration
-
-// $([`data-popup="contact"`]).on('click', function (e) {
-//     e.preventDefault();
-//     console.log("click");
-// })
 
 export {
     cookieConsent,

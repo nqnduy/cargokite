@@ -19,7 +19,6 @@ const scripts = () => {
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
     }
-    initCookie();
 
     barba.use(barbaPrefetch);
     gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -505,6 +504,7 @@ const scripts = () => {
                 addNavActiveLink(data)
                 handleScrollTo()
                 transitionOnce(data)
+                initCookie();
                 handlePopup.toggle();
                 handlePopup.cookie();
             },

@@ -578,14 +578,17 @@ CookieConsent settings modal
 
 #s-c-bn{
     padding: 0;
-    width: 1.7em;
-    height: 1.7em;
+    width: 4rem;
+    height: 4rem;
     font-size: 1.45em;
     margin: 0;
     font-weight: initial;
     position: relative;
     overflow: hidden;
     border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #s-c-bnc{
@@ -876,8 +879,6 @@ html.force--consent.show--consent body{
 #s-c-bn::after{
     content: '';
     position: absolute;
-    left: .82em;
-    top: .58em;
     height: .6em;
     width: 1.5px;
     background: var(--cc-btn-secondary-text);
@@ -1146,7 +1147,6 @@ html.force--consent.show--consent body{
 }
 
 @media screen and (max-width: 688px) {
-
     #cm,
     #cm.cloud,
     #cm.left,
@@ -1159,6 +1159,11 @@ html.force--consent.show--consent body{
         left: 1em;
         bottom: 1em;
         display: block;
+    }
+
+    #c-ttl{
+        margin-bottom: 1.2rem;
+        font-size: 2.4rem;
     }
 
     .force--consent #cm,
@@ -1214,6 +1219,10 @@ html.force--consent.show--consent body{
     .cc_div .b-tg{
         transform: scale(1.1);
         right: 1.1em;
+    }
+
+    .cc_div #c-bns{
+        margin-top: 2.8rem;
     }
 
     #s-inr{
@@ -1308,6 +1317,13 @@ html.force--consent.show--consent body{
     .cc_div .c-bn{
         width: 100%;
         margin-right: 0;
+    }
+    #s-c-bn.c-bn {
+        width: 3.2rem;
+        height: 3.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #s-cnt #s-rall-bn{
