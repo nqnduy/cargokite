@@ -382,15 +382,14 @@ const scripts = () => {
 
             $(form).on("submit", function (e) {
                 e.preventDefault();
-                // setLoading(true);
-                // if (prepareMap) {
-                //     prepareMap($(this));
-                // }
-                // const data = mapFormToObject(e.target);
-                // if (handleSubmit) handleSubmit(data);
-                // sendSubmission(data);
-                // return false;
-
+                setLoading(true);
+                if (prepareMap) {
+                    prepareMap($(this));
+                }
+                const data = mapFormToObject(e.target);
+                if (handleSubmit) handleSubmit(data);
+                sendSubmission(data);
+                return false;
             });
         }
 
@@ -398,20 +397,22 @@ const scripts = () => {
         //$('.input-field').on('change keyup blur input', hanldeInput);
         $('.popup__main-form .popup__main-submit').on('click', function (e) {
             e.preventDefault();
+            console.log('submiitttttttt')
+            
             $('.popup__main-form').trigger('submit');
         })
-
         const formContact = initForm('.popup__main-form', {
             onSuccess: (data) => {
                 // success form callback
                 $('.popup__main-form').find('.popup__main-form-success-txt [data-form-name]').text(data.name)
                 $('.popup__main-form').find('.popup__main-submit').addClass('on-complete')
+                $('.popup__main-form').find('.popup__main-submit').attr('disabled',true)
                 $('.popup__main-form').find('.popup__main-form-inner').addClass('hidden')
                 $('.popup__main-form').find('.popup__main-form-success').removeClass('hidden')
             },
             hubspot: {
-                portalId: '22164009',
-                formId: 'f86cc368-6d7e-4114-9475-635711b656a7'
+                portalId: '44086236',
+                formId: '98046cb7-c4e3-4ca8-a334-8e7df720c94c'
             },
             submitEle: {
                 ele: '.popup__main-submit',
@@ -435,15 +436,6 @@ const scripts = () => {
                 },
             ]
         })
-
-        // function hanldeInput() {
-        //     if ($(this).val()) {
-        //         $(this).prev().addClass('show')
-        //     } else if ($(this).val() == '') {
-        //         $(this).prev().removeClass('show')
-        //     }
-        // };
-
         $('.footer__form-main .input-submit').on('click', function (e) {
             e.preventDefault();
             $('.footer__form-main').trigger('submit');
@@ -468,8 +460,8 @@ const scripts = () => {
                 }, 4000);
             },
             hubspot: {
-                portalId: '22164009',
-                formId: 'f86cc368-6d7e-4114-9475-635711b656a7'
+                portalId: '44086236',
+                formId: 'd8a21750-c40f-41ca-aba1-9d40f5ee97f0'
             },
             submitEle: {
                 ele: '.input-submit',
