@@ -180,9 +180,10 @@ class techDemoWebGL {
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.tech-demo__main',
-                start: 'top top',
-                end: 'bottom bottom',
+                start: 'top bottom',
+                end: 'bottom top',
                 scrub: true,
+                markers: true,
                 onUpdate: () => {
                     this.camera.lookAt( this.lookAtTarget );
                 }
@@ -192,12 +193,15 @@ class techDemoWebGL {
             }
         })
         tl
+        //dummy start 100vh
+        .to('.popup', {duration: 1})
+        //end dummy start 100vh
         .to(this.camera.position, {
             x: -43.3858,
             y: 3.16929,
             z: -17.9227,
             duration: 1
-        }, '0')
+        })
         .to(this.lookAtTarget, {
             x: -19.2134,
             y: 5.46543,
@@ -220,21 +224,31 @@ class techDemoWebGL {
             z: 0.056603,
             duration: 1
         }, '<=0')
-        console.log(this.containerGrp)
-        this.containerGrp.forEach((el, idx) => {
-            tl.to(el.position, {
-                y: `${10 + 3 * (Math.random() - .5) * 2}`,
-                duration: 1,
-            }, '<=0')
-            .to(el.material, {
-                opacity: 0,
-                duration: 1
-            }, '<=0')
-        })
+        
         tl.to('.tech-demo__main-inner .tech-demo__main-item', {
             yPercent: -200,
             duration: 1
         }, '<=0')
+        console.log(this.containerGrp)
+        this.containerGrp.forEach((el, idx) => {
+            let delayTime;
+            if (idx == 0) {
+                delayTime = '<=.4'
+            } else {
+                delayTime = '<=0'
+            }
+            tl.to(el.position, {
+                y: `${10 + 3 * (Math.random() - .5) * 2}`,
+                duration: .6,
+            }, delayTime)
+            .to(el.material, {
+                opacity: 0,
+                duration: .6
+            }, '<=0')
+        })
+        //dummy end 100vh
+        tl.to('.popup', {duration: 1})
+        //end dummy end 100vh
 
     }
     init() {
