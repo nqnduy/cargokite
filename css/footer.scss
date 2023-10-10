@@ -110,7 +110,7 @@
         color: rgba($cl-white, 1);
         transition: color $dur-default ease;
         &:hover {
-            color: rgba($cl-orange, 1);
+            color: rgba($cl-body, 1);
             .footer__marquee-wrap {
                 transform: translate(-4%);
             }

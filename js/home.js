@@ -410,6 +410,7 @@ function homeWhy() {
 
     const homeWhyItems = $('.home-why__main-item');
     homeWhyItems.each((index, el) => {
+        
         let homeWhyItemTitle = new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.words)
         let tlHomeWhyItem = gsap.timeline({
             scrollTrigger: {
@@ -473,6 +474,7 @@ function homePart() {
     tl
     .from(homePartLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
     .from(homePartTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+    .from('.home-part__btn', {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
 
     let tlItems = gsap.timeline({
         scrollTrigger: {
@@ -499,15 +501,6 @@ function homePart() {
     })
     tlItemInvest
     .from('.home-part__main-investors .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'all'})
-    
-    let tlBtn = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-part__tail',
-            start: 'top top+=65%',
-        }
-    })
-    tlBtn.from('.home-part__btn', {yPercent: 60, autoAlpha: 0, duration: .4, ease: 'none'})
-
 }
 function homeFaq() {
     const homeFaqTitle = new SplitText('.home-faq__title',typeOpts.words);
