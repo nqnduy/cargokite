@@ -160,7 +160,7 @@ function homeProb() {
         gsap.set(el.querySelector('.home-prob__main-item-img'), {clipPath: 'inset(20%)'})
         gsap.set(el.querySelector('.home-prob__main-item-img img'), {scale: 1.4, autoAlpha: 0})
         const homeProbItemTitle = new SplitText(el.querySelector('.home-prob__main-item-title'), typeOpts.words)
-        const homeProbItemSub = new SplitText(el.querySelector('.home-prob__main-item-txt'), typeOpts.words)
+        const homeProbItemSub = nestedLinesSplit(el.querySelector('.home-prob__main-item-txt'), typeOpts.words)
         const homeProbItemTl = gsap.timeline({
             scrollTrigger: {
                 trigger: el,

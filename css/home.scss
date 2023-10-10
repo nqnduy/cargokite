@@ -176,7 +176,7 @@
         grid-row: 1/2;
         align-self: start;
         // justify-self: start;
-        max-width: 72.2rem;
+        max-width: 58rem;
     }
     &__main {
         grid-column: 1/17;
@@ -1117,7 +1117,7 @@
                         .home-shift__img-wrap {
                             height: 96vh;
                             &::after {
-                                width: 500vw;
+                                width: 500vh;
                             }
                             .home-shift__small-txt {
                                 font-size: 5.2rem;
@@ -1285,22 +1285,20 @@
         }
         &__main {
             grid-column: 1/13;
-            grid-template-columns: repeat(6,1fr);
             &-item {
-                padding: 2rem 0rem;
-                // &:nth-child(-n+7) {
-                //     border-top: 1px solid #CFD3D4;
-                // }
-                // &:nth-child(7n) {
-                //     border-right: 1px solid #CFD3D4;
-                // }
-                // &:nth-child(-n+6) {
-                //     border-top: none;
-                // }
-                // &:nth-child(6n) {
-                //     border-right: none;
-                // }
+                width: calc(100% / 5);
+                padding: 1.2rem 0rem;
             }
+        }
+        &__investor {
+            grid-column: 1/13;
+            margin-top: 6rem;
+            color: rgba($cl-txt, 1);
+            margin-bottom: 4rem;
+        }
+        &__tail {
+            margin-top: 6rem;
+            grid-column: 1/13;
         }
     }
     .home-faq {
@@ -1509,7 +1507,7 @@
                         .home-shift__img-wrap {
                             height: 96vh;
                             &::after {
-                                width: 500vw;
+                                width: 500vh;
                             }
                             .home-shift__small-txt {
                                 font-size: 3.2rem;
@@ -1627,25 +1625,25 @@
             grid-column: 1/3;
             margin-bottom: 4.8rem;
         }
+        &__label {
+            margin-bottom: 1.2rem;
+        }
         &__main {
             grid-column: 1/3;
-            grid-template-columns: repeat(3, 1fr);
             &-item {
+                width: calc(100% / 3);
                 padding: 1.6rem 1rem;
-                // &:nth-child(-n+6) {
-                //     border-top: 1px solid #CFD3D4;
-                // }
-                // &:nth-child(6n) {
-                //     border-right: 1px solid #CFD3D4;
-                // }
-                // &:nth-child(3n) {
-                //     border-right: none;
-                // }
-                // &:nth-child(-n+3) {
-                //     border-top: none;
-                // }
-                
             }
+        }
+        &__investor {
+            grid-column: 1/3;
+            margin-top: 6rem;
+            color: rgba($cl-txt, 1);
+            margin-bottom: 4rem;
+        }
+        &__tail {
+            margin-top: 6rem;
+            grid-column: 1/3;
         }
     }
     .home-faq {
