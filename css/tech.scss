@@ -241,7 +241,7 @@
         grid-row: 1/2;
         z-index: 2;
         &-outer {
-            height: 400vh;
+            height: 500vh;
             position: relative;
             @include sm {
                 height: 100%;

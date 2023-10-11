@@ -85,7 +85,7 @@ class techDemoWebGL {
         this.renderer.setPixelRatio(window.devicePixelRatio);
     }
     createMesh() {
-        let url = new URL('../assets/cargo-demo-cont.gltf', import.meta.url)
+        let url = new URL('../assets/cargo-demo-4.glb', import.meta.url)
         url = "" + url;
         this.loader = new GLTFLoader();
         this.dracoLoader = new DRACOLoader();
@@ -98,20 +98,27 @@ class techDemoWebGL {
         (glb) => {
             this.model = glb.scene;
             this.scene.environment = this.hdri;
-            let orangeMat = new THREE.MeshStandardMaterial({
+            this.orangeMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#FF471D'),
                 envMapIntensity: 4,
                 roughness: .35,
                 metalness: 0
             })
-            let darkMat = new THREE.MeshStandardMaterial({
+            this.darkMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
                 envMapIntensity: 3,
                 roughness: .70,
                 metalness: 1,
                 transparent: true
             })
-            let darkContMat = new THREE.MeshStandardMaterial({
+            this.darkContMat = new THREE.MeshStandardMaterial({
+                color: new THREE.Color('#2B2C2F'),
+                envMapIntensity: 3,
+                roughness: .70,
+                metalness: 1,
+                transparent: true
+            })
+            this.darkBattMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
                 envMapIntensity: 3,
                 roughness: .70,
@@ -122,21 +129,27 @@ class techDemoWebGL {
             this.model.traverse((obj) => {
                 if (obj instanceof THREE.Mesh) {
                     if (obj.name === 'kite') {
-                        obj.material = orangeMat;
+                        obj.material = this.orangeMat;
                     } else if (obj.name == 'Propeller1') {
                         this.prop1 = obj
-                        obj.material = darkMat;
+                        obj.material = this.darkMat;
                     } else if (obj.name == 'Propeller2') {
                         this.prop2 = obj
-                        obj.material = darkMat;
+                        obj.material = this.darkMat;
+                    } else if (obj.name === 'Battery') {
+                        obj.material = this.darkBattMat;
                     } else if (obj.name.includes('container')) {
-                        obj.material = darkContMat;
+                        obj.material = this.darkContMat;
                     } else {
-                        obj.material = darkMat;
+                        obj.material = this.darkMat;
                     }
                 }
+                
                 if (obj.name === 'container-grp') {
                     this.containerGrp = obj.children;
+                } else if (obj.name === 'Battery') {
+                    this.battery = obj
+                    console.log(this.battery)
                 }
             })
             const light = new THREE.PointLight(new THREE.Color('white'), 10, 10, 2)
@@ -175,7 +188,7 @@ class techDemoWebGL {
                 scrollTrigger: {
                     trigger: '.tech-demo__main',
                     start: 'top bottom',
-                    end: 'bottom top',
+                    end: 'bottom top+=25%',
                     scrub: true,
                     onUpdate: () => {
                         this.camera.lookAt( this.lookAtTarget );
@@ -249,17 +262,37 @@ class techDemoWebGL {
                     duration: .6
                 }, '<=0')
             })
-            //dummy end 100vh
             tl.to(this.camera.position, {
-                x: viewportBreak({ md: -10.182, sm: -50.182 }),
-                y: viewportBreak({ md: 10.6084, sm: 40.6084}),
-                z: viewportBreak({ md: 0.1051, sm: 0.1051 }),
+                x: viewportBreak({ md: -10.3768, sm: -20.182 }),
+                y: viewportBreak({ md: 14.7438, sm: 15.6084}),
+                z: viewportBreak({ md: 8.8912, sm: 10.1051 }),
                 duration: 1
             })
             .to(this.lookAtTarget, {
-                x: viewportBreak({ md: 60.3448, sm: 80.3448 }),
-                y: viewportBreak({ md: 55.2503, sm: 55.2503 }),
-                z: viewportBreak({ md: 0.056603, sm: 0.056603 }),
+                x: viewportBreak({ md: 5.3448, sm: 7.3448 }),
+                y: 6.2503,
+                z: 0.056603,
+                duration: 1
+            }, '<=0')
+            .to(this.darkMat, {
+                opacity: 0,
+                duration: 1,
+            }, '<=0')
+            .to('.tech-demo__main-inner .tech-demo__main-item', {
+                yPercent: -300,
+                duration: 1
+            }, '<=0')
+            //dummy end 100vh
+            tl.to(this.camera.position, {
+                x: viewportBreak({ md: -10.3768, sm: -25.182 }),
+                y: viewportBreak({ md: 14.7438, sm: 15.6084}),
+                z: viewportBreak({ md: 4.8912, sm: 10.1051 }),
+                duration: 1
+            })
+            .to(this.lookAtTarget, {
+                x: viewportBreak({ md: 5.3448, sm: 7.3448 }),
+                y: 6.2503,
+                z: 0.056603,
                 duration: 1
             }, '<=0')
             // tl.to('.popup', {duration: 1})
@@ -304,11 +337,24 @@ class techDemoWebGL {
                         y: -12.2503,
                         z: 0.056603
                     }
+                },
+                {
+                    position: {
+                        x: -20.182,
+                        y: 10.6084,
+                        z: 10.1051
+                    },
+                    lookAt: {
+                        x: 0.65,
+                        y: 4.7503,
+                        z: 0.056603
+                    }
                 }
             ]
             swiper.initClassName(parent);
             swiper.setup(parent, {
                 touchMove: true,
+                spacing: 32,
                 on: {
                     slideChange: (slide) => {
                         let index = slide.activeIndex;
@@ -330,7 +376,7 @@ class techDemoWebGL {
                                     this.camera.lookAt( this.lookAtTarget );
                                 }
                             }, '<=0')
-
+                        .to(this.darkMat, {opacity: index === 3 ? 0 : 1}, '<=0')
                         this.containerGrp.forEach((el, idx) => {
                             let delayTime;
                             if (idx == 0) {
@@ -339,9 +385,12 @@ class techDemoWebGL {
                                 delayTime = '<=0'
                             }
                             tlSwiper.to(el.position, {
-                                y: `${index === 2 ? (10 + 3 * (Math.random() - .5) * 2) : 0}`,
+                                y: `${index === 2 || index === 3 ? (10 + 3 * (Math.random() - .5) * 2) : 0}`,
                                 duration: 1,
                             }, delayTime)
+                            .to(el.material, {
+                                opacity: index === 2 || index === 3 ? 0 : 1,
+                            }, '<=0')
                         })
                     },
                     beforeInit: () => {
