@@ -19,7 +19,6 @@ const scripts = () => {
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
     }
-    initCookie();
 
     barba.use(barbaPrefetch);
     gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -213,7 +212,7 @@ const scripts = () => {
                 lenis.scrollTo(locationHash, {
                     force: true,
                     immediate: true,
-                });    
+                });
             }, 300);
         } else {
             lenis.scrollTo(0, {
@@ -253,8 +252,8 @@ const scripts = () => {
             let closeBtn = $('#s-c-bn').clone();
             closeBtn.css({
                 position: 'absolute',
-                top: "8px",
-                right: "8px"
+                top: "0",
+                right: "0"
             })
             closeBtn.on('click', function (e) {
                 cookieConsent?.hide();
@@ -321,9 +320,8 @@ const scripts = () => {
             }
             const mapField = (data) => {
                 if (!fields.length) return [];
-
                 const result = fields.map((field) => {
-                    const { name, value } = field;
+                    const { name, value, regexp } = field;
                     if (!value) {
                         return {
                             name,
@@ -342,6 +340,7 @@ const scripts = () => {
             }
             const sendSubmission = (data) => {
                 const mappedFields = mapField(data);
+                console.log(mappedFields)
                 const dataSend = {
                     fields: mappedFields,
                     context: {
@@ -398,7 +397,7 @@ const scripts = () => {
         $('.popup__main-form .popup__main-submit').on('click', function (e) {
             e.preventDefault();
             console.log('submiitttttttt')
-            
+
             $('.popup__main-form').trigger('submit');
         })
         const formContact = initForm('.popup__main-form', {
@@ -499,6 +498,7 @@ const scripts = () => {
                 addNavActiveLink(data)
                 handleScrollTo()
                 transitionOnce(data)
+                initCookie();
                 handlePopup.toggle();
                 handlePopup.cookie();
             },

@@ -194,6 +194,11 @@
                                 </div>
                             </a>
                             <img src="./imgs/vid-thumb.jpg" alt="Video thumbnail" class="img-fill">
+                            <div class="tech-vid__main-vid">
+                                <video id="vidTech" class="img-fill">
+                                <source src="https://s3.ap-southeast-1.amazonaws.com/assets.bearplus.io/videos/caskx-intro.mp4" type="video/mp4">
+                                </video>
+                            </div>
                         </div>
                     </div>
                     <div class="tech-vid__holder">
@@ -206,9 +211,9 @@
             <section class="tech-demo">
                 <div class="tech-demo__wrap">
                     <div class="tech-demo__main">
-                        <div class="container grid tech-demo__main-outer">
-                            <div class="tech-demo__main-inner">
-                                <div class="tech-demo__main-item">
+                        <div class="container grid tech-demo__main-outer" data-swiper="swiper">
+                            <div class="tech-demo__main-inner" data-swiper="wrapper">
+                                <div class="tech-demo__main-item" data-swiper="slide">
                                     <h3 class="heading h4 tech-demo__main-item-title">
                                         Airborne Wind Energy System (AWE)
                                     </h3>
@@ -221,7 +226,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="tech-demo__main-item">
+                                <div class="tech-demo__main-item" data-swiper="slide">
                                     <h3 class="heading h4 tech-demo__main-item-title">
                                         Hydrofoils
                                     </h3>
@@ -234,7 +239,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="tech-demo__main-item">
+                                <div class="tech-demo__main-item" data-swiper="slide">
                                     <h3 class="heading h4 tech-demo__main-item-title">
                                         Ship hull
                                     </h3>

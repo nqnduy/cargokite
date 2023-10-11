@@ -11,6 +11,8 @@ import Flip from "./vendors/Flip";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { lerp, isTouchDevice, xGetter, yGetter, xSetter, ySetter, pointerCurr } from './untils';
+import swiper from "./components/swiper";
+import { childrenSelect } from "./common/utils/childrenSelector";
 
 import { viewport, viewportBreak } from "./common/helpers/viewport";
 
@@ -48,7 +50,6 @@ class techDemoWebGL {
             new URL('../assets/map/high/nz.png', import.meta.url)
         ])
     }
-
     get viewport() {
         let width = this.container.width();
         let height = this.container.height();
@@ -64,17 +65,14 @@ class techDemoWebGL {
         window.addEventListener('resize', this.onWindowResize.bind(this))
         //camera
         let fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
-        fov = 32.26880414280885;
+        fov = this.viewport.width > 767 ? 32.26880414280885 : 32.26880414280885 * 1.1;
         this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 10000);
         this.camera.position.set(
-            viewportBreak({ md: 74.63897705078125, sm: 85.63897705078125 }),
-            viewportBreak({ md: 16.265151023864746, sm: 10.265151023864746 }),
+            100.63897705078125,
+            16.265151023864746,
             viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 })
         )
-        this.lookAtTarget = new THREE.Vector3(
-            viewportBreak({ md: 49.7516, sm: 45.7516 }),
-            viewportBreak({ md: 24.93049, sm: 21.9304 }),
-            -1.35464
+        this.lookAtTarget = new THREE.Vector3(65.7516, 24.93049, -1.35464
         )
         this.camera.lookAt(this.lookAtTarget)
 
@@ -177,79 +175,189 @@ class techDemoWebGL {
         requestAnimationFrame(this.animate.bind(this))
     }
     scrollAnimate() {
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.tech-demo__main',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-                markers: true,
-                onUpdate: () => {
-                    this.camera.lookAt( this.lookAtTarget );
+        if (this.viewport.width > 767) {
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.tech-demo__main',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                    onUpdate: () => {
+                        this.camera.lookAt( this.lookAtTarget );
+                    }
+                },
+                defaults: {
+                    ease: 'none'
                 }
-            },
-            defaults: {
-                ease: 'none'
-            }
-        })
-        tl
-        //dummy start 100vh
-        .to('.popup', {duration: 1})
-        //end dummy start 100vh
-        .to(this.camera.position, {
-            x: -43.3858,
-            y: 3.16929,
-            z: -17.9227,
-            duration: 1
-        })
-        .to(this.lookAtTarget, {
-            x: -19.2134,
-            y: 5.46543,
-            z: -0.014547,
-            duration: 1
-        }, '<=0')
-        .to('.tech-demo__main-inner .tech-demo__main-item', {
-            yPercent: -100,
-            duration: 1
-        }, '<=0')
-        .to(this.camera.position, {
-            x: -36.182,
-            y: 28.6084,
-            z: 52.1051,
-            duration: 1
-        })
-        .to(this.lookAtTarget, {
-            x: 11.3448,
-            y: 6.2503,
-            z: 0.056603,
-            duration: 1
-        }, '<=0')
-        
-        tl.to('.tech-demo__main-inner .tech-demo__main-item', {
-            yPercent: -200,
-            duration: 1
-        }, '<=0')
-        console.log(this.containerGrp)
-        this.containerGrp.forEach((el, idx) => {
-            let delayTime;
-            if (idx == 0) {
-                delayTime = '<=.4'
-            } else {
-                delayTime = '<=0'
-            }
-            tl.to(el.position, {
-                y: `${10 + 3 * (Math.random() - .5) * 2}`,
-                duration: .6,
-            }, delayTime)
-            .to(el.material, {
-                opacity: 0,
-                duration: .6
+            })
+            tl
+            //dummy start 100vh
+            // .to('.popup', { duration: 1 })
+            .to(this.camera.position, {
+                x: viewportBreak({ md: 74.63897705078125, sm: 85.63897705078125 }),
+                y: viewportBreak({ md: 16.265151023864746, sm: 10.265151023864746 }),
+                z: viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 }),
+                duration: 1
+            })
+            .to(this.lookAtTarget, {
+                x: viewportBreak({ md: 49.7516, sm: 45.7516 }),
+                y: viewportBreak({ md: 24.93049, sm: 21.9304 }),
+                z: -1.35464,
+                duration: 1
             }, '<=0')
-        })
-        //dummy end 100vh
-        tl.to('.popup', {duration: 1})
-        //end dummy end 100vh
+            //end dummy start 100vh
+            .to(this.camera.position, {
+                x: viewportBreak({ md: -43.3858, sm: -75.3858 }),
+                y: viewportBreak({ md: -3.16929, sm: -1.16929 }),
+                z: viewportBreak({ md: -17.9227, sm: -38.9227 }),
+                duration: 1
+            })
+            .to(this.lookAtTarget, {
+                x: viewportBreak({ md: -19.2134, sm: -24.2134 }),
+                y: viewportBreak({ md: 5.46543, sm: 4.46543 }),
+                z: -0.014547,
+                duration: 1
+            }, '<=0')
+            .to('.tech-demo__main-inner .tech-demo__main-item', {
+                yPercent: -100,
+                duration: 1
+            }, '<=0')
+            .to(this.camera.position, {
+                x: viewportBreak({ md: -36.182, sm: -75.182 }),
+                y: viewportBreak({ md: 28.6084, sm: 40.6084, }),
+                z: viewportBreak({ md: 52.1051, sm: 100.1051 }),
+                duration: 1
+            })
+            .to(this.lookAtTarget, {
+                x: viewportBreak({ md: 11.3448, sm: 20.3448 }),
+                y: 6.2503,
+                z: 0.056603,
+                duration: 1
+            }, '<=0')
+            .to('.tech-demo__main-inner .tech-demo__main-item', {
+                yPercent: -200,
+                duration: 1
+            }, '<=0')
+            console.log(this.containerGrp)
+            this.containerGrp.forEach((el, idx) => {
+                let delayTime;
+                if (idx == 0) {
+                    delayTime = '<=.4'
+                } else {
+                    delayTime = '<=0'
+                }
+                tl.to(el.position, {
+                    y: `${10 + 3 * (Math.random() - .5) * 2}`,
+                    duration: .6,
+                }, delayTime)
+                .to(el.material, {
+                    opacity: 0,
+                    duration: .6
+                }, '<=0')
+            })
+            //dummy end 100vh
+            tl.to(this.camera.position, {
+                x: viewportBreak({ md: -10.182, sm: -50.182 }),
+                y: viewportBreak({ md: 10.6084, sm: 40.6084}),
+                z: viewportBreak({ md: 0.1051, sm: 0.1051 }),
+                duration: 1
+            })
+            .to(this.lookAtTarget, {
+                x: viewportBreak({ md: 60.3448, sm: 80.3448 }),
+                y: viewportBreak({ md: 55.2503, sm: 55.2503 }),
+                z: viewportBreak({ md: 0.056603, sm: 0.056603 }),
+                duration: 1
+            }, '<=0')
+            // tl.to('.popup', {duration: 1})
+            //end dummy end 100vh
 
+        }
+        else {
+            const parent = childrenSelect('.tech-demo__main');
+            let pointer = [
+                {
+                    position: {
+                        x: 85.63897705078125,
+                        y: 10.265151023864746,
+                        z: -68.48991394042969
+                    },
+                    lookAt: {
+                        x: 55.7516,
+                        y: 12.9304,
+                        z: -1.35464
+                    }
+                },
+                {
+                    position: {
+                        x: -60.3858,
+                        y: 0.16929,
+                        z: -40.9227,
+                    },
+                    lookAt: {
+                        x: -11.2134,
+                        y: -3.46543,
+                        z: -1.014547,
+                    }
+                },
+                {
+                    position: {
+                        x: -72.182,
+                        y: 50.6084,
+                        z: 90.1051
+                    },
+                    lookAt: {
+                        x: 0.3448,
+                        y: -12.2503,
+                        z: 0.056603
+                    }
+                }
+            ]
+            swiper.initClassName(parent);
+            swiper.setup(parent, {
+                touchMove: true,
+                on: {
+                    slideChange: (slide) => {
+                        let index = slide.activeIndex;
+
+                        let tlSwiper = gsap.timeline({
+                            onUpdate: () => {
+                                this.camera.lookAt( this.lookAtTarget );
+                            }
+                        })
+                        tlSwiper
+                            .to(this.camera.position, {
+                                ...pointer[index].position,
+                                duration: 1,
+                        }, '0')
+                            .to(this.lookAtTarget, {
+                                ...pointer[index].lookAt,
+                                duration: 1,
+                                onUpdate: () => {
+                                    this.camera.lookAt( this.lookAtTarget );
+                                }
+                            }, '<=0')
+
+                        this.containerGrp.forEach((el, idx) => {
+                            let delayTime;
+                            if (idx == 0) {
+                                delayTime = '<=.4'
+                            } else {
+                                delayTime = '<=0'
+                            }
+                            tlSwiper.to(el.position, {
+                                y: `${index === 2 ? (10 + 3 * (Math.random() - .5) * 2) : 0}`,
+                                duration: 1,
+                            }, delayTime)
+                        })
+                    },
+                    beforeInit: () => {
+                        this.camera.position.set(pointer[0].position.x, pointer[0].position.y, pointer[0].position.z)
+                        this.lookAtTarget = new THREE.Vector3(pointer[0].lookAt.x, pointer[0].lookAt.y, pointer[0].lookAt.z)
+                        this.camera.lookAt(this.lookAtTarget)
+                    }
+                }
+            })
+        }
     }
     init() {
         this.setupCamera()
@@ -304,27 +412,63 @@ function techVideo() {
 function techVideoInteraction() {
     const container = $('.tech-vid')
     const item = $('.tech-vid__main-inner');
-    container.addClass('end-state')
-    let state = Flip.getState(item);
-    container.removeClass('end-state')
-    Flip.to(state, {
-        simple: true,
-        scrollTrigger: {
-            trigger: '.tech-vid__main',
-            start: `top top+=${($(window).height() - $('.tech-vid__holder').height())  / 2}`,
-            end: `top -=${viewportBreak({ md: 150, sm: 40 })}%`,
-            scrub: true,
-            pin: true,
-        }
-    })
+    if (viewport.width > 767) {
+        container.addClass('end-state')
+        let state = Flip.getState(item);
+        container.removeClass('end-state')
+        Flip.to(state, {
+            simple: true,
+            scrollTrigger: {
+                trigger: '.tech-vid__main',
+                start: `top top+=${($(window).height() - $('.tech-vid__holder').height())  / 2}`,
+                end: `top -=${viewportBreak({ md: 150, sm: 40 })}%`,
+                scrub: true,
+                pin: true,
+            }
+        })
+    }
 
+    const videoAction = {
+        play: (video) => {
+            if (!video) return;
+            let el = $(video).get(0);
+            el.play()
+
+            $('.tech-vid__play-btn').addClass('playing');
+            $('.tech-vid__main-vid').addClass('playing');
+        },
+        pause: (video) => {
+            if (!video) return;
+            let el = $(video).get(0);
+            el.pause()
+
+            $('.tech-vid__play-btn').removeClass('playing');
+            $('.tech-vid__main-vid').removeClass('playing');
+        }
+    }
+    let clearThumb = (wrap) => wrap.hasClass('clear-thumb') ? true : wrap.addClass('clear-thumb');
     let playBtn = '.tech-vid__play-btn'
     $(playBtn).on('click', function(e) {
         e.preventDefault();
+        videoAction.play('#vidTech');
+        console.log("click")
+
+        if (!clearThumb(item)) return;
         let target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height();
+        clearThumb(item);
         lenis.scrollTo(target)
     })
-    if ($(window).width() > 991) {
+    $('.tech-vid__main-vid').on('click', function () {
+        if (!clearThumb(item)) return;
+
+        if ($(this).hasClass('playing')) {
+            videoAction.pause('#vidTech');
+        }
+        else {
+            videoAction.play('#vidTech');
+        }
+    })
+    if (viewport.width > 991) {
         if (!isTouchDevice()) {
             function moveCursor() {
                 let iconsX = xGetter(playBtn);
@@ -354,27 +498,30 @@ function techDemo() {
     techWebGL.init()
     techWebGL.reset()
 
-    let techDemoItems = $('.tech-demo__main-item')
-    requestAnimationFrame(() => {
-        techDemoItems.each((idx, el) => {
-            const techDemoItemTitle = new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.words)
-            const techDemoItemSub = new SplitText(el.querySelector('.tech-demo__main-item-richtext'), typeOpts.words)
-            const techDemoItemTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: $(el).find('.tech-demo__main-item-title'),
-                    start: 'top top+=75%',
-                },
-                onComplete: () => {
-                    techDemoItemTitle.revert()
-                    new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.lines)
-                    techDemoItemSub.revert()
-                }
+    let techDemoItems = $('.tech-demo__main-item');
+
+    if (viewport.width > 767) {
+        requestAnimationFrame(() => {
+            techDemoItems.each((idx, el) => {
+                const techDemoItemTitle = new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.words)
+                const techDemoItemSub = new SplitText(el.querySelector('.tech-demo__main-item-richtext'), typeOpts.words)
+                const techDemoItemTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: $(el).find('.tech-demo__main-item-title'),
+                        start: 'top top+=75%',
+                    },
+                    onComplete: () => {
+                        techDemoItemTitle.revert()
+                        new SplitText(el.querySelector('.tech-demo__main-item-title'), typeOpts.lines)
+                        techDemoItemSub.revert()
+                    }
+                })
+                techDemoItemTl
+                .from(techDemoItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '0')
+                .from(techDemoItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
             })
-            techDemoItemTl
-            .from(techDemoItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '0')
-            .from(techDemoItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
         })
-    })
+    }
 }
 function techMap() {
     function reverseLineStringCoordinates(lineString) {
@@ -655,9 +802,7 @@ const techScript = {
             techVideo()
             techDemo()
             techMap()
-            if (viewport.width > 767) {
-                techVideoInteraction();
-            }
+            techVideoInteraction();
             techMapInteraction()
             techControl()
         }, 100);
