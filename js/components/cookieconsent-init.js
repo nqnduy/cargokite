@@ -97,21 +97,21 @@ const initCookie = () => {
                                 enabled: false,
                                 readonly: false
                             },
-                            cookie_table: [             // list of all expected cookies
-                                {
-                                    col1: '^_ga',       // match all cookies starting with "_ga"
-                                    col2: 'google.com',
-                                    col3: '2 years',
-                                    col4: 'description ...',
-                                    is_regex: true
-                                },
-                                {
-                                    col1: '_gid',
-                                    col2: 'google.com',
-                                    col3: '1 day',
-                                    col4: 'description ...',
-                                }
-                            ]
+                            // cookie_table: [             // list of all expected cookies
+                            //     {
+                            //         col1: '^_ga',       // match all cookies starting with "_ga"
+                            //         col2: 'google.com',
+                            //         col3: '2 years',
+                            //         col4: 'description ...',
+                            //         is_regex: true
+                            //     },
+                            //     {
+                            //         col1: '_gid',
+                            //         col2: 'google.com',
+                            //         col3: '1 day',
+                            //         col4: 'description ...',
+                            //     }
+                            // ]
                         }, {
                             title: 'Advertisement and Targeting cookies',
                             description: 'These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you',

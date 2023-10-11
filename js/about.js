@@ -2,6 +2,7 @@ import $ from "jquery";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
+import { nestedLinesSplit } from "./untils";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 let typeOpts = {
@@ -182,7 +183,7 @@ function abtMiles() {
     .to('.abt-mil__progress-dot', {top: '100%', ease: 'none'}, 0)
 
     const abtMilLabel = new SplitText('.abt-mil__label', typeOpts.chars);
-    const abtMilTitle = new SplitText('.abt-mil__title', typeOpts.words);
+    const abtMilTitle = nestedLinesSplit('.abt-mil__title', typeOpts.words);
     let tlHead = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-mil__head',
@@ -190,7 +191,6 @@ function abtMiles() {
         },
         onComplete: () => {
             abtMilLabel.revert();
-            abtMilTitle.revert();
             new SplitText('.abt-mil__title', typeOpts.lines);
         }
     })
@@ -268,7 +268,7 @@ function abtTeam() {
             };
             replaceInfo('name');
             replaceInfo('job');
-            replaceInfo('link');
+            replaceInfo('icon');
             gsap.set('.abt-team__main-img-inner', { y: 0 });
             gsap.from('.abt-team__main-img-inner', { y: 5 });
             abtTeamImgItem.eq($(this).index()).addClass('selected');

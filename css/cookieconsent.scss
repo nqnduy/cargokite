@@ -13,7 +13,7 @@
     --cc-btn-secondary-text: var(--cc-text);
     --cc-btn-secondary-hover-bg: #d8e0e6;
     --cc-btn-secondary-hover-text: var(--cc-btn-secondary-text);
-    --cc-btn-border-radius: 0.4rem;
+    --cc-btn-border-radius: 0;
     --cc-toggle-bg-off: #919ea6;
     --cc-toggle-bg-on: var(--cc-btn-primary-bg);
     --cc-toggle-bg-readonly: #d5dee2;
@@ -102,7 +102,6 @@
     color: var(--cc-text);
 }
 
-.cc_div .c-bn,
 .cc_div .b-tl,
 #c-ttl,
 #s-bl td:before{
@@ -272,10 +271,10 @@
 .cc_div .c-bn{
     color: var(--cc-btn-secondary-text);
     background: var(--cc-btn-secondary-bg);
-    padding: 1.2em 1.7em;
+    padding: 1.6rem 2rem;
     display: inline-block;
     cursor: pointer;
-    font-size: 0.82em;
+    font-size: 0.9em;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -284,6 +283,8 @@
     text-align: center;
     border-radius: var(--cc-btn-border-radius);
     flex: 1;
+    line-height: 1.6em;
+    font-weight: 500;
 }
 
 #c-bns button + button,
@@ -578,8 +579,8 @@ CookieConsent settings modal
 
 #s-c-bn{
     padding: 0;
-    width: 4rem;
-    height: 4rem;
+    width: 6rem;
+    height: 6rem;
     font-size: 1.45em;
     margin: 0;
     font-weight: initial;
@@ -589,6 +590,7 @@ CookieConsent settings modal
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 
 #s-c-bnc{
@@ -879,8 +881,8 @@ html.force--consent.show--consent body{
 #s-c-bn::after{
     content: '';
     position: absolute;
-    height: .6em;
-    width: 1.5px;
+    height: 2.8rem;
+    width: 0.15rem;
     background: var(--cc-btn-secondary-text);
     transform: rotate(45deg);
     border-radius: 1em;

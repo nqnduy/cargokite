@@ -120,6 +120,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            img {
+                z-index: 1;
+                pointer-events: none;
+            }
+            &.clear-thumb {
+                img {
+                    opacity: 0;
+                    @include transition(0.4s ease-out);
+                }
+            }
             @include md {
                 width: 40.25%;
                 margin-right: 0;
@@ -128,9 +138,16 @@
                 width: 100%;
             }
         }
+        &-vid {
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
     }
     &__play-btn {
         position: absolute;
+        z-index: 2;
         @include size(12rem);
         @include sm {
             @include size(6.4rem);
@@ -161,6 +178,10 @@
                     transform: scale(1.2);
                 }
             }
+        }
+        &.playing {
+            opacity: 0;
+            @include transition(0.35s ease-out 0.15s);
         }
     }
 
@@ -249,8 +270,11 @@
             flex-direction: column;
             justify-content: center;
             @include sm {
-                padding-top: 49vh;
+                height: 42.2rem;
+                max-height: 42.2rem;
                 height: 100%;
+                margin-top: auto;
+                padding-bottom: 9.6rem;
                 justify-content: flex-start;
             }
             &-title {
@@ -261,6 +285,7 @@
                 }
                 @include sm {
                     font-size: 3.2rem;
+                    line-height: 1.3em;
                     margin-bottom: 2.4rem;
                 }
             }
@@ -357,9 +382,12 @@
         &-p {
             color: rgba($cl-body, 1);
         }
+        @include md {
+            max-width: none;
+        }
     }
     &__img {
-        grid-column: 7/17;
+        grid-column: 8/16;
         align-self: end;
         display: flex;
         flex-direction: column;
@@ -369,6 +397,7 @@
         }
         @include sm {
             grid-column: span 2;
+            margin-top: 8rem;
         }
     }
 }
@@ -419,6 +448,16 @@
                 padding-top: 160%;
             }
         }
+
+        &:hover {
+            .leaflet-control-container {
+                .leaflet-top.leaflet-left {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        }
+
         //Leaflet custom
         path.leaflet-interactive {
             stroke: rgba($cl-orange, 1);
@@ -429,9 +468,16 @@
 
         .leaflet-control-container {
             .leaflet-top.leaflet-left {
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all $dur-default ease;
                 top: 0;
                 right: 0;
                 left: auto;
+                @include md {
+                    opacity: 1;
+                    transform: none;
+                }
                 @include sm {
                     top: 50%;
                     @include transform(translateY(-50%));

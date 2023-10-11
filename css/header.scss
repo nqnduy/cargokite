@@ -2,9 +2,11 @@
 .header {
     --header-txt: 255,255,255;
     --header-bg: 255,255,255;
+    --header-orange: 255, 71, 29;
     &.on-scroll {
         --header-txt: 0,0,0;
-        //--header-bg: 0,0,0;
+        --header-orange: 0,0,0;
+        --header-orange: 255, 71, 29;
     }
     background-color: rgba(var(--header-bg), 0);
     padding: 3.2rem 0;
@@ -32,6 +34,9 @@
             path {
                 transition: fill $dur-default ease;
                 fill: rgba(var(--header-txt), 1) !important;
+                &.cl-orange {
+                    fill: rgba(var(--header-orange), 1) !important;
+                }
             }
         }
     }
@@ -87,6 +92,9 @@
                     svg {
                         path {
                             fill: rgba(var(--header-txt), 1) !important;
+                            &.cl-orange {
+                                fill: rgba(var(--header-orange), 1) !important;
+                            }
                         }
                     }
                 }
