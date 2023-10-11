@@ -54,7 +54,7 @@ const initCookie = () => {
                     title: 'Cookies consent',
                     description: 'By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts. <button type="button" data-cc="c-settings" class="cc-link">Settings</button>',
                     // close_btn_label: 'Close',
-                    close: '<button type="button" id="s-c-bn" style="margin-right: -3rem" class="c-bn" aria-label="Close"><span tabindex="-1"></span></button>',
+                    close: '<button type="button" id="s-c-bn" class="c-bn" aria-label="Close"><span tabindex="-1"></span></button>',
                     primary_btn: {
                         text: 'Accept',
                         role: 'accept_all'              // 'accept_selected' or 'accept_all'
