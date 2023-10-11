@@ -320,6 +320,30 @@ function abtJob() {
         .from(abtJobItems, {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .1, clearProps: 'all'})
     })
 }
+function getApi_abtTeam() {
+    console.log('start')
+    getAllDataByType('team', 'asc').then((res) => {
+        let allTeam = res;
+        let templateTeam = $('.abt-team__main-item').eq(0).clone();
+        let templatePic = $('.abt-team__main-img-item').eq(0).clone();
+        $('.abt-team__main-list').html('')
+        $('.abt-team__main-img-inner').find('.abt-team__main-img-item').remove()
+        allTeam.forEach((i) => {
+            console.log(i)
+            let htmlTeam = templateTeam.clone();
+            let htmlPic = templatePic.clone();
+            htmlTeam.find('.abt-team__main-item-name').text(i.data.name)
+            htmlTeam.find('.abt-team__main-item-job').text(i.data.job)
+            htmlTeam.find('.abt-team__main-item-icon').attr('href',i.data.linkedin.url ? i.data.linkedin.url : '#').attr('target', i.data.linkedin.target)
+            htmlTeam.appendTo('.abt-team__main-list');
+            htmlPic.find('img').attr('src', i.data.picture.url).attr('alt',i.data.picture.alt)
+            htmlPic.appendTo('.abt-team__main-img-inner')
+            console.log(i.data.name)
+        })
+        console.log('end')
+        abtTeam()
+    })
+ }
 const aboutScript = {
     namespace: 'about',
     afterEnter() {
@@ -328,9 +352,10 @@ const aboutScript = {
             abtHero()
             abtInfo()
             abtMiles()
-            abtTeam()
+            //abtTeam()
             abtJob()
         }, 100);
+        getApi_abtTeam()
     },
     beforeLeave() {
         console.log('leave about')

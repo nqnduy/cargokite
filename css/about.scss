@@ -368,6 +368,7 @@
             display: flex;
             flex-direction: column;
             padding-bottom: 33.7rem;
+            min-height: 112rem;
         }
         &-item {
             display: grid;
@@ -744,6 +745,7 @@
             }
             &-list {
                 padding-bottom: 2rem;
+                min-height: auto;
             }
             &-item {
                 padding: 2.4rem 0;

@@ -410,7 +410,6 @@ function homeWhy() {
 
     const homeWhyItems = $('.home-why__main-item');
     homeWhyItems.each((index, el) => {
-
         let homeWhyItemTitle = new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.words)
         let tlHomeWhyItem = gsap.timeline({
             scrollTrigger: {
