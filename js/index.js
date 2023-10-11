@@ -8,6 +8,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { initCookie, cookieConsent, cookieAccepted } from './components/cookieconsent-init';
+import { getAllDataByType } from './common/prismic_fn';
 
 import homeScript from './home';
 import aboutScript from './about';
@@ -481,6 +482,14 @@ const scripts = () => {
     }
     handleForm()
 
+    function checkIfJobAvail() {
+        getAllDataByType('job').then((res) => {
+            if (res.length <= 0) {
+                $('.footer .tag-link').addClass('hidden')
+            }
+        })
+    }
+
     const VIEWS = [
         homeScript,
         aboutScript,
@@ -501,6 +510,7 @@ const scripts = () => {
                 initCookie();
                 handlePopup.toggle();
                 handlePopup.cookie();
+                checkIfJobAvail()
             },
             async enter(data) {
 

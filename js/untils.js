@@ -123,4 +123,36 @@ const ySetter = (el) => gsap.quickSetter(el, 'y', `px`);
 const xGetter = (el) => gsap.getProperty(el, 'x')
 const yGetter = (el) => gsap.getProperty(el, 'y')
 
-export { nestedLinesSplit, createToc, lerp, isTouchDevice, pointerCurr, xSetter, ySetter, xGetter, yGetter }
+function toHTML(richTextArray, pClass, linkClass) {
+    let html = '';
+    for (const block of richTextArray) {
+        switch (block.type) {
+        case 'paragraph':
+                let string = block.text;
+                for (const span of block.spans) {
+                    switch (span.type) {
+                        case 'hyperlink':
+                            let link = new URL(span.data.url)
+                            string = string.replace(block.text.substring(span.start, span.end),`<a href="${window.location.origin}${link.pathname}${link.hash}" class="${linkClass}" >${block.text.substring(span.start, span.end)}</a>`);
+                        case 'label':
+                            let tag;
+                            switch (span.data.label) {
+                                case 'contact':
+                                tag = "contact"
+                            }
+                            string = string.replace(block.text.substring(span.start, span.end),`<a href="#" class="${linkClass}" data-popup="${tag}" >${block.text.substring(span.start, span.end)}</a>`);
+                        break;
+                        default:
+                        break;
+                    }
+                }
+                html += `<p class="${pClass}">${string}</p>`;
+            break;
+        default:
+            console.error(`Unsupported block type: ${block.type}`);
+        }
+    }
+    return html;
+}
+
+export { nestedLinesSplit, createToc, lerp, isTouchDevice, pointerCurr, xSetter, ySetter, xGetter, yGetter, toHTML }

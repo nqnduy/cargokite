@@ -96,13 +96,8 @@ class techDemoWebGL {
 
         this.loader.load(url,
         (glb) => {
-            console.log(glb)
             this.model = glb.scene;
-            //this.scene.add( new THREE.AmbientLight( 0xffffff ) );
-            //this.scene.add( new THREE.DirectionalLight( 0xffffff, 4 ) );
             this.scene.environment = this.hdri;
-            //this.scene.background = this.hdri;
-            //this.scene.fog = new THREE.Fog( 0x212121, 10, 120 );
             let orangeMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#FF471D'),
                 envMapIntensity: 4,
@@ -238,7 +233,6 @@ class techDemoWebGL {
                 yPercent: -200,
                 duration: 1
             }, '<=0')
-            console.log(this.containerGrp)
             this.containerGrp.forEach((el, idx) => {
                 let delayTime;
                 if (idx == 0) {
@@ -451,7 +445,6 @@ function techVideoInteraction() {
     $(playBtn).on('click', function(e) {
         e.preventDefault();
         videoAction.play('#vidTech');
-        console.log("click")
 
         if (!clearThumb(item)) return;
         let target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height();
@@ -682,7 +675,6 @@ function techMap() {
             $(this).closest('.input-wrap').find('.input-hidden').val(id)
 
             if ($(this).closest('.input-wrap').hasClass('input-wrap-start')) {
-                console.log('start')
                 $('.input-wrap-end .port-item').removeClass('hidden-dup')
                 $('.input-wrap-end .port-item').each((idx, el) => {
                     if ($(el).find('.port-item-id').text() === id) {
@@ -690,7 +682,6 @@ function techMap() {
                     }
                 })
             } else {
-                console.log('end')
                 $('.input-wrap-start .port-item').removeClass('hidden-dup')
                 $('.input-wrap-start .port-item').each((idx, el) => {
                     if ($(el).find('.port-item-id').text() === id) {
@@ -709,7 +700,6 @@ function techMap() {
         let value = $(this).val().toLowerCase().trim();
         if (value == '') {
             itemList.removeClass('hidden-srch')
-            itemList.each((el) => console.log(el))
         } else {
             itemList.each((idx, el) => {
                 let compVal = $(el).find('.port-item-name').text()
@@ -797,7 +787,6 @@ const techScript = {
     afterEnter() {
         console.log('enter tech')
         setTimeout(() => {
-            console.log('hello')
             techHero()
             techVideo()
             techDemo()

@@ -319,6 +319,11 @@
             margin-bottom: 4rem;
             color: rgba($cl-body, 1);
         }
+        &-link {
+            &.hidden {
+                visibility: hidden;
+            }
+        }
     }
     .p-line {
         grid-column: 2/16;
@@ -428,6 +433,9 @@
 .abt-job {
     padding-bottom: 32.4rem;
     padding-top: 20rem;
+    &.hidden {
+        display: none;
+    }
     &__label {
         grid-column: 2/5;
         align-self: start;

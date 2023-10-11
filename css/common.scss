@@ -120,6 +120,9 @@ button {
         clip-path: polygon(0% 0%, 100% 0, 0% 100%);
         background-color: rgba($cl-orange, 1);
     }
+    &.hidden {
+        display: none;
+    }
 }
 
 .arr-wrap {

@@ -1,6 +1,7 @@
 import $ from "jquery";
 import gsap from "gsap";
 import SplitText from "./vendors/SplitText";
+import { getAllDataByType } from "./common/prismic_fn";
 
 let typeOpts = {
     lines: { type: 'lines', linesClass: 'g-lines'},
@@ -49,10 +50,37 @@ function newsHero() {
         }
     })
 }
+function getApi_newsHero() {
+    getAllDataByType('news').then((res) => {
+        let allNews = res;
+        let templateNews = $('.news-hero__main-item').eq(0).clone();
+        let templateLogo = $('.news-hero__logo-ex-item').eq(0).clone();
+        $('.news-hero__main').html('')
+        $('.news-hero__logo-ex').html('')
+        allNews.forEach((i) => {
+            let htmlNews = templateNews.clone();
+            htmlNews.attr('href', i.data.link.url).attr('target', i.data.link.target ? i.data.link.target : '')
+            htmlNews.find('.news-hero__main-item-label').text(i.data.press)
+            htmlNews.find('.news-hero__main-item-title').text(i.data.name)
+            htmlNews.find('.news-hero__main-item-site').text(i.data.domain)
+            htmlNews.find('.news-hero__main-item-year').text(i.data.year)
+            htmlNews.appendTo('.news-hero__main');
 
+            let htmlLogo = templateLogo.clone(); 
+            htmlLogo.find('img').attr('src', i.data.logo.url).attr('alt', i.data.logo.alt ? i.data.logo.alt : i.data.press)
+            htmlLogo.appendTo('.news-hero__logo-ex');
+        })
+        newsHero()
+        newsHeroInteraction()
+    })
+}
 function newsHeroInteraction() {
     let newsHeroItem = $('.news-hero__main-item')
-    console.log(newsHeroItem.length)
+    newsHeroItem.each((i, el) => {
+        if (i >= 3) {
+            $(el).addClass('hidden')
+        }
+    })
     newsHeroItem.on('mouseenter', function(e) {
         e.preventDefault();
         let index = $(this).index();
@@ -94,9 +122,10 @@ const newsScript = {
     afterEnter() {
         console.log('enter news')
         setTimeout(() => {
-            newsHero()
+            //newsHero()
 
-            newsHeroInteraction()
+            getApi_newsHero()
+            //newsHeroInteraction()
         }, 100);
     },
     beforeLeave() {

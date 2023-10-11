@@ -1,10 +1,11 @@
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import $ from "jquery";
-import { nestedLinesSplit } from './untils';
+import { nestedLinesSplit, toHTML } from './untils';
 import SplitText from "./vendors/SplitText";
 import { childrenSelect } from './common/utils/childrenSelector'
 import swiper from './components/swiper';
+import { getAllDataByType } from "./common/prismic_fn";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -28,7 +29,7 @@ let typeOpts = {
 };
 let gOpts = {
     ease: 'power2.easeOut'
-}
+};
 
 function homeHero() {
     const homeHeroTitle = new SplitText('.home-hero__title', typeOpts.chars);
@@ -572,6 +573,44 @@ function homeFaqInteraction() {
         }
     })
 }
+function getApi_homePart() {
+    getAllDataByType('partner', 'asc').then((res) => {
+        let allPart = res;
+        let templatePart = $('.home-part__main-item').eq(0).clone();
+        $('.home-part__main-supporters').html('')
+        $('.home-part__main-investors').html('')
+        allPart.forEach((i) => {
+            let htmlPart = templatePart.clone();
+            htmlPart.find('img').attr('src',i.data.logo.url).attr('alt',i.data.logo.alt ? i.data.logo.alt : i.data.name)
+            if (i.data.type == "Supporter") {
+                htmlPart.appendTo('.home-part__main-supporters');
+            } else {
+                htmlPart.appendTo('.home-part__main-investors');
+            }
+        })
+        homePart()
+    })
+}
+function getApi_homeFaq() {
+    getAllDataByType('faq', 'asc').then((res) => {
+        let allFaq = res;
+        let templateFaq = $('.faq-item').eq(0).clone();
+        $('.home-faq__main').html('')
+        allFaq.forEach((i) => {
+            let htmlFaq = templateFaq.clone();
+            htmlFaq.find('.faq-item__head-txt').text(i.data.ques)
+            htmlFaq.find('.faq-item__body').html(toHTML(i.data.ans, 'txt txt-16', 'txt-link hover-un'))
+            htmlFaq.appendTo('.home-faq__main');
+        })
+        homeFaq()
+        homeFaqInteraction()
+        $('.home-faq__main [data-popup="contact"]').on('click', function(e) {
+            e.preventDefault()
+            $('.popup').addClass('active')
+            lenis.stop()
+        })
+    })
+}
 
 const homeScript = {
     namespace: 'home',
@@ -588,14 +627,15 @@ const homeScript = {
             homeShift()
             homeTech()
             homeWhy()
-            homePart()
-            homeFaq()
+            //homePart()
+            //homeFaq()
 
-            //homeTechInteraction()
+            getApi_homePart()
+            getApi_homeFaq()
             if ($(window).width() > 991) {
                 homeWhyInteraction();
             }
-            homeFaqInteraction()
+            //homeFaqInteraction()
         }, 100);
     },
     beforeLeave() {

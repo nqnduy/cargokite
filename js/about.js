@@ -2,7 +2,8 @@ import $ from "jquery";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit } from "./untils";
+import { nestedLinesSplit, toHTML } from "./untils";
+import { getAllDataByType } from "./common/prismic_fn";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 let typeOpts = {
@@ -320,8 +321,23 @@ function abtJob() {
         .from(abtJobItems, {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .1, clearProps: 'all'})
     })
 }
+function getApi_abtMiles() {
+    getAllDataByType('milestone', 'asc').then((res) => {
+        let allMiles = res;
+        let templateMile = $('.abt-mil__main-item').eq(0).clone();
+        $('.abt-mil__main-inner').html('')
+        console.log(allMiles)
+        allMiles.forEach((i) => {
+            let htmlMile = templateMile.clone();
+            htmlMile.find('.abt-mil__main-item-label').text(i.data.label)
+            htmlMile.find('.abt-mil__main-item-title').text(i.data.title)
+            htmlMile.find('.abt-mil__main-item-richtext').html(toHTML(i.data.content, 'txt txt-18 abt-mil__main-item-richtext-p'))
+            htmlMile.appendTo('.abt-mil__main-inner');
+        })
+        abtMiles()
+    })
+}
 function getApi_abtTeam() {
-    console.log('start')
     getAllDataByType('team', 'asc').then((res) => {
         let allTeam = res;
         let templateTeam = $('.abt-team__main-item').eq(0).clone();
@@ -329,7 +345,6 @@ function getApi_abtTeam() {
         $('.abt-team__main-list').html('')
         $('.abt-team__main-img-inner').find('.abt-team__main-img-item').remove()
         allTeam.forEach((i) => {
-            console.log(i)
             let htmlTeam = templateTeam.clone();
             let htmlPic = templatePic.clone();
             htmlTeam.find('.abt-team__main-item-name').text(i.data.name)
@@ -338,12 +353,31 @@ function getApi_abtTeam() {
             htmlTeam.appendTo('.abt-team__main-list');
             htmlPic.find('img').attr('src', i.data.picture.url).attr('alt',i.data.picture.alt)
             htmlPic.appendTo('.abt-team__main-img-inner')
-            console.log(i.data.name)
         })
-        console.log('end')
         abtTeam()
     })
- }
+}
+function getApi_abtJob() {
+    getAllDataByType('job').then((res) => {
+        let allJob = res;
+        let templateJob = $('.abt-job__main-item').eq(0).clone();
+        $('.abt-job__main').html('')
+        if (allJob.length <= 0) {
+            $('.abt-job').addClass('hidden')
+            $('.abt-team__richtext-link').addClass('hidden')
+            $('.footer__main .tag-link').addClass('hidden')
+        } else {
+            allJob.forEach((i) => {
+                let htmlJob = templateJob.clone()
+                htmlJob.attr('href',i.data.desc.url ? i.data.desc.url : '#').attr('target', i.data.desc.target)
+                htmlJob.find('.abt-job__main-item-loca').text(i.data.location)
+                htmlJob.find('.abt-team__main-item-type').text(i.data.type)
+                htmlJob.appendTo('.abt-job__main');
+            })
+            abtJob()
+        }
+    })
+}
 const aboutScript = {
     namespace: 'about',
     afterEnter() {
@@ -351,11 +385,13 @@ const aboutScript = {
         setTimeout(() => {
             abtHero()
             abtInfo()
-            abtMiles()
+            //abtMiles()
             //abtTeam()
-            abtJob()
+            //abtJob()
         }, 100);
+        getApi_abtMiles()
         getApi_abtTeam()
+        getApi_abtJob()
     },
     beforeLeave() {
         console.log('leave about')
