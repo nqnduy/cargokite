@@ -488,7 +488,6 @@
                                     height: calc((100% - (6 * 3rem)) / 7);
                                 }
                             }
-
                         }
                         .home-shift__small-txt {
                             position: absolute;
@@ -803,6 +802,9 @@
     &__title {
         //margin-bottom: 6rem;
     }
+    &__btn {
+        margin-top: 3.2rem;
+    }
     &__main {
         grid-column: 1/17;
         display: flex;
@@ -824,13 +826,6 @@
         color: rgba($cl-txt, 1);
         margin-bottom: 6rem;
     }
-    &__tail {
-        margin-top: 10rem;
-        grid-column: 1/17;
-        text-align: center;
-        justify-self: center;
-    }
-
 }
 .home-faq {
     padding-top: 18.9rem;
@@ -1283,6 +1278,9 @@
         &__label {
             margin-bottom: 1.2rem;
         }
+        &__btn {
+            margin-top: 2.4rem;
+        }
         &__main {
             grid-column: 1/13;
             &-item {
@@ -1295,10 +1293,6 @@
             margin-top: 6rem;
             color: rgba($cl-txt, 1);
             margin-bottom: 4rem;
-        }
-        &__tail {
-            margin-top: 6rem;
-            grid-column: 1/13;
         }
     }
     .home-faq {
@@ -1621,7 +1615,9 @@
                 }
                 &-inner {
                     padding: 3.2rem 2.4rem;
-
+                }
+                &-title br {
+                    display: none;
                 }
                 &-sub {
                     font-size: 1.4rem;
@@ -1641,6 +1637,9 @@
         &__label {
             margin-bottom: 1.2rem;
         }
+        &__btn {
+            padding: 1.2rem 2.1rem
+        }
         &__main {
             grid-column: 1/3;
             &-item {
@@ -1653,10 +1652,6 @@
             margin-top: 6rem;
             color: rgba($cl-txt, 1);
             margin-bottom: 4rem;
-        }
-        &__tail {
-            margin-top: 6rem;
-            grid-column: 1/3;
         }
     }
     .home-faq {

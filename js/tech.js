@@ -235,10 +235,10 @@ class techDemoWebGL {
                 duration: 1
             }, '<=0')
 
-            tl.to('.tech-demo__main-inner .tech-demo__main-item', {
-                yPercent: -200,
-                duration: 1
-            }, '<=0')
+            // tl.to('.tech-demo__main-inner .tech-demo__main-item', {
+            //     yPercent: -200,
+            //     duration: 1
+            // }, '<=0')
             console.log(this.containerGrp)
             this.containerGrp.forEach((el, idx) => {
                 let delayTime;
