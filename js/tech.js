@@ -432,10 +432,6 @@ function techVideoInteraction() {
             $('.tech-vid__main-vid').addClass('playing');
         },
         pause: (video) => {
-            if (!video) return;
-            let el = $(video).get(0);
-            el.pause()
-
             $('.tech-vid__play-btn').removeClass('playing');
             $('.tech-vid__main-vid').removeClass('playing');
         }
@@ -461,16 +457,30 @@ function techVideoInteraction() {
             videoAction.play('#vidTech');
         }
     })
+    // $('#vidTech').on('click', function (e) {
+    //     console.log("click")
+    //     console.log($(this).paused);
+    // })
+
     if (viewport.width > 991) {
         if (!isTouchDevice()) {
             function moveCursor() {
                 let iconsX = xGetter(playBtn);
                 let iconsY = yGetter(playBtn);
                 let vidBoundary = $('.tech-vid__main-inner').get(0);
+                let vidRect = vidBoundary.getBoundingClientRect()
+                let ctrlHeight = 65;
+
                 if ($('.tech-vid__main-inner').length) {
                     if ($('.tech-vid__main-inner:hover').length) {
-                        xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidBoundary.getBoundingClientRect().left - vidBoundary.getBoundingClientRect().width / 2), 0.01);
-                        ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidBoundary.getBoundingClientRect().top - vidBoundary.getBoundingClientRect().height / 2), 0.01);
+                        xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidRect.left - vidRect.width / 2), 0.01);
+                        ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidRect.top - vidRect.height / 2), 0.01);
+                        if (pointerCurr().y - vidRect.top  >= vidRect.height - ctrlHeight) {
+                            gsap.to(playBtn, { opacity: 0, duration: 0.3 })
+                        }
+                        else {
+                            gsap.to(playBtn, { opacity: 1, duration: 0.3 })
+                        }
                     } else {
                         xSetter(playBtn)(lerp(iconsX, 0), 0.01);
                         ySetter(playBtn)(lerp(iconsY, 0), 0.01);

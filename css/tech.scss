@@ -148,6 +148,7 @@
     &__play-btn {
         position: absolute;
         z-index: 2;
+        pointer-events: auto;
         @include size(12rem);
         @include sm {
             @include size(6.4rem);
@@ -164,10 +165,14 @@
             backdrop-filter: blur(3px);
             transition: all $dur-default ease;
             svg {
-                transition: transform $dur-default ease;
+                position: absolute;
+                @include transition(transform $dur-default ease);
                 @include sm {
                     @include size(30%);
                 }
+            }
+            .ic-pause {
+                opacity: 0;
             }
         }
         &:hover {
@@ -180,8 +185,13 @@
             }
         }
         &.playing {
-            opacity: 0;
-            @include transition(0.35s ease-out 0.15s);
+            pointer-events: none;
+            .ic-pause {
+                opacity: 1;
+            }
+            .ic-play {
+                opacity: 0;
+            }
         }
     }
 

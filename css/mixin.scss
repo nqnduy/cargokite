@@ -82,3 +82,15 @@
 	-ms-transition-delay: $args;
 	-o-transition-delay: $args;
 }
+@mixin custom-scroll($width: 0.7rem, $bgTrack: #ddd, $bgThumb: #1D1D1D) {
+	&::-webkit-scrollbar {
+		width: $width;
+	}
+	&::-webkit-scrollbar-track {
+		background: $bgTrack;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: $bgThumb;
+		border-radius: 2rem;
+	}
+}
