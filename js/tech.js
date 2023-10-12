@@ -603,10 +603,16 @@ function techMap() {
             routeLayer.clearLayers();
         }
 
+        let strokeWidth;
+        if ($(window).width() >= 767) {
+            strokeWidth = 4;
+        } else {
+            strokeWidth = 8;
+        }
         const geoJsonLayer = L.geoJSON(reversedGeoJson, {
             style: {
                 color: '#0074D9',
-                weight: 8,
+                weight: strokeWidth,
             },
         }).addTo(routeLayer);
 
@@ -622,7 +628,6 @@ function techMap() {
             });
         }
         
-
         const popup = L.popup();
 
         // Add mousemove event handler to the GeoJSON layer
@@ -632,7 +637,6 @@ function techMap() {
             geoJsonLayer.on('click', handleMouseMove);
         }
         
-
         // Remove popup when mouse leaves the GeoJSON layer
         geoJsonLayer.on('mouseout', handleMouseOut);
 
