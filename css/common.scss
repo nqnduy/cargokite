@@ -206,3 +206,7 @@ button {
 .swiper-slide {
     height: auto;
 }
+html.lenis-scrolling,
+.lenis-scrolling body {
+    overflow: hidden;
+}
