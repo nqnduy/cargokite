@@ -63,6 +63,41 @@ button, input, textarea {
 button {
     cursor: pointer;
 }
+@include sm {
+    html,
+    body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* For android: https://stackoverflow.com/questions/60241559/how-can-i-get-a-fixed-address-bar-in-google-chrome-for-android-with-javascript */
+    }
+    body {
+        position: fixed;
+        overscroll-behavior-y: none;
+        overscroll-behavior-x: none;
+    }
+    .wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+        -ms-scroll-chaining: none;
+        overscroll-behavior: contain;
+    }
+}
+
+// .main {
+//     position: sticky;
+//     top: 0;
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden;
+//     z-index: 2;
+// }
 .hover-un, .priv-hero__main-richtext a {
     position: relative;
     width: fit-content;
@@ -206,7 +241,12 @@ button {
 .swiper-slide {
     height: auto;
 }
-html.lenis-scrolling,
-.lenis-scrolling body {
+html.lenis-scrolling {
     overflow: hidden;
 }
+// .lenis-scrolling body {
+//     -webkit-overflow-scrolling: touch;
+//     height: 100%;
+//     position: fixed;
+//     overflow-y: scroll;
+// }
