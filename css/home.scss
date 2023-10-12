@@ -1539,9 +1539,9 @@
                 &--small-ship {
                     .container.fluid {
                         .home-shift__img-wrap {
-                            height: 96vh;
+                            height: 96dvh;
                             &::after {
-                                width: 500vh;
+                                width: 500dvh;
                             }
                             .home-shift__small-txt {
                                 font-size: 3.2rem;
