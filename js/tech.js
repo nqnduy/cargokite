@@ -148,7 +148,7 @@ class techDemoWebGL {
                         obj.material = this.darkMat;
                     }
                 }
-                
+
                 if (obj.name === 'container-grp') {
                     this.containerGrp = obj.children;
                 } else if (obj.name === 'Battery') {
@@ -475,15 +475,15 @@ function techVideoInteraction() {
     }
 
     const videoAction = {
-        play: (video) => {
-            if (!video) return;
-            let el = $(video).get(0);
-            el.play()
+        play: () => {
+            // if (!video) return;
+            // let el = $(video).get(0);
+            // el.play()
 
             $('.tech-vid__play-btn').addClass('playing');
             $('.tech-vid__main-vid').addClass('playing');
         },
-        pause: (video) => {
+        pause: () => {
             $('.tech-vid__play-btn').removeClass('playing');
             $('.tech-vid__main-vid').removeClass('playing');
         }
@@ -521,18 +521,11 @@ function techVideoInteraction() {
                 let iconsY = yGetter(playBtn);
                 let vidBoundary = $('.tech-vid__main-inner').get(0);
                 let vidRect = vidBoundary.getBoundingClientRect()
-                let ctrlHeight = 65;
 
                 if ($('.tech-vid__main-inner').length) {
                     if ($('.tech-vid__main-inner:hover').length) {
                         xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidRect.left - vidRect.width / 2), 0.01);
                         ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidRect.top - vidRect.height / 2), 0.01);
-                        if (pointerCurr().y - vidRect.top  >= vidRect.height - ctrlHeight) {
-                            gsap.to(playBtn, { opacity: 0, duration: 0.3 })
-                        }
-                        else {
-                            gsap.to(playBtn, { opacity: 1, duration: 0.3 })
-                        }
                     } else {
                         xSetter(playBtn)(lerp(iconsX, 0), 0.01);
                         ySetter(playBtn)(lerp(iconsY, 0), 0.01);
@@ -627,7 +620,7 @@ function techMap() {
                 padding: [100, 100]
             });
         }
-        
+
         const popup = L.popup();
 
         // Add mousemove event handler to the GeoJSON layer
@@ -636,7 +629,7 @@ function techMap() {
         } else {
             geoJsonLayer.on('click', handleMouseMove);
         }
-        
+
         // Remove popup when mouse leaves the GeoJSON layer
         geoJsonLayer.on('mouseout', handleMouseOut);
 
@@ -705,7 +698,7 @@ function techMap() {
     if ($(window).width() <= 767) {
         map.dragging.disable()
     }
-    
+
     // Default center coordinates and zoom level
     L.tileLayer(`https://api.maptiler.com/maps/dataviz-dark/{z}/{x}/{y}.png?key=${key}`, {
         minZoom: 1,
@@ -878,8 +871,8 @@ const techScript = {
             techMap()
             techMapInteraction()
             techControl()
-            
-            
+
+
         }, 100);
     },
     beforeLeave() {

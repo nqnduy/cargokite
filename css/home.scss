@@ -695,6 +695,8 @@
     }
 }
 .home-why {
+    position: relative;
+    z-index: 5;
     padding-bottom: 16.2rem;
     &__head {
         margin-top: 29rem;
