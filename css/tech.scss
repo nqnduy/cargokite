@@ -489,8 +489,11 @@
         @include md {
             grid-column: span 1;
             padding: 6.75rem 3.25rem;
+            z-index: 2;
+            position: relative;
         }
         @include sm {
+            margin-bottom: -10rem;
             padding: 3.8rem 2.5rem;
         }
     }

@@ -94,6 +94,10 @@ class techDemoWebGL {
         this.dracoLoader.setDecoderConfig({type: 'js'})
         this.loader.setDRACOLoader( this.dracoLoader )
 
+        if ($(window).width() <= 767) {
+            const parent = childrenSelect('.tech-demo__main');
+            swiper.initClassName(parent);
+        }
         this.loader.load(url,
         (glb) => {
             this.model = glb.scene;
@@ -351,8 +355,6 @@ class techDemoWebGL {
                     }
                 }
             ]
-            swiper.initClassName(parent);
-            
             swiper.setup(parent, {
                 touchMove: true,
                 spacing: 32,
@@ -604,25 +606,38 @@ function techMap() {
         const geoJsonLayer = L.geoJSON(reversedGeoJson, {
             style: {
                 color: '#0074D9',
-                weight: 4,
+                weight: 8,
             },
         }).addTo(routeLayer);
 
         // Fit the map to the route's bounding box
         const bounds = L.geoJSON(reversedGeoJson).getBounds();
-        map.fitBounds(bounds, {
-            padding: [20, 20],
-        });
+        if ($(window).width() > 767) {
+            map.fitBounds(bounds, {
+                padding: [20, 20]
+            });
+        } else {
+            map.fitBounds(bounds, {
+                padding: [100, 100]
+            });
+        }
+        
 
         const popup = L.popup();
 
         // Add mousemove event handler to the GeoJSON layer
-        geoJsonLayer.on('mousemove', handleMouseMove);
+        if ($(window).width() > 767) {
+            geoJsonLayer.on('mousemove', handleMouseMove);
+        } else {
+            geoJsonLayer.on('click', handleMouseMove);
+        }
+        
 
         // Remove popup when mouse leaves the GeoJSON layer
         geoJsonLayer.on('mouseout', handleMouseOut);
 
         function handleMouseMove(e) {
+            console.log('move')
             const { duration_hr, distance_km, average_speed_km_h } = geojsonData.properties;
             const days = Math.floor(duration_hr / 24);
             const hours = Math.floor(duration_hr % 24);
@@ -643,8 +658,8 @@ function techMap() {
             <span class="txt-bold">${average_speed_km_h.toFixed(2)} km/h</span>
             </div
             </div>
-        `;
-
+            `;
+            console.log(e.latlng)
             popup.setLatLng(e.latlng)
                 .setContent(popupContent)
                 .openOn(map);
@@ -683,6 +698,10 @@ function techMap() {
     const key = 'foURK5elDM5gPh7BhbIO';
     map = L.map('techMap').setView([0, 20], 2);
     map.scrollWheelZoom.disable()
+    if ($(window).width() <= 767) {
+        map.dragging.disable()
+    }
+    
     // Default center coordinates and zoom level
     L.tileLayer(`https://api.maptiler.com/maps/dataviz-dark/{z}/{x}/{y}.png?key=${key}`, {
         minZoom: 1,
@@ -794,7 +813,7 @@ function techMapInteraction() {
     const techMapTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.tech-map__head',
-            start: 'top top+=75%',
+            start: 'top top+=65%',
         },
         onComplete: () => {
             techMapTitle.revert()
@@ -850,11 +869,13 @@ const techScript = {
         setTimeout(() => {
             techHero()
             techVideo()
+            techVideoInteraction();
             techDemo()
             techMap()
-            techVideoInteraction();
             techMapInteraction()
             techControl()
+            
+            
         }, 100);
     },
     beforeLeave() {
