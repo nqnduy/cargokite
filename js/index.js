@@ -9,18 +9,22 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { initCookie, cookieConsent, cookieAccepted } from './components/cookieconsent-init';
 import { getAllDataByType } from './common/prismic_fn';
+import { viewport } from './common/helpers/viewport';
+import vh from './common/helpers/vh';
 
 import homeScript from './home';
 import aboutScript from './about';
 import techScript from './tech';
 import newsScript from './news';
 import privacyScript from './privacy';
-import { viewport } from './common/helpers/viewport';
+
 
 const scripts = () => {
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
     }
+    vh.init();
+
 
     barba.use(barbaPrefetch);
     gsap.registerPlugin(ScrollTrigger, SplitText);

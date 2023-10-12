@@ -1118,9 +1118,9 @@
         }
     }
     .home-shift {
-        margin-bottom: -75dvh;
+        margin-bottom: calc(-75 * var(--vh));
         &__main {
-            height: calc(450dvh + 75dvh);
+            height: calc((450 * var(--vh)) + (75 * var(--vh)));
             &-part {
                 &--big-txt {
                     .title-wrap {
@@ -1163,7 +1163,7 @@
     }
     .home-ship {
         &__bg-img {
-            height: clamp(52rem, 48dvh, 87.6rem);
+            height: 52rem;
         }
     }
     .home-tech {
@@ -1539,9 +1539,9 @@
                 &--small-ship {
                     .container.fluid {
                         .home-shift__img-wrap {
-                            height: 96dvh;
+                            height: calc(96 * var(--vh));
                             &::after {
-                                width: 500dvh;
+                                width: calc(500 * var(--vh));
                             }
                             .home-shift__small-txt {
                                 font-size: 3.2rem;
