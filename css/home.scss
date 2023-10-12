@@ -1118,9 +1118,9 @@
         }
     }
     .home-shift {
-        margin-bottom: -75vh;
+        margin-bottom: -75dvh;
         &__main {
-            height: calc(450vh + 75vh);
+            height: calc(450dvh + 75dvh);
             &-part {
                 &--big-txt {
                     .title-wrap {
@@ -1163,7 +1163,7 @@
     }
     .home-ship {
         &__bg-img {
-            height: clamp(52rem, 48vh, 87.6rem);
+            height: clamp(52rem, 48dvh, 87.6rem);
         }
     }
     .home-tech {
@@ -1516,9 +1516,9 @@
         }
     }
     .home-shift {
-        margin-bottom: -75vh;
+        // margin-bottom: -75dvh;
         &__main {
-            height: calc(450vh + 75vh);
+            // height: calc(450dvh + 75dvh);
             &-part {
                 &--big-txt {
                     .title-wrap {
