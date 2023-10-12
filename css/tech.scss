@@ -249,10 +249,9 @@
             }
         }
         @include sm {
-            position: sticky;
-            height: 100vh;
+            height: 100%;            
             width: 100%;
-            top: 0;
+            
             padding: 0 2rem;
             overflow: hidden;
         }
@@ -275,17 +274,18 @@
             }
         }
         &-item {
-            height: 100vh;
+            height: auto;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             @include sm {
-                height: 42.2rem;
-                max-height: 42.2rem;
                 height: 100%;
+                padding-top: 30rem;
                 margin-top: auto;
                 padding-bottom: 9.6rem;
-                justify-content: flex-start;
+                justify-content: end;
+                min-height: 52.2rem;
             }
             &-title {
                 color: rgba($cl-white, 1);
@@ -328,7 +328,12 @@
             height: 100%;
         }
         @include sm {
-            width: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
         }
         &-inner {
             margin-left: -6rem;

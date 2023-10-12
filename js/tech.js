@@ -352,6 +352,7 @@ class techDemoWebGL {
                 }
             ]
             swiper.initClassName(parent);
+            
             swiper.setup(parent, {
                 touchMove: true,
                 spacing: 32,
@@ -400,12 +401,12 @@ class techDemoWebGL {
                     }
                 }
             })
+            this.onWindowResize()
         }
     }
     init() {
         this.setupCamera()
         this.createMesh()
-        //this.animate()
     }
     reset() {
         this.container.append(this.renderer.domElement);
@@ -549,6 +550,7 @@ function techDemo() {
     let techWebGL = new techDemoWebGL();
     techWebGL.init()
     techWebGL.reset()
+    techWebGL.onWindowResize()
 
     let techDemoItems = $('.tech-demo__main-item');
 
