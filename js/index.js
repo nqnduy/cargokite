@@ -10,7 +10,7 @@ import SplitText from "./vendors/SplitText";
 import { initCookie, cookieConsent, cookieAccepted } from './components/cookieconsent-init';
 import { getAllDataByType } from './common/prismic_fn';
 import { viewport } from './common/helpers/viewport';
-import vh from './common/helpers/vh';
+// import vh from './common/helpers/vh';
 
 import homeScript from './home';
 import aboutScript from './about';
@@ -23,7 +23,7 @@ const scripts = () => {
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
     }
-    vh.init();
+    // vh.init();
 
 
     barba.use(barbaPrefetch);

@@ -1118,9 +1118,9 @@
         }
     }
     .home-shift {
-        margin-bottom: calc(-75 * var(--vh));
+        margin-bottom: -75dvh;
         &__main {
-            height: calc((450 * var(--vh)) + (75 * var(--vh)));
+            height: calc(450dvh + 75dvh);
             &-part {
                 &--big-txt {
                     .title-wrap {
@@ -1539,9 +1539,9 @@
                 &--small-ship {
                     .container.fluid {
                         .home-shift__img-wrap {
-                            height: calc(96 * var(--vh));
+                            height: 96dvh;
                             &::after {
-                                width: calc(500 * var(--vh));
+                                width: 500dvh;
                             }
                             .home-shift__small-txt {
                                 font-size: 3.2rem;
