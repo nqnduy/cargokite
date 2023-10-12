@@ -492,7 +492,7 @@
                         .home-shift__small-txt {
                             position: absolute;
                             left: calc(100% + 3.2rem);
-                            text-wrap: nowrap;
+                            white-space: nowrap;
                             color: rgba($cl-sub, 1);
                             &::after {
                                 content: '';
@@ -525,7 +525,6 @@
     }
 }
 .home-tech {
-    overflow-x: clip;
     position: relative;
     z-index: 4;
     &__top {
@@ -666,6 +665,7 @@
         width: 100%;
         margin: -9.4rem auto 0;
         max-width: $container-width;
+        overflow: hidden;
         &:after {
             content: '';
             display: block;
