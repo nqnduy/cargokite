@@ -486,6 +486,10 @@
                                 }
                                 .ship-small-svg {
                                     height: calc((100% - (6 * 3rem)) / 7);
+                                    @include sm {
+                                        height: auto;
+                                        width: 32.8rem;
+                                    }
                                 }
                             }
                         }

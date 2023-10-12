@@ -15,6 +15,7 @@ import aboutScript from './about';
 import techScript from './tech';
 import newsScript from './news';
 import privacyScript from './privacy';
+import { viewport } from './common/helpers/viewport';
 
 const scripts = () => {
     if (history.scrollRestoration) {
@@ -253,7 +254,7 @@ const scripts = () => {
             let closeBtn = $('#s-c-bn').clone();
             closeBtn.css({
                 position: 'absolute',
-                top: "0",
+                top: `${viewport.width > 767 ? "0px" : "5px"}`,
                 right: "0"
             })
             closeBtn.on('click', function (e) {
