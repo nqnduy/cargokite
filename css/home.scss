@@ -426,6 +426,10 @@
                         @include sm {
                             height: auto;
                             width: 171.5rem;
+                            img {
+                                height: auto;
+                                width: 100%;
+                            }
                         }
                     }
                 }
@@ -1129,7 +1133,7 @@
                 &--big-ship {
                     .container.fluid {
                         .home-shift__img-wrap {
-                            height: 32vh;
+                            // height: 32vh;
                         }
                     }
                 }
