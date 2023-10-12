@@ -475,15 +475,15 @@ function techVideoInteraction() {
     }
 
     const videoAction = {
-        play: () => {
-            // if (!video) return;
-            // let el = $(video).get(0);
-            // el.play()
+        play: (video) => {
+            if (!video) return;
+            let el = $(video).get(0);
+            el.play()
 
             $('.tech-vid__play-btn').addClass('playing');
             $('.tech-vid__main-vid').addClass('playing');
         },
-        pause: () => {
+        pause: (video) => {
             $('.tech-vid__play-btn').removeClass('playing');
             $('.tech-vid__main-vid').removeClass('playing');
         }
@@ -521,11 +521,18 @@ function techVideoInteraction() {
                 let iconsY = yGetter(playBtn);
                 let vidBoundary = $('.tech-vid__main-inner').get(0);
                 let vidRect = vidBoundary.getBoundingClientRect()
+                let ctrlHeight = 65;
 
                 if ($('.tech-vid__main-inner').length) {
                     if ($('.tech-vid__main-inner:hover').length) {
                         xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidRect.left - vidRect.width / 2), 0.01);
                         ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidRect.top - vidRect.height / 2), 0.01);
+                        if (pointerCurr().y - vidRect.top  >= vidRect.height - ctrlHeight) {
+                            gsap.to(playBtn, { opacity: 0, duration: 0.3 })
+                        }
+                        else {
+                            gsap.to(playBtn, { opacity: 1, duration: 0.3 })
+                        }
                     } else {
                         xSetter(playBtn)(lerp(iconsX, 0), 0.01);
                         ySetter(playBtn)(lerp(iconsY, 0), 0.01);

@@ -120,12 +120,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            img {
-                z-index: 1;
-                pointer-events: none;
-            }
+            // img {
+            //     z-index: 1;
+            //     pointer-events: none;
+            // }
             &.clear-thumb {
-                img {
+                .tech-vid__main-thumbnail {
                     opacity: 0;
                     @include transition(0.4s ease-out);
                 }
@@ -143,6 +143,10 @@
             position: absolute;
             inset: 0;
             z-index: 0;
+        }
+        &-thumbnail {
+            z-index: 1;
+            pointer-events: none;
         }
     }
     &__play-btn {
@@ -186,7 +190,9 @@
         }
         &.playing {
             pointer-events: none;
-            opacity: 0;
+            @include sm {
+                opacity: 0;
+            }
             .ic-pause {
                 opacity: 1;
             }
