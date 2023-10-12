@@ -411,21 +411,33 @@ function homeWhy() {
 
     const homeWhyItems = $('.home-why__main-item');
     homeWhyItems.each((index, el) => {
-        let homeWhyItemTitle = new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.words)
+        let homeWhyItemTitle
+        if ($(window).width() > 767) {
+            homeWhyItemTitle = new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.words)
+        }
         let tlHomeWhyItem = gsap.timeline({
             scrollTrigger: {
                 trigger: el,
                 start: 'top top+=65%'
             },
             onComplete: () => {
-                homeWhyItemTitle.revert()
-                new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.lines)
+                if ($(window).width() > 767) {
+                    homeWhyItemTitle.revert()
+                    new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.lines)
+                }
             }
         })
         tlHomeWhyItem
         .from(el, {autoAlpha: 0, duration: 1, delay: index == 0 ? 0 : index % 2 == 0 ? .3 : 0})
         .from(el.querySelector('.home-why__main-item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4, clearProps: 'transform'}, '<=.2')
-        .from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+        if ($(window).width() > 767) {
+            tl.from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+        } else {
+            tl
+            .from(el.querySelector('.home-why__main-item-title'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
+            .from(el.querySelector('.home-why__main-item-sub'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
+        }
+        
     })
 
     if ($(window).width() > 991) {

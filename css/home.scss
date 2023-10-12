@@ -527,6 +527,11 @@
 .home-tech {
     position: relative;
     z-index: 4;
+    overflow: hidden;
+    padding-top: 9.6rem;
+    margin-top: -9.6rem;
+    padding-bottom: 100vh;
+    margin-bottom: -100vh;
     &__top {
         background: #111112;
         position: relative;
@@ -665,7 +670,6 @@
         width: 100%;
         margin: -9.4rem auto 0;
         max-width: $container-width;
-        overflow: hidden;
         &:after {
             content: '';
             display: block;
