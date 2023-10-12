@@ -423,6 +423,10 @@
                         height: 37vh;
                         position: absolute;
                         left: 100%;
+                        @include sm {
+                            height: auto;
+                            width: 171.5rem;
+                        }
                     }
                 }
             }
