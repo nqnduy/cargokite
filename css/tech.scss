@@ -227,7 +227,7 @@
         @include sm {
             display: block;
             position: absolute;
-            top: calc(42rem - 3.2rem - 2px);
+            top: calc(48rem - 3.2rem - 2px);
             left: 0;
             background-color: rgba($cl-white, .05);
             width: calc(100% + 3.2rem);
@@ -291,9 +291,9 @@
             flex-direction: column;
             justify-content: center;
             @include sm {
-                height: calc(100% - 48.2rem) !important;
+                height: calc(100% - 48rem - 6.2rem) !important;
                 min-height: auto;
-                margin-top: 42rem;
+                margin-top: 48rem;
                 margin-bottom: 6.2rem;
                 padding: 3.2rem 2.4rem;
                 background-color: rgba($cl-white, .05);
@@ -333,7 +333,7 @@
                         font-size: 1.6rem;
                     }
                     @include xs {
-                        font-size: 1.2rem;
+                        font-size: 1.4rem;
                     }
                 }
             }
