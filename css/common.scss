@@ -63,6 +63,35 @@ button, input, textarea {
 button {
     cursor: pointer;
 }
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+@include sm {
+    html,
+    body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    }
+    body {
+        position: fixed;
+        overscroll-behavior-y: none;
+        overscroll-behavior-x: none;
+    }
+    .wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        overflow-y: scroll;
+        -ms-scroll-chaining: none;
+        overscroll-behavior: contain;
+    }
+}
 .hover-un, .priv-hero__main-richtext a {
     position: relative;
     width: fit-content;
@@ -206,3 +235,12 @@ button {
 .swiper-slide {
     height: auto;
 }
+html.lenis-scrolling {
+    overflow: hidden;
+}
+// .lenis-scrolling body {
+//     -webkit-overflow-scrolling: touch;
+//     height: 100%;
+//     position: fixed;
+//     overflow-y: scroll;
+// }

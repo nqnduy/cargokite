@@ -148,7 +148,7 @@ class techDemoWebGL {
                         obj.material = this.darkMat;
                     }
                 }
-                
+
                 if (obj.name === 'container-grp') {
                     this.containerGrp = obj.children;
                 } else if (obj.name === 'Battery') {
@@ -627,7 +627,7 @@ function techMap() {
                 padding: [100, 100]
             });
         }
-        
+
         const popup = L.popup();
 
         // Add mousemove event handler to the GeoJSON layer
@@ -636,7 +636,7 @@ function techMap() {
         } else {
             geoJsonLayer.on('click', handleMouseMove);
         }
-        
+
         // Remove popup when mouse leaves the GeoJSON layer
         geoJsonLayer.on('mouseout', handleMouseOut);
 
@@ -705,7 +705,7 @@ function techMap() {
     if ($(window).width() <= 767) {
         map.dragging.disable()
     }
-    
+
     // Default center coordinates and zoom level
     L.tileLayer(`https://api.maptiler.com/maps/dataviz-dark/{z}/{x}/{y}.png?key=${key}`, {
         minZoom: 1,
@@ -878,8 +878,8 @@ const techScript = {
             techMap()
             techMapInteraction()
             techControl()
-            
-            
+
+
         }, 100);
     },
     beforeLeave() {

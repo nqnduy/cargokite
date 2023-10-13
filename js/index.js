@@ -9,6 +9,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { initCookie, cookieConsent, cookieAccepted } from './components/cookieconsent-init';
 import { getAllDataByType } from './common/prismic_fn';
+import { viewport } from './common/helpers/viewport';
 
 import homeScript from './home';
 import aboutScript from './about';
@@ -19,6 +20,11 @@ import privacyScript from './privacy';
 const scripts = () => {
     if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
+    }
+    if (viewport.width <= 767) {
+        ScrollTrigger.defaults({
+            scroller: ".wrapper"
+        });
     }
 
     barba.use(barbaPrefetch);
@@ -75,49 +81,90 @@ const scripts = () => {
     refreshOnBreakpoint();
 
     const header = $('.header')
-    const hamburger = $('.header__toggle');
-    lenis.on('scroll', function (inst) {
-        if (inst.scroll > header.height()) {
-            header.addClass('on-scroll')
-            if (inst.direction == 1) {
-                // down
-                header.addClass('on-hide')
-            } else if (inst.direction == -1) {
-                // up
-                header.removeClass('on-hide')
-            }
-        } else {
-            header.removeClass('on-scroll on-hide')
-        };
-    })
+    // lenis.on('scroll', function (inst) {
+    //     if (inst.scroll > header.height()) {
+    //         header.addClass('on-scroll')
+    //         if (inst.direction == 1) {
+    //             // down
+    //             header.addClass('on-hide')
+    //         } else if (inst.direction == -1) {
+    //             // up
+    //             header.removeClass('on-hide')
+    //         }
+    //     } else {
+    //         header.removeClass('on-scroll on-hide')
+    //     };
+    // })
+    let lastScrollTop = 0;
+    const handleHeader = {
+        toggleHide: (scrollPos) => {
+            let headerHeight = header.height();
+			if (scrollPos > lastScrollTop) {
+				if (scrollPos > headerHeight) {
+                    header.addClass('on-hide')
+				}
+			} else {
+				if (scrollPos > headerHeight) {
+					header.addClass("on-hide");
+					header.removeClass("on-hide");
+				}
+			}
+			lastScrollTop = scrollPos;
+		},
+		addBG: (scrollPos) => {
+			if (scrollPos > header.height()) header.addClass("on-scroll");
+			else header.removeClass("on-scroll");
+        },
+        toggleNav: () => {
+            const hamburger = $('.header__toggle');
+            hamburger.on('click', function (e) {
+                e.preventDefault();
+                if (header.hasClass('open-nav')) {
+                    if ($(window).width() <= 476) {
+                        let scrollY = $("body").css('top');
+                        $("body").css({
+                            'position': 'relative',
+                            'top': ''
+                        });
+                        lenis.start();
+                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                    }
+                    header.removeClass('open-nav force');
+                }
+                else {
+                    if ($(window).width() <= 476) {
+                        setTimeout(() => {
+                            $("body").css({
+                                'position': 'fixed',
+                                'top': `-${window.scrollY}px`
+                            });
+                        }, 500)
+                        lenis.stop();
+                    }
+                    header.addClass('open-nav force');
+                }
+            })
+		},
+    };
 
-    hamburger.on('click', function (e) {
-        e.preventDefault();
-        if (header.hasClass('open-nav')) {
-            if ($(window).width() <= 476) {
-                let scrollY = $("body").css('top');
-                $("body").css({
-                    'position': 'relative',
-                    'top': ''
-                });
-                lenis.start();
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-            header.removeClass('open-nav force');
+    handleHeader.toggleNav();
+    function scrollHeaderSwitch() {
+        if (viewport.width > 767) {
+            lenis.on('scroll', function (inst) {
+                let scrollPos = inst.scroll;
+                handleHeader.addBG(inst.scroll);
+                handleHeader.toggleHide(inst.scroll);
+            })
         }
         else {
-            if ($(window).width() <= 476) {
-                setTimeout(() => {
-                    $("body").css({
-                        'position': 'fixed',
-                        'top': `-${window.scrollY}px`
-                    });
-                }, 500)
-                lenis.stop();
-            }
-            header.addClass('open-nav force');
+            $('.wrapper').on("scroll", function () {
+                let scrollPos = $('.wrapper').scrollTop();
+                handleHeader.addBG(scrollPos);
+                handleHeader.toggleHide(scrollPos);
+            });
         }
-    })
+    }
+    scrollHeaderSwitch();
 
     function transitionOnce() {
         resetScroll()
@@ -197,6 +244,7 @@ const scripts = () => {
         console.log('remove scroll trigger')
         let triggers = ScrollTrigger.getAll();
         triggers.forEach(trigger => {
+            console.log(trigger)
             trigger.kill();
         });
     }
@@ -223,6 +271,13 @@ const scripts = () => {
         }
         lenis.start()
     }
+    // function changeScrollerContainer() {
+    //     let triggers = ScrollTrigger.getAll();
+    //     triggers.forEach(trigger => {
+    //         trigger.scroller.customElements = '.wrapper'
+    //         console.log(trigger);
+    //     });
+    // }
     function handleScrollTo() {
         $('[data-scrollto]').on('click', function(e) {
             //e.preventDefault();
@@ -253,7 +308,7 @@ const scripts = () => {
             let closeBtn = $('#s-c-bn').clone();
             closeBtn.css({
                 position: 'absolute',
-                top: "0",
+                top: `${viewport.width > 767 ? "0px" : "5px"}`,
                 right: "0"
             })
             closeBtn.on('click', function (e) {

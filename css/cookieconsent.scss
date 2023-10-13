@@ -233,7 +233,7 @@
     max-width: 53rem;
     width: 100%;
     bottom: 2rem;
-    right: 2.5rem;
+    left: 2rem;
     box-shadow: 0 0.625em 1.875em #000000;
     box-shadow: var(--cc-consent-modal-box-shadow);
     opacity: 0;
@@ -1333,11 +1333,12 @@ html.force--consent.show--consent body{
         margin-right: 0;
     }
     #s-c-bn.c-bn {
-        width: 3.2rem;
-        height: 3.2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 4.2rem;
+        height: 4.2rem;
+        margin-right: 0.6rem;
+    }
+    #s-c-bn:first-child {
+        margin-right: -0.8rem;
     }
 
     #s-cnt #s-rall-bn{
@@ -1381,5 +1382,10 @@ html.force--consent.show--consent body{
 
     .cc_div .cloud #c-bns{
         margin-top: 1.625em;
+    }
+
+    #s-c-bn::before,
+    #s-c-bn::after{
+        height: 2rem;
     }
 }
