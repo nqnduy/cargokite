@@ -176,9 +176,12 @@ function abtMiles() {
             start: 'top top',
             end: `top top-=${scrollDistance}%`,
             scrub: true,
-            pin: '.abt-mil-pin-container',
+            pin: $(window).width() > 767 ? '.abt-mil-pin-container' : false,
         }
     })
+    if ($(window).width() <= 767) {
+        gsap.set('.abt-mil-pin-container', { height: $('.abt-mil__main-inner').height() + $('.abt-mil__head').outerHeight(), position: 'sticky', top: -1  });
+    }
     tlMain
     .to('.abt-mil__main-inner', {y: -mainDistance, ease: 'none'})
     .to('.abt-mil__progress-dot', {top: '100%', ease: 'none'}, 0)

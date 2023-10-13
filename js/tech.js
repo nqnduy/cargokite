@@ -113,7 +113,7 @@ class techDemoWebGL {
                 envMapIntensity: 3,
                 roughness: .70,
                 metalness: 1,
-                transparent: true
+                transparent: true,
             })
             this.darkContMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
