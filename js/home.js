@@ -1,7 +1,8 @@
+import $ from "jquery";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import $ from "jquery";
 import { nestedLinesSplit, toHTML } from './untils';
+import lenis from './vendors/lenis';
 import SplitText from "./vendors/SplitText";
 import { childrenSelect } from './common/utils/childrenSelector'
 import swiper from './components/swiper';

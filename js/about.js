@@ -2,7 +2,7 @@ import $ from "jquery";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit, toHTML } from "./untils";
+import { nestedLinesSplit, toHTML, sortAsc } from "./untils";
 import { getAllDataByType } from "./common/prismic_fn";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -339,7 +339,7 @@ function getApi_abtMiles() {
 }
 function getApi_abtTeam() {
     getAllDataByType('team', 'asc').then((res) => {
-        let allTeam = res;
+        let allTeam = sortAsc(res);
         let templateTeam = $('.abt-team__main-item').eq(0).clone();
         let templatePic = $('.abt-team__main-img-item').eq(0).clone();
         $('.abt-team__main-list').html('')

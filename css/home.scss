@@ -544,7 +544,9 @@
     margin-top: -9.6rem;
     padding-bottom: 100vh;
     margin-bottom: -100vh;
+    pointer-events: none;
     &__top {
+        pointer-events: auto;
         background: #111112;
         position: relative;
         z-index: 2;

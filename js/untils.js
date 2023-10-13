@@ -131,9 +131,6 @@ function toHTML(richTextArray, pClass, linkClass) {
                 let string = block.text;
                 for (const span of block.spans) {
                     switch (span.type) {
-                        case 'hyperlink':
-                            let link = new URL(span.data.url)
-                            string = string.replace(block.text.substring(span.start, span.end),`<a href="${window.location.origin}${link.pathname}${link.hash}" class="${linkClass}" >${block.text.substring(span.start, span.end)}</a>`);
                         case 'label':
                             let tag;
                             switch (span.data.label) {
@@ -141,6 +138,10 @@ function toHTML(richTextArray, pClass, linkClass) {
                                 tag = "contact"
                             }
                             string = string.replace(block.text.substring(span.start, span.end),`<a href="#" class="${linkClass}" data-popup="${tag}" >${block.text.substring(span.start, span.end)}</a>`);
+                        break;
+                        case 'hyperlink':
+                            let link = new URL(span.data.url)
+                            string = string.replace(block.text.substring(span.start, span.end),`<a href="${window.location.origin}${link.pathname}${link.hash}" class="${linkClass}">${block.text.substring(span.start, span.end)}</a>`);
                         break;
                         default:
                         break;
@@ -154,5 +155,19 @@ function toHTML(richTextArray, pClass, linkClass) {
     }
     return html;
 }
+function sortAsc(arr) {
+    return arr.sort((a,b) => {
+        if (a.data.order === null) {
+            return 1;
+        }
+        if (b.data.order === null) {
+            return -1;
+        }
+        if (a.data.order === b.data.order) {
+            return 0;
+        }
+        return a.data.order < b.data.order ? -1 : 1;
+    })
+}
 
-export { nestedLinesSplit, createToc, lerp, isTouchDevice, pointerCurr, xSetter, ySetter, xGetter, yGetter, toHTML }
+export { nestedLinesSplit, createToc, lerp, isTouchDevice, pointerCurr, xSetter, ySetter, xGetter, yGetter, toHTML, sortAsc }
