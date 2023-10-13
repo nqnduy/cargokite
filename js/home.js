@@ -89,6 +89,7 @@ function homeIntro() {
         scrollTrigger: {
             trigger: '.home-intro',
             start: 'top top+=50%',
+            // scroller: $('.wrapper')
         },
         defaults: {
             ease: gOpts.ease
@@ -119,7 +120,8 @@ function homeIntro() {
             trigger: '.home-intro__richtext',
             start: 'top bottom',
             end: 'bottom top',
-            scrub: true
+            scrub: true,
+            // scroller: $('.wrapper')
         }
     })
     tlScrub.fromTo('.home-intro__richtext', {yPercent: -7}, { yPercent: 7, ease: 'none'})
@@ -129,7 +131,8 @@ function homeIntro() {
             trigger: '.home-intro__img',
             start: 'top bottom',
             end: 'bottom top',
-            scrub: true
+            scrub: true,
+            // scroller: $('.wrapper')
         }
     })
     tlScrubImg.fromTo('.home-intro__img', {yPercent: 15}, { yPercent: -15, ease: 'none'})
@@ -437,7 +440,7 @@ function homeWhy() {
             .from(el.querySelector('.home-why__main-item-title'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
             .from(el.querySelector('.home-why__main-item-sub'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
         }
-        
+
     })
 
     if ($(window).width() > 991) {

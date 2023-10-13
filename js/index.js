@@ -22,7 +22,9 @@ const scripts = () => {
         history.scrollRestoration = "manual";
     }
     if (viewport.width <= 767) {
-        $('.wrapper').attr('data-lenis-prevent', '');
+        ScrollTrigger.defaults({
+            scroller: ".wrapper"
+        });
     }
 
     barba.use(barbaPrefetch);
@@ -201,6 +203,7 @@ const scripts = () => {
         console.log('remove scroll trigger')
         let triggers = ScrollTrigger.getAll();
         triggers.forEach(trigger => {
+            console.log(trigger)
             trigger.kill();
         });
     }
@@ -227,6 +230,13 @@ const scripts = () => {
         }
         lenis.start()
     }
+    // function changeScrollerContainer() {
+    //     let triggers = ScrollTrigger.getAll();
+    //     triggers.forEach(trigger => {
+    //         trigger.scroller.customElements = '.wrapper'
+    //         console.log(trigger);
+    //     });
+    // }
     function handleScrollTo() {
         $('[data-scrollto]').on('click', function(e) {
             //e.preventDefault();

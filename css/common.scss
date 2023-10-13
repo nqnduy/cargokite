@@ -70,7 +70,7 @@ button {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* For android: https://stackoverflow.com/questions/60241559/how-can-i-get-a-fixed-address-bar-in-google-chrome-for-android-with-javascript */
+    overflow: hidden;
     }
     body {
         position: fixed;
@@ -89,15 +89,6 @@ button {
         overscroll-behavior: contain;
     }
 }
-
-// .main {
-//     position: sticky;
-//     top: 0;
-//     width: 100%;
-//     height: 100%;
-//     overflow: hidden;
-//     z-index: 2;
-// }
 .hover-un, .priv-hero__main-richtext a {
     position: relative;
     width: fit-content;
