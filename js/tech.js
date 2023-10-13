@@ -153,7 +153,6 @@ class techDemoWebGL {
                     this.containerGrp = obj.children;
                 } else if (obj.name === 'Battery') {
                     this.battery = obj
-                    console.log(this.battery)
                 }
             })
             const light = new THREE.PointLight(new THREE.Color('white'), 10, 10, 2)
@@ -501,48 +500,47 @@ function techVideoInteraction() {
         clearThumb(item);
         lenis.scrollTo(target)
     })
-    $('.tech-vid__main-vid').on('click', function () {
-        if (!clearThumb(item)) return;
-
-        if ($(this).hasClass('playing')) {
-            videoAction.pause('#vidTech');
-        }
-        else {
-            videoAction.play('#vidTech');
-        }
-    })
-    // $('#vidTech').on('click', function (e) {
-    //     console.log("click")
-    //     console.log($(this).paused);
-    // })
 
     if (viewport.width > 991) {
         if (!isTouchDevice()) {
-            function moveCursor() {
-                let iconsX = xGetter(playBtn);
-                let iconsY = yGetter(playBtn);
-                let vidBoundary = $('.tech-vid__main-inner').get(0);
-                let vidRect = vidBoundary.getBoundingClientRect()
-                let ctrlHeight = 65;
+            function techVideoHandle() {
+                function moveCursor() {
+                    let iconsX = xGetter(playBtn);
+                    let iconsY = yGetter(playBtn);
+                    let vidBoundary = $('.tech-vid__main-inner').get(0);
+                    let vidRect = vidBoundary.getBoundingClientRect()
+                    let ctrlHeight = 65;
 
-                if ($('.tech-vid__main-inner').length) {
-                    if ($('.tech-vid__main-inner:hover').length) {
-                        xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidRect.left - vidRect.width / 2), 0.01);
-                        ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidRect.top - vidRect.height / 2), 0.01);
-                        if (pointerCurr().y - vidRect.top  >= vidRect.height - ctrlHeight) {
-                            gsap.to(playBtn, { opacity: 0, duration: 0.3 })
+                    if ($('.tech-vid__main-inner').length) {
+                        if ($('.tech-vid__main-inner:hover').length) {
+                            xSetter(playBtn)(lerp(iconsX, pointerCurr().x - vidRect.left - vidRect.width / 2), 0.01);
+                            ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidRect.top - vidRect.height / 2), 0.01);
+                            if (pointerCurr().y - vidRect.top  >= vidRect.height - ctrlHeight) {
+                                gsap.to(playBtn, { opacity: 0, duration: 0.3 })
+                            }
+                            else {
+                                gsap.to(playBtn, { opacity: 1, duration: 0.3 })
+                            }
+                        } else {
+                            xSetter(playBtn)(lerp(iconsX, 0), 0.01);
+                            ySetter(playBtn)(lerp(iconsY, 0), 0.01);
                         }
-                        else {
-                            gsap.to(playBtn, { opacity: 1, duration: 0.3 })
-                        }
-                    } else {
-                        xSetter(playBtn)(lerp(iconsX, 0), 0.01);
-                        ySetter(playBtn)(lerp(iconsY, 0), 0.01);
                     }
                 }
-                requestAnimationFrame(moveCursor)
+                moveCursor();
+
+                function checkVidPlaying() {
+                    if ($('#vidTech').get(0).paused) {
+                        videoAction.pause('#vidTech');
+                    }
+                    else {
+                        videoAction.play('#vidTech');
+                    }
+                }
+                checkVidPlaying();
+                requestAnimationFrame(techVideoHandle)
             }
-            requestAnimationFrame(moveCursor)
+            requestAnimationFrame(techVideoHandle)
         }
     }
 }
