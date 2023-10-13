@@ -58,7 +58,8 @@
 }
 
 #cc--main {
-    z-index: var(--cc-z-index);
+    position: static !important;
+    // z-index: var(--cc-z-index);
 }
 
 .cc_div *,
@@ -228,7 +229,7 @@
     font-family: inherit;
     padding: 6rem;
     position: fixed;
-    z-index: 1;
+    z-index: var(--cc-z-index);
     background: var(--cc-bg);
     max-width: 53rem;
     width: 100%;
@@ -316,7 +317,7 @@ CookieConsent settings modal
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 101;
+    z-index: calc(var(--cc-z-index) + 1);
     display: table;
     height: 100%;
     visibility: hidden;
@@ -1247,6 +1248,7 @@ html.force--consent.show--consent body{
 
     #s-bns{
         height: 7.9em;
+        justify-content: space-between;
     }
 
 	#s-bl,
@@ -1269,7 +1271,12 @@ html.force--consent.show--consent body{
     }
 
     .bns-t #s-bns{
-        height: 10.5em;
+        height: auto;
+    }
+    #s-all-bn,
+    #s-rall-bn {
+        width: calc(50% - 0.5rem) !important;
+
     }
 
     .cc_div .bns-t .c-bn{
@@ -1332,6 +1339,9 @@ html.force--consent.show--consent body{
         width: 100%;
         margin-right: 0;
     }
+    .cc_div .c-bn {
+        padding: 1rem 2rem;
+    }
     #s-c-bn.c-bn {
         width: 4.2rem;
         height: 4.2rem;
@@ -1346,10 +1356,14 @@ html.force--consent.show--consent body{
     }
 
     .cc_div #c-bns{
-        flex-direction: column;
+        justify-content: space-between;
+    }
+    #c-p-bn {
+        width: calc(50% - 0.5rem) !important;
+        margin-top: 0 !important;
     }
 
-    #c-bns button + button,
+    // #c-bns button + button,
     #s-cnt button + button{
         margin-top: 0.625em;
         margin-left: 0;
@@ -1388,4 +1402,10 @@ html.force--consent.show--consent body{
     #s-c-bn::after{
         height: 2rem;
     }
+
+    #s-rall-bn {
+        float: right !important;
+        margin-top: 0 !important;
+    }
+
 }

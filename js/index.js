@@ -244,7 +244,6 @@ const scripts = () => {
         console.log('remove scroll trigger')
         let triggers = ScrollTrigger.getAll();
         triggers.forEach(trigger => {
-            console.log(trigger)
             trigger.kill();
         });
     }

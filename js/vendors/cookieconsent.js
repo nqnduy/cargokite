@@ -9,7 +9,7 @@
         /**
          * CHANGE THIS FLAG FALSE TO DISABLE console.log()
          */
-        var ENABLE_LOGS = true;
+        var ENABLE_LOGS = false;
         var OPT_IN = 'opt-in';
         var OPT_OUT = 'opt-out';
 
