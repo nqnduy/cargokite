@@ -99,8 +99,6 @@ const scripts = () => {
     const handleHeader = {
         toggleHide: (scrollPos) => {
             let headerHeight = header.height();
-			// let st = $(this).scrollTop();
-			// let headerHeight = $(".header").outerHeight();
 			if (scrollPos > lastScrollTop) {
 				if (scrollPos > headerHeight) {
                     header.addClass('on-hide')
@@ -114,10 +112,6 @@ const scripts = () => {
 			lastScrollTop = scrollPos;
 		},
 		addBG: (scrollPos) => {
-			// const scrollPos = {
-			// 	x: window.pageXOffset,
-			// 	y: window.pageYOffset,
-			// };
 			if (scrollPos > header.height()) header.addClass("on-scroll");
 			else header.removeClass("on-scroll");
         },
@@ -154,10 +148,23 @@ const scripts = () => {
     };
 
     handleHeader.toggleNav();
-    lenis.on('scroll', function (inst) {
-        handleHeader.addBG(inst.scroll);
-        handleHeader.toggleHide(inst.scroll);
-    })
+    function scrollHeaderSwitch() {
+        if (viewport.width > 767) {
+            lenis.on('scroll', function (inst) {
+                let scrollPos = inst.scroll;
+                handleHeader.addBG(inst.scroll);
+                handleHeader.toggleHide(inst.scroll);
+            })
+        }
+        else {
+            $('.wrapper').on("scroll", function () {
+                let scrollPos = $('.wrapper').scrollTop();
+                handleHeader.addBG(scrollPos);
+                handleHeader.toggleHide(scrollPos);
+            });
+        }
+    }
+    scrollHeaderSwitch();
 
     function transitionOnce() {
         resetScroll()

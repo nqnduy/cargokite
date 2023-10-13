@@ -63,6 +63,9 @@ button, input, textarea {
 button {
     cursor: pointer;
 }
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
 @include sm {
     html,
     body {
