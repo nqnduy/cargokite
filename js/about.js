@@ -174,7 +174,7 @@ function abtMiles() {
         scrollTrigger: {
             trigger: '.abt-mil__wrap',
             start: 'top top',
-            end: `top top-=${scrollDistance}%`,
+            end: $(window).width() > 767 ? `top top-=${scrollDistance}%` : `top top-=${scrollDistance - 50}%`,
             scrub: true,
             pin: $(window).width() > 767 ? '.abt-mil-pin-container' : false,
         }
