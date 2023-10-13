@@ -845,6 +845,12 @@
         margin-top: 10rem;
         color: rgba($cl-txt, 1);
         margin-bottom: 6rem;
+        &-title {
+            margin-bottom: 2rem;
+        }
+        &-sub {
+            color: rgba($cl-desc, 1);
+        }
     }
 }
 .home-faq {
@@ -1334,6 +1340,12 @@
             margin-top: 6rem;
             color: rgba($cl-txt, 1);
             margin-bottom: 4rem;
+            &-title {
+                margin-bottom: .8rem;
+            }
+            &-sub {
+                font-size: 1.6rem;
+            }
         }
     }
     .home-faq {
@@ -1683,6 +1695,12 @@
             margin-top: 6rem;
             color: rgba($cl-txt, 1);
             margin-bottom: 4rem;
+            &-title {
+                margin-bottom: 0;
+            }
+            &-sub {
+                font-size: 1.4rem;
+            }
         }
     }
     .home-faq {

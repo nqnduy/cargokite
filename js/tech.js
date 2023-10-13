@@ -113,7 +113,7 @@ class techDemoWebGL {
                 envMapIntensity: 3,
                 roughness: .70,
                 metalness: 1,
-                transparent: true
+                transparent: true,
             })
             this.darkContMat = new THREE.MeshStandardMaterial({
                 color: new THREE.Color('#2B2C2F'),
@@ -356,11 +356,13 @@ class techDemoWebGL {
             ]
             swiper.setup(parent, {
                 touchMove: true,
-                spacing: 32,
+                spacing: 24,
                 on: {
                     slideChange: (slide) => {
                         let index = slide.activeIndex;
-
+                        gsap.to('.tech-demo__prog-inner', {
+                            scaleX: .25 * (index + 1)
+                        })
                         let tlSwiper = gsap.timeline({
                             onUpdate: () => {
                                 this.camera.lookAt( this.lookAtTarget );
