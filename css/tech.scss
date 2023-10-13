@@ -305,6 +305,10 @@
                     line-height: 1.3em;
                     margin-bottom: 2.4rem;
                 }
+                @include xs {
+                    font-size: 2.6rem;
+                    line-height: 1.2em;
+                }
             }
             &-richtext {
                 color: rgba($cl-white, .7);
