@@ -89,7 +89,6 @@ function homeIntro() {
         scrollTrigger: {
             trigger: '.home-intro',
             start: 'top top+=50%',
-            // scroller: $('.wrapper')
         },
         defaults: {
             ease: gOpts.ease
@@ -121,7 +120,6 @@ function homeIntro() {
             start: 'top bottom',
             end: 'bottom top',
             scrub: true,
-            // scroller: $('.wrapper')
         }
     })
     tlScrub.fromTo('.home-intro__richtext', {yPercent: -7}, { yPercent: 7, ease: 'none'})
@@ -132,7 +130,6 @@ function homeIntro() {
             start: 'top bottom',
             end: 'bottom top',
             scrub: true,
-            // scroller: $('.wrapper')
         }
     })
     tlScrubImg.fromTo('.home-intro__img', {yPercent: 15}, { yPercent: -15, ease: 'none'})
