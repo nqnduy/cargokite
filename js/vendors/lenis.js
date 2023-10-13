@@ -4,7 +4,6 @@ import $ from "jquery";
 const lenis = new Lenis({
   content: $(window).width() > 767 ? document.documentElement : $('.wrapper').get(0),
 })
-console.log(lenis)
 function raf(time) {
   lenis.raf(time)
   requestAnimationFrame(raf)

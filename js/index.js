@@ -81,48 +81,82 @@ const scripts = () => {
     refreshOnBreakpoint();
 
     const header = $('.header')
-    const hamburger = $('.header__toggle');
-    lenis.on('scroll', function (inst) {
-        if (inst.scroll > header.height()) {
-            header.addClass('on-scroll')
-            if (inst.direction == 1) {
-                // down
-                header.addClass('on-hide')
-            } else if (inst.direction == -1) {
-                // up
-                header.removeClass('on-hide')
-            }
-        } else {
-            header.removeClass('on-scroll on-hide')
-        };
-    })
+    // lenis.on('scroll', function (inst) {
+    //     if (inst.scroll > header.height()) {
+    //         header.addClass('on-scroll')
+    //         if (inst.direction == 1) {
+    //             // down
+    //             header.addClass('on-hide')
+    //         } else if (inst.direction == -1) {
+    //             // up
+    //             header.removeClass('on-hide')
+    //         }
+    //     } else {
+    //         header.removeClass('on-scroll on-hide')
+    //     };
+    // })
+    let lastScrollTop = 0;
+    const handleHeader = {
+        toggleHide: (scrollPos) => {
+            let headerHeight = header.height();
+			// let st = $(this).scrollTop();
+			// let headerHeight = $(".header").outerHeight();
+			if (scrollPos > lastScrollTop) {
+				if (scrollPos > headerHeight) {
+                    header.addClass('on-hide')
+				}
+			} else {
+				if (scrollPos > headerHeight) {
+					header.addClass("on-hide");
+					header.removeClass("on-hide");
+				}
+			}
+			lastScrollTop = scrollPos;
+		},
+		addBG: (scrollPos) => {
+			// const scrollPos = {
+			// 	x: window.pageXOffset,
+			// 	y: window.pageYOffset,
+			// };
+			if (scrollPos > header.height()) header.addClass("on-scroll");
+			else header.removeClass("on-scroll");
+        },
+        toggleNav: () => {
+            const hamburger = $('.header__toggle');
+            hamburger.on('click', function (e) {
+                e.preventDefault();
+                if (header.hasClass('open-nav')) {
+                    if ($(window).width() <= 476) {
+                        let scrollY = $("body").css('top');
+                        $("body").css({
+                            'position': 'relative',
+                            'top': ''
+                        });
+                        lenis.start();
+                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                    }
+                    header.removeClass('open-nav force');
+                }
+                else {
+                    if ($(window).width() <= 476) {
+                        setTimeout(() => {
+                            $("body").css({
+                                'position': 'fixed',
+                                'top': `-${window.scrollY}px`
+                            });
+                        }, 500)
+                        lenis.stop();
+                    }
+                    header.addClass('open-nav force');
+                }
+            })
+		},
+    };
 
-    hamburger.on('click', function (e) {
-        e.preventDefault();
-        if (header.hasClass('open-nav')) {
-            if ($(window).width() <= 476) {
-                let scrollY = $("body").css('top');
-                $("body").css({
-                    'position': 'relative',
-                    'top': ''
-                });
-                lenis.start();
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            }
-            header.removeClass('open-nav force');
-        }
-        else {
-            if ($(window).width() <= 476) {
-                setTimeout(() => {
-                    $("body").css({
-                        'position': 'fixed',
-                        'top': `-${window.scrollY}px`
-                    });
-                }, 500)
-                lenis.stop();
-            }
-            header.addClass('open-nav force');
-        }
+    handleHeader.toggleNav();
+    lenis.on('scroll', function (inst) {
+        handleHeader.addBG(inst.scroll);
+        handleHeader.toggleHide(inst.scroll);
     })
 
     function transitionOnce() {
