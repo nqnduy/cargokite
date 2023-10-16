@@ -517,11 +517,16 @@ function techVideoInteraction() {
                             ySetter(playBtn)(lerp(iconsY, pointerCurr().y - vidRect.top - vidRect.height / 2), 0.01);
                             if (pointerCurr().y - vidRect.top  >= vidRect.height - ctrlHeight) {
                                 gsap.to(playBtn, { opacity: 0, duration: 0.3 })
-                            }
-                            else {
+                            } else {
                                 gsap.to(playBtn, { opacity: 1, duration: 0.3 })
                             }
                         } else {
+                            if ($(playBtn).hasClass('playing')) {
+                                gsap.to(playBtn, { opacity: 0, duration: 0.3 })
+                            } else {
+                                gsap.to(playBtn, { opacity: 1, duration: 0.3 })
+                            }
+                            
                             xSetter(playBtn)(lerp(iconsX, 0), 0.01);
                             ySetter(playBtn)(lerp(iconsY, 0), 0.01);
                         }

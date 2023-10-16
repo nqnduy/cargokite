@@ -340,21 +340,21 @@
         column-gap: 2rem;
         &-img {
             grid-column: 2/7;
-            height: 63.4rem;
-            align-self: start;
-            overflow: hidden;
+            transform-origin: center;
+            z-index: 2;
+            pointer-events: none;
+            position: relative;
             &-inner {
-                display: flex;
-                flex-direction: column;
-                //Additional, can be replace later
-                position: relative;
+                display: grid;
+                width: 48.9rem;
+                position: absolute;
+                transform: translateY(-50%);
             }
             &-item {
+                grid-column: 1/2;
+                grid-row: 1/2;
                 opacity: 0;
                 transition: opacity 600ms ease;
-                //Additional, can be replace later
-                position: absolute;
-                top: 0;
                 background-color: rgba($cl-white, 1);
                 &.active {
                     opacity: 1;
@@ -372,7 +372,7 @@
             grid-column: 9/16;
             display: flex;
             flex-direction: column;
-            padding-bottom: 33.7rem;
+            padding-bottom: 20rem;
             min-height: 112rem;
         }
         &-item {
@@ -690,6 +690,7 @@
                     width: 50%;
                     margin: 0 auto;
                     position: absolute;
+                    height: auto;
                     top: 50%;
                     left: 50%;
                     @include transform(translate(-50%, -50%));
@@ -891,6 +892,10 @@
         &__main {
             grid-column: 2/3;
             margin-left: -4rem;
+            &-inner {
+                padding-top: 35svh;
+                padding-bottom: 35svh;
+            }
         }
         &__head {
             padding-top: 8rem;

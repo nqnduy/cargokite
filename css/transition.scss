@@ -43,3 +43,14 @@
         }
     }
 }
+@include sm {
+    .trans {
+        &__wrapper {
+            height: 100svh;
+        }
+        &__logo {
+            width: 8rem;
+            height: 8rem;
+        }
+    }
+}

@@ -2,7 +2,7 @@ import $ from "jquery";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
-import { nestedLinesSplit, toHTML, sortAsc } from "./untils";
+import { nestedLinesSplit, toHTML, sortAsc, xGetter, yGetter, xSetter, ySetter, pointerCurr, lerp } from "./untils";
 import { getAllDataByType } from "./common/prismic_fn";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -33,18 +33,6 @@ function abtHero() {
     tl
     .from(abtHeroLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
     .from(abtHeroTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '<=.2')
-
-    let tlScrub = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.abt-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        }
-    })
-    tlScrub
-    .to('.abt-hero__title', {yPercent: 25, ease: 'none'}, '0')
-    .to('.abt-hero__label', {yPercent: 25, ease: 'none'}, '0')
 }
 function abtInfo() {
     const abtInfoQuoteTxt = new SplitText('.abt-info__quote-txt', typeOpts.words);
@@ -151,7 +139,6 @@ function abtInfo() {
     .from(abtVisTitle.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
     .from(abtVisTxt.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 }
-
 function abtMiles() {
     //Setup
     let scrollDistance = ($('.abt-mil__main-item').length + .7) * 50;
@@ -163,13 +150,14 @@ function abtMiles() {
             trigger: '.abt-mil__wrap',
             start: 'top bottom',
             end: `bottom top-=${scrollDistance}%`,
-            scrub: true
+            scrub: true,
         }
     })
     tlShip
     .to('.abt-mil__ship-img', {y: shipDistance + $(window).height() * .35, ease: 'none'})
 
     let mainDistance = $('.abt-mil__main-inner').height() - $(window).height() * .3;
+    
     let tlMain = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-mil__wrap',
@@ -182,6 +170,7 @@ function abtMiles() {
     if ($(window).width() <= 767) {
         gsap.set('.abt-mil-pin-container', { height: $('.abt-mil__main-inner').height() + $('.abt-mil__head').outerHeight(), position: 'sticky', top: -1  });
     }
+    gsap.to($('.abt-mil-pin-container').parent('.pin-spacer'), {background: '#212121'})
     tlMain
     .to('.abt-mil__main-inner', {y: -mainDistance, ease: 'none'})
     .to('.abt-mil__progress-dot', {top: '100%', ease: 'none'}, 0)
@@ -203,7 +192,6 @@ function abtMiles() {
     .from(abtMilTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '<=.2')
     .from('.abt-mil__progress', {yPercent: 15, autoAlpha: 0, duration: .4}, '<=.2')
 }
-
 function abtTeam() {
     const abtTeamTitle = new SplitText('.abt-team__title', typeOpts.words);
     const abtTeamTxt = new SplitText('.abt-team__richtext-p', typeOpts.words);
@@ -244,16 +232,15 @@ function abtTeam() {
             abtTeamImgItem.removeClass('active')
         })
 
-        const tlTeamImg = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.abt-team__main-list',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-            }
-        })
-        tlTeamImg
-        .to('.abt-team__main-img', {yPercent: 35, ease: 'none'})
+        let teamImgWrap = '.abt-team__main-img-inner';
+        function mousMove() {
+            let iconsX = xGetter(teamImgWrap);
+            let iconsY = yGetter(teamImgWrap);
+            xSetter(teamImgWrap)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgWrap).width() * .2 ), 0.01);
+            ySetter(teamImgWrap)(lerp(iconsY, pointerCurr().y - $('.abt-team__main-img').get(0).getBoundingClientRect().top), 0.01);    
+            requestAnimationFrame(mousMove)
+        }
+        requestAnimationFrame(mousMove)
     }
     else {
         abtTeamItem.on('click', function () {
@@ -288,17 +275,7 @@ function abtTeam() {
             abtTeamImg.removeClass('active');
         })
     }
-
-    const tlTeamList = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.abt-team__main-list',
-            start: 'top top+=65%'
-        }
-    })
-    tlTeamList
-    .from('.abt-team__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .15, clearProps: 'all'})
 }
-
 function abtJob() {
     const abtJobLabel = new SplitText('.abt-job__label', typeOpts.chars)
     const abtJobTitle = new SplitText('.abt-job__title', typeOpts.words)

@@ -325,15 +325,24 @@
             display: flex;
             flex-direction: column;
             &-addr {
-                margin-bottom: 3.2rem;
+                margin-bottom: 4rem;
+                display: flex;
+                flex-direction: column;
+                row-gap: 2rem;
                 &-label {
-                    font-size: 1.4rem;
+                    margin-bottom: .8rem;
+                }
+                &-txt br {
+                    display: none;
                 }
             }
             &-contact {
                 margin-left: 0;
-                flex-direction: row;
+                flex-direction: column;
                 column-gap: 2rem;
+                &-label {
+                    margin-bottom: .8rem;
+                }
                 &-link {
                     font-size: 1.6rem;
                 }
@@ -347,7 +356,7 @@
         }
         &__marquee {
             &-wrap {
-                padding: 4.6rem 0 6rem;
+                padding: 4.6rem 0 4.6rem;
             }
             &-item {
                 font-size: 6rem;

@@ -70,7 +70,9 @@ function homeHero() {
             }
         })
         tlScrub
-        .to('.home-hero__bg-wrap', {yPercent: 25, ease: 'none'})
+        .to('.home-hero__bg-wrap', {yPercent: 15, ease: 'none', duration: 1})
+        .to('.home-hero__title', {autoAlpha: 0, ease: 'none', duration: .4}, '0')
+        .to('.home-hero__sub', {autoAlpha: 0, duration: .4, ease: 'none'}, '0')
         // .to('.home-hero__title', {yPercent: -35, ease: 'none'}, '0')
         // .to('.home-hero__sub', { yPercent: -45, ease: 'none' }, '0')
     }
@@ -376,16 +378,19 @@ function homeTech() {
         .from('.home-tech__link .arr-wrap', {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
         .from(homeTechItemLinkTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
+            
     let tlShip = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-tech__ship',
-            start: 'top bottom+=35%',
+            start: 'top bottom+=15%',
             end: 'bottom top-=35%',
             scrub: .4,
         }
     })
-    requestAnimationFrame(() => {
-        tlShip.fromTo('.home-tech__ship img', {xPercent: 55, yPercent: -35}, {xPercent: -55, yPercent: 35, ease: 'none'})
+    tlShip.fromTo('.home-tech__ship img', {
+        xPercent: $(window).width() > 767 ? 75 : 55, yPercent: -35
+    }, {
+        xPercent: $(window).width() > 767 ? -75 : -55, yPercent: 35, ease: 'none'
     })
 }
 function homeWhy() {

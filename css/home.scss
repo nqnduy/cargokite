@@ -540,8 +540,8 @@
     position: relative;
     z-index: 4;
     overflow: hidden;
-    padding-top: 9.6rem;
-    margin-top: -9.6rem;
+    padding-top: 13rem;
+    margin-top: -13rem;
     padding-bottom: 100vh;
     margin-bottom: -100vh;
     pointer-events: none;
@@ -1176,6 +1176,8 @@
         }
     }
     .home-tech {
+        margin-top: -7.8rem;
+        padding-top: 7.8rem;
         &__inner {
             grid-column: 1/13;
             grid-template-columns: repeat(4, 1fr);
@@ -1194,6 +1196,9 @@
         }
         &__title {
             max-width: none;
+            br {
+                display: none;
+            }
         }
         &__item {
             &-inner {
@@ -1271,6 +1276,7 @@
                 column-gap: 2rem;
             }
             &-item {
+                align-self: stretch;
                 &-title {
                     margin-top: 2.4rem;
                     br {
@@ -1648,9 +1654,11 @@
                 }
             }
             &-list {
-                display: flex;
-                align-items: flex-start;
+                align-items: stretch;
                 column-gap: 0;
+                &.swiper-wrapper {
+                    display: grid;
+                }
             }
             &-item {
                 &::after {

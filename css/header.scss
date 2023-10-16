@@ -311,7 +311,7 @@
 
 @include sm {
     .header {
-        padding: 2.4rem 0;
+        padding: 2rem 0;
         &_act {
             display: none;
         }
@@ -321,7 +321,7 @@
         &__nav {
             position: fixed;
             inset: 0;
-            padding: 2.4rem 2rem;
+            padding: 2rem 2rem;
             overflow-y: auto;
             height: 100vh;
             @include transform(scale(1) translateX(2.5rem));
@@ -370,13 +370,17 @@
                 }
             }
         }
+        &.on-scroll {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
         &.open-nav {
             &.on-scroll {
                 .header__nav {
                     top: 0;
                 }
                 .header__toggle {
-                    top: 1.2rem;
+                    top: 0rem;
                     @include transition(top 0.3s ease-out);
                 }
             }
