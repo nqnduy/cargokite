@@ -212,6 +212,7 @@ function abtTeam() {
         .from(abtTeamTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03})
         .from(abtTeamTxt.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
         .from(abtTeamLink.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '>=-.2')
+        .from('.abt-team__richtext-link', {'--line-width': '0%', duration: .6}, '<=.2')
     })
 
     const abtTeamItem = $('.abt-team__main-item');

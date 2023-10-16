@@ -8,9 +8,19 @@
 		@content;
 	}
 }
+@mixin md-up {
+	@media screen and (min-width: $md-min ) {
+		@content;
+	}
+}
 // tablet
 @mixin sm {
 	@media screen and (max-width: $sm-max) {
+		@content;
+	}
+}
+@mixin sm-up {
+	@media screen and (min-width: $sm-min ) {
 		@content;
 	}
 }

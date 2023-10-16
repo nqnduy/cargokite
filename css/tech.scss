@@ -71,7 +71,7 @@
     }
     &__label {
         margin-top: 4.2rem;
-        grid-column: 2/4;
+        grid-column: 2/6;
         grid-row: 1/2;
         align-self: start;
         @include md {
@@ -84,7 +84,7 @@
         }
     }
     &__holder {
-        grid-column: 2/16;
+        grid-column: 1/17;
         margin-top: 4.2rem;
         grid-row: 1/2;
         opacity: 0;
@@ -99,7 +99,7 @@
     }
     &__main {
         margin-top: 4.2rem;
-        grid-column: 2/16;
+        grid-column: 1/17;
         grid-row: 1/2;
         display: flex;
         justify-content: end;
@@ -113,8 +113,9 @@
             grid-area: span 1 / span 2;
         }
         &-inner {
-            width: calc(28.5714% - 1.42857rem);
-            margin-right: calc(-7.14286% - .142857rem);
+            //width: calc(28.5714% - 1.42857rem);
+            width: 24%;
+            //margin-right: calc(-7.14286% - .142857rem);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -153,6 +154,12 @@
         position: absolute;
         z-index: 2;
         pointer-events: auto;
+        @include sm-up {
+            transition: opacity $dur-default ease;
+            &.force-hidden {
+                opacity: 0 !important;
+            }
+        }
         @include size(12rem);
         @include sm {
             @include size(6.4rem);
@@ -163,8 +170,6 @@
             align-items: center;
             @include size(100%);
             background-color: rgba($cl-white, .1);
-            border-radius: 50%;
-            border: solid 1px rgba($cl-white, .1);
             color: rgba($cl-white, 1);
             backdrop-filter: blur(3px);
             transition: all $dur-default ease;
@@ -458,7 +463,7 @@
                     margin-left: 0;
                     margin-right: 2rem;
                     margin-top: 2rem;
-                    border-radius: .4rem;
+                    border-radius: 0rem;
                     border: none;
                     overflow: hidden;
                     .leaflet-control-zoom-in, .leaflet-control-zoom-out {
@@ -467,6 +472,7 @@
                         justify-content: center;
                         align-items: center;
                         position: relative;
+                        border-radius: 0 !important;
                         span {
                             position: absolute;
                             font-size: 2.4rem;

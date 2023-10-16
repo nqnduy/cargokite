@@ -312,6 +312,9 @@
 @include sm {
     .header {
         padding: 2rem 0;
+        &__logo {
+            height: 2.6rem;
+        }
         &_act {
             display: none;
         }

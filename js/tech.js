@@ -439,7 +439,7 @@ function techHero() {
     .from(techHeroSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 }
 function techVideo() {
-    const techVidLabel = new SplitText('.tech-vid__label', typeOpts.chars);
+    const techVidLabel = new SplitText('.tech-vid__label', typeOpts.words);
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.tech-vid__label',
@@ -453,12 +453,13 @@ function techVideo() {
         },
     })
     tl
-    .from(techVidLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
+    .from(techVidLabel.words, {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .04})
     .from('.tech-vid__main-inner', {yPercent: 60, autoAlpha: 0, duration: .6}, '<=.2')
 }
 function techVideoInteraction() {
     const container = $('.tech-vid')
     const item = $('.tech-vid__main-inner');
+    let offset = ($(window).height() - $('.tech-vid__holder').height())  / 2
     if (viewport.width > 767) {
         container.addClass('end-state')
         let state = Flip.getState(item);
@@ -467,10 +468,14 @@ function techVideoInteraction() {
             simple: true,
             scrollTrigger: {
                 trigger: '.tech-vid__main',
-                start: `top top+=${($(window).height() - $('.tech-vid__holder').height())  / 2}`,
+                start: `top top+=${offset}`,
                 end: `top -=${viewportBreak({ md: 150, sm: 40 })}%`,
                 scrub: true,
                 pin: true,
+                markers: true,
+                onUpdate: (self) => {
+                    self.progress > .2 ? $(playBtn).removeClass('force-hidden') : $(playBtn).addClass('force-hidden')
+                }
             }
         })
     }
@@ -496,7 +501,7 @@ function techVideoInteraction() {
         videoAction.play('#vidTech');
 
         if (!clearThumb(item)) return;
-        let target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height();
+        let target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height() - offset;
         clearThumb(item);
         lenis.scrollTo(target)
     })

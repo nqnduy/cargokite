@@ -116,6 +116,7 @@ function homeIntro() {
     .from(homeIntroRichh3.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
     .from(homeIntroRichp.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .015}, '<=.2')
     .from(homeIntroRichlink.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '>=-.2')
+    .from('.home-intro__richtext-link', {'--line-width': '0%', duration: .6}, '<=.2')
 
     let tlScrub = gsap.timeline({
         scrollTrigger: {
@@ -541,6 +542,7 @@ function homeFaq() {
     .from(homeFaqTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
     .from(homeFaqSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
     .from('.home-faq__link', {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .04}, '<=.2')
+    .from('.home-faq__link.hover-un', {'--line-width': '0%', duration: .6}, '<=.2')
 
     let tlItems = gsap.timeline({
         scrollTrigger: {
