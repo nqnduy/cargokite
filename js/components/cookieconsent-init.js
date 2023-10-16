@@ -7,7 +7,7 @@ let cookieAccepted = false;
 const initCookie = () => {
     cookieConsent.run({
         current_lang: 'en',
-        autoclear_cookies: true,                   // default: false
+        // autoclear_cookies: true,                   // default: false
         page_scripts: true,                        // default: false
         gui_options: {
             consent_modal: {
