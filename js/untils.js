@@ -125,30 +125,53 @@ const yGetter = (el) => gsap.getProperty(el, 'y')
 
 function toHTML(richTextArray, pClass, linkClass) {
     let html = '';
+    console.log(richTextArray)
     for (const block of richTextArray) {
         switch (block.type) {
         case 'paragraph':
-                let string = block.text;
-                for (const span of block.spans) {
-                    switch (span.type) {
-                        case 'label':
-                            let tag;
-                            switch (span.data.label) {
-                                case 'contact':
-                                tag = "contact"
-                            }
-                            string = string.replace(block.text.substring(span.start, span.end),`<a href="#" class="${linkClass}" data-popup="${tag}" >${block.text.substring(span.start, span.end)}</a>`);
-                        break;
-                        case 'hyperlink':
-                            let link = new URL(span.data.url)
-                            string = string.replace(block.text.substring(span.start, span.end),`<a href="${window.location.origin}${link.pathname}${link.hash}" class="${linkClass}">${block.text.substring(span.start, span.end)}</a>`);
-                        break;
-                        default:
-                        break;
-                    }
+            let string = block.text;
+            for (const span of block.spans) {
+                switch (span.type) {
+                    case 'label':
+                        let tag;
+                        switch (span.data.label) {
+                            case 'contact':
+                            tag = "contact"
+                        }
+                        string = string.replace(block.text.substring(span.start, span.end),`<a href="#" class="${linkClass}" data-popup="${tag}" >${block.text.substring(span.start, span.end)}</a>`);
+                    break;
+                    case 'hyperlink':
+                        let link = new URL(span.data.url)
+                        string = string.replace(block.text.substring(span.start, span.end),`<a href="${window.location.origin}${link.pathname}${link.hash}" class="${linkClass}">${block.text.substring(span.start, span.end)}</a>`);
+                    break;
+                    default:
+                    break;
                 }
-                html += `<p class="${pClass}">${string}</p>`;
-            break;
+            }
+            html += `<p class="${pClass}">${string}</p>`;
+        break;
+        case 'list-item':
+            let listString = block.text;
+            for (const span of block.spans) {
+                switch (span.type) {
+                    case 'label':
+                        let tag;
+                        switch (span.data.label) {
+                            case 'contact':
+                            tag = "contact"
+                        }
+                        listString = listString.replace(block.text.substring(span.start, span.end),`<a href="#" class="${linkClass}" data-popup="${tag}" >${block.text.substring(span.start, span.end)}</a>`);
+                    break;
+                    case 'hyperlink':
+                        let link = new URL(span.data.url)
+                        listString = listString.replace(block.text.substring(span.start, span.end),`<a href="${window.location.origin}${link.pathname}${link.hash}" class="${linkClass}">${block.text.substring(span.start, span.end)}</a>`);
+                    break;
+                    default:
+                    break;
+                }
+            }
+            html += `<li class="txt txt-16 txt-li">${listString}</li>`;
+        break;
         default:
             console.error(`Unsupported block type: ${block.type}`);
         }
