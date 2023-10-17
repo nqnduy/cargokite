@@ -340,6 +340,7 @@ function getApi_abtTeam() {
 }
 function getApi_abtJob() {
     getAllDataByType('job').then((res) => {
+        console.log(res)
         let allJob = res;
         let templateJob = $('.abt-job__main-item').eq(0).clone();
         $('.abt-job__main').html('')
@@ -351,6 +352,7 @@ function getApi_abtJob() {
             allJob.forEach((i) => {
                 let htmlJob = templateJob.clone()
                 htmlJob.attr('href',i.data.desc.url ? i.data.desc.url : '#').attr('target', i.data.desc.target)
+                htmlJob.find('.abt-job__main-item-title').text(i.data.name)
                 htmlJob.find('.abt-job__main-item-loca').text(i.data.location)
                 htmlJob.find('.abt-team__main-item-type').text(i.data.type)
                 htmlJob.appendTo('.abt-job__main');
