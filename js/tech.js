@@ -472,7 +472,6 @@ function techVideoInteraction() {
                 end: `top -=${viewportBreak({ md: 150, sm: 40 })}%`,
                 scrub: true,
                 pin: true,
-                markers: true,
                 onUpdate: (self) => {
                     self.progress > .2 ? $(playBtn).removeClass('force-hidden') : $(playBtn).addClass('force-hidden')
                 }
