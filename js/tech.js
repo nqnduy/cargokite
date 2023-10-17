@@ -65,15 +65,25 @@ class techDemoWebGL {
         window.addEventListener('resize', this.onWindowResize.bind(this))
         //camera
         let fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
-        fov = this.viewport.width > 767 ? 32.26880414280885 : 32.26880414280885 * 1.1;
+        fov = this.viewport.width > 767 ? 32.26880414280885 : 32.26880414280885 * 1;
         this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 10000);
-        this.camera.position.set(
-            100.63897705078125,
-            16.265151023864746,
-            viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 })
-        )
-        this.lookAtTarget = new THREE.Vector3(65.7516, 24.93049, -1.35464
-        )
+        if ($(window).width() > 767) {
+            this.camera.position.set(
+                100.63897705078125,
+                16.265151023864746,
+                viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 })
+            )
+            this.lookAtTarget = new THREE.Vector3(65.7516, 24.93049, -1.35464
+            )
+        } else {
+            this.camera.position.set(
+                85.63897705078125,
+                14.265151023864746,
+                -68.48991394042969
+            )
+            this.lookAtTarget = new THREE.Vector3(55.7516, 16.9304, -1.35464
+            )
+        }
         this.camera.lookAt(this.lookAtTarget)
 
         //renderer
@@ -82,12 +92,7 @@ class techDemoWebGL {
             alpha: true
         })
         this.renderer.setSize(this.viewport.width, this.viewport.height);
-        if ($(window).width() < 767 && isTouchDevice()) {
-            this.renderer.setPixelRatio(window.devicePixelRatio);
-        } else {
-            this.renderer.setPixelRatio(1.0);
-        }
-        
+        this.renderer.setPixelRatio(window.devicePixelRatio);
     }
     createMesh() {
         let url = new URL('../assets/cargo-demo-4.glb', import.meta.url)
@@ -99,10 +104,10 @@ class techDemoWebGL {
         this.dracoLoader.setDecoderConfig({type: 'js'})
         this.loader.setDRACOLoader( this.dracoLoader )
 
-        if ($(window).width() <= 767) {
-            const parent = childrenSelect('.tech-demo__main');
-            swiper.initClassName(parent);
-        }
+        // if ($(window).width() <= 767) {
+        //     const parent = childrenSelect('.tech-demo__main');
+        //     swiper.initClassName(parent);
+        // }
         this.loader.load(url,
         (glb) => {
             this.model = glb.scene;
@@ -193,13 +198,213 @@ class techDemoWebGL {
     scrollAnimate() {
         if (this.viewport.width > 767) {
             let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.tech-demo__main',
+                start: 'top bottom',
+                end: 'bottom top+=25%',
+                scrub: true,
+                onUpdate: () => {
+                    this.camera.lookAt( this.lookAtTarget );
+                }
+            },
+            defaults: {
+                ease: 'none'
+            }
+        })
+        tl
+        //dummy start 100vh
+        // .to('.popup', { duration: 1 })
+        .to(this.camera.position, {
+            x: viewportBreak({ md: 74.63897705078125, sm: 85.63897705078125 }),
+            y: viewportBreak({ md: 16.265151023864746, sm: 10.265151023864746 }),
+            z: viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 }),
+            duration: 1
+        })
+        .to(this.lookAtTarget, {
+            x: viewportBreak({ md: 49.7516, sm: 45.7516 }),
+            y: viewportBreak({ md: 24.93049, sm: 21.9304 }),
+            z: -1.35464,
+            duration: 1
+        }, '<=0')
+        //end dummy start 100vh
+        .to(this.camera.position, {
+            x: viewportBreak({ md: -43.3858, sm: -75.3858 }),
+            y: viewportBreak({ md: -3.16929, sm: -1.16929 }),
+            z: viewportBreak({ md: -17.9227, sm: -38.9227 }),
+            duration: 1
+        })
+        .to(this.lookAtTarget, {
+            x: viewportBreak({ md: -19.2134, sm: -24.2134 }),
+            y: viewportBreak({ md: 5.46543, sm: 4.46543 }),
+            z: -0.014547,
+            duration: 1
+        }, '<=0')
+        .to('.tech-demo__main-inner .tech-demo__main-item', {
+            yPercent: -100,
+            duration: 1
+        }, '<=0')
+        .to(this.camera.position, {
+            x: viewportBreak({ md: -36.182, sm: -75.182 }),
+            y: viewportBreak({ md: 28.6084, sm: 40.6084, }),
+            z: viewportBreak({ md: 52.1051, sm: 100.1051 }),
+            duration: 1
+        })
+        .to(this.lookAtTarget, {
+            x: viewportBreak({ md: 11.3448, sm: 20.3448 }),
+            y: 6.2503,
+            z: 0.056603,
+            duration: 1
+        }, '<=0')
+        .to('.tech-demo__main-inner .tech-demo__main-item', {
+            yPercent: -200,
+            duration: 1
+        }, '<=0')
+        this.containerGrp.forEach((el, idx) => {
+            let delayTime;
+            if (idx == 0) {
+                delayTime = '<=.4'
+            } else {
+                delayTime = '<=0'
+            }
+            tl.to(el.position, {
+                y: `${10 + 3 * (Math.random() - .5) * 2}`,
+                duration: .6,
+            }, delayTime)
+            .to(el.material, {
+                opacity: 0,
+                duration: .6
+            }, '<=0')
+        })
+        tl.to(this.camera.position, {
+            x: viewportBreak({ md: -10.3768, sm: -20.182 }),
+            y: viewportBreak({ md: 14.7438, sm: 15.6084}),
+            z: viewportBreak({ md: 8.8912, sm: 10.1051 }),
+            duration: 1
+        })
+        .to(this.lookAtTarget, {
+            x: viewportBreak({ md: 5.3448, sm: 7.3448 }),
+            y: 6.2503,
+            z: 0.056603,
+            duration: 1
+        }, '<=0')
+        .to(this.darkMat, {
+            opacity: 0,
+            duration: 1,
+        }, '<=0')
+        .to('.tech-demo__main-inner .tech-demo__main-item', {
+            yPercent: -300,
+            duration: 1
+        }, '<=0')
+        //dummy end 100vh
+        tl.to(this.camera.position, {
+            x: viewportBreak({ md: -10.3768, sm: -25.182 }),
+            y: viewportBreak({ md: 14.7438, sm: 15.6084}),
+            z: viewportBreak({ md: 4.8912, sm: 10.1051 }),
+            duration: 1
+        })
+        .to(this.lookAtTarget, {
+            x: viewportBreak({ md: 5.3448, sm: 7.3448 }),
+            y: 6.2503,
+            z: 0.056603,
+            duration: 1
+        }, '<=0')
+        // tl.to('.popup', {duration: 1})
+        //end dummy end 100vh
+
+        }
+        else {
+            let pointer = [
+                {
+                    position: {
+                        x: 85.63897705078125,
+                        y: 14.265151023864746,
+                        z: -68.48991394042969
+                    },
+                    lookAt: {
+                        x: 55.7516,
+                        y: 16.9304,
+                        z: -1.35464
+                    }
+                },
+                {
+                    position: {
+                        x: -50.3858,
+                        y: 4.16929,
+                        z: -30.9227,
+                    },
+                    lookAt: {
+                        x: -11.2134,
+                        y: 1.46543,
+                        z: -1.014547,
+                    }
+                },
+                {
+                    position: {
+                        x: -72.182,
+                        y: 58.6084,
+                        z: 90.1051
+                    },
+                    lookAt: {
+                        x: 0.3448,
+                        y: -4.2503,
+                        z: 0.056603
+                    }
+                },
+                {
+                    position: {
+                        x: -20.182,
+                        y: 12.6084,
+                        z: 10.1051
+                    },
+                    lookAt: {
+                        x: 0.65,
+                        y: 6.7503,
+                        z: 0.056603
+                    }
+                }
+            ]
+            let activeIndex = 0;
+            let prog;
+            let tl = gsap.timeline({    
                 scrollTrigger: {
                     trigger: '.tech-demo__main',
-                    start: 'top bottom',
-                    end: 'bottom top+=25%',
+                    start: 'top top+=50%',
+                    end: 'bottom top+=50%',
                     scrub: true,
-                    onUpdate: () => {
+                    snap: {
+                        snapTo: [.125, .375, .625, .875],
+                        duration: { min: 0.2, max: 3 },
+                        delay: 0.1,
+                        onComplete: (self) => {
+                            
+                        }
+                    },
+                    onUpdate: (self) => {
                         this.camera.lookAt( this.lookAtTarget );
+                        prog = self.progress.toFixed(2);
+                        if (prog <= .25) {
+                            activeIndex = 0
+                        } else if (prog > .25 && prog <= .5) {
+                            activeIndex = 1
+                        } else if (prog > .5 && prog <= .75) {
+                            activeIndex = 2
+                        } else if (prog > .75) {
+                            activeIndex = 3
+                        }
+                        $('.tech-demo__main-item').removeClass('active')
+                        $('.tech-demo__main-item').eq(activeIndex).addClass('active')
+                    },
+                    onEnter: () => {
+                        $('.header').addClass('force-hidden')
+                    },
+                    onLeave: () => {
+                        $('.header').removeClass('force-hidden')
+                    },
+                    onEnterBack: () => {
+                        $('.header').addClass('force-hidden')
+                    },
+                    onLeaveBack: () => {
+                        $('.header').removeClass('force-hidden')
                     }
                 },
                 defaults: {
@@ -207,51 +412,32 @@ class techDemoWebGL {
                 }
             })
             tl
-            //dummy start 100vh
-            // .to('.popup', { duration: 1 })
+            //Start
+            .to('.popup', { duration: .5 })
+            .addLabel("demo0")
             .to(this.camera.position, {
-                x: viewportBreak({ md: 74.63897705078125, sm: 85.63897705078125 }),
-                y: viewportBreak({ md: 16.265151023864746, sm: 10.265151023864746 }),
-                z: viewportBreak({ md: -51.48991394042969, sm:  -68.48991394042969 }),
+                x: pointer[1].position.x,
+                y: pointer[1].position.y,
+                z: pointer[1].position.z,
                 duration: 1
             })
             .to(this.lookAtTarget, {
-                x: viewportBreak({ md: 49.7516, sm: 45.7516 }),
-                y: viewportBreak({ md: 24.93049, sm: 21.9304 }),
-                z: -1.35464,
+                x: pointer[1].lookAt.x,
+                y: pointer[1].lookAt.y,
+                z: pointer[1].lookAt.z,
                 duration: 1
             }, '<=0')
-            //end dummy start 100vh
+            .addLabel("demo1")
             .to(this.camera.position, {
-                x: viewportBreak({ md: -43.3858, sm: -75.3858 }),
-                y: viewportBreak({ md: -3.16929, sm: -1.16929 }),
-                z: viewportBreak({ md: -17.9227, sm: -38.9227 }),
+                x: pointer[2].position.x,
+                y: pointer[2].position.y,
+                z: pointer[2].position.z,
                 duration: 1
             })
             .to(this.lookAtTarget, {
-                x: viewportBreak({ md: -19.2134, sm: -24.2134 }),
-                y: viewportBreak({ md: 5.46543, sm: 4.46543 }),
-                z: -0.014547,
-                duration: 1
-            }, '<=0')
-            .to('.tech-demo__main-inner .tech-demo__main-item', {
-                yPercent: -100,
-                duration: 1
-            }, '<=0')
-            .to(this.camera.position, {
-                x: viewportBreak({ md: -36.182, sm: -75.182 }),
-                y: viewportBreak({ md: 28.6084, sm: 40.6084, }),
-                z: viewportBreak({ md: 52.1051, sm: 100.1051 }),
-                duration: 1
-            })
-            .to(this.lookAtTarget, {
-                x: viewportBreak({ md: 11.3448, sm: 20.3448 }),
-                y: 6.2503,
-                z: 0.056603,
-                duration: 1
-            }, '<=0')
-            .to('.tech-demo__main-inner .tech-demo__main-item', {
-                yPercent: -200,
+                x: pointer[2].lookAt.x,
+                y: pointer[2].lookAt.y,
+                z: pointer[2].lookAt.z,
                 duration: 1
             }, '<=0')
             this.containerGrp.forEach((el, idx) => {
@@ -270,146 +456,46 @@ class techDemoWebGL {
                     duration: .6
                 }, '<=0')
             })
+            tl.addLabel("demo2")
             tl.to(this.camera.position, {
-                x: viewportBreak({ md: -10.3768, sm: -20.182 }),
-                y: viewportBreak({ md: 14.7438, sm: 15.6084}),
-                z: viewportBreak({ md: 8.8912, sm: 10.1051 }),
+                x: pointer[3].position.x,
+                y: pointer[3].position.y,
+                z: pointer[3].position.z,
                 duration: 1
             })
-            .to(this.lookAtTarget, {
-                x: viewportBreak({ md: 5.3448, sm: 7.3448 }),
-                y: 6.2503,
-                z: 0.056603,
-                duration: 1
-            }, '<=0')
             .to(this.darkMat, {
                 opacity: 0,
                 duration: 1,
             }, '<=0')
-            .to('.tech-demo__main-inner .tech-demo__main-item', {
-                yPercent: -300,
-                duration: 1
-            }, '<=0')
-            //dummy end 100vh
-            tl.to(this.camera.position, {
-                x: viewportBreak({ md: -10.3768, sm: -25.182 }),
-                y: viewportBreak({ md: 14.7438, sm: 15.6084}),
-                z: viewportBreak({ md: 4.8912, sm: 10.1051 }),
-                duration: 1
-            })
             .to(this.lookAtTarget, {
-                x: viewportBreak({ md: 5.3448, sm: 7.3448 }),
-                y: 6.2503,
-                z: 0.056603,
+                x: pointer[3].lookAt.x,
+                y: pointer[3].lookAt.y,
+                z: pointer[3].lookAt.z,
                 duration: 1
             }, '<=0')
-            // tl.to('.popup', {duration: 1})
-            //end dummy end 100vh
+            .addLabel("demo3")
 
-        }
-        else {
-            const parent = childrenSelect('.tech-demo__main');
-            let pointer = [
-                {
-                    position: {
-                        x: 85.63897705078125,
-                        y: 10.265151023864746,
-                        z: -68.48991394042969
-                    },
-                    lookAt: {
-                        x: 55.7516,
-                        y: 12.9304,
-                        z: -1.35464
-                    }
-                },
-                {
-                    position: {
-                        x: -60.3858,
-                        y: 0.16929,
-                        z: -40.9227,
-                    },
-                    lookAt: {
-                        x: -11.2134,
-                        y: -3.46543,
-                        z: -1.014547,
-                    }
-                },
-                {
-                    position: {
-                        x: -72.182,
-                        y: 50.6084,
-                        z: 90.1051
-                    },
-                    lookAt: {
-                        x: 0.3448,
-                        y: -12.2503,
-                        z: 0.056603
-                    }
-                },
-                {
-                    position: {
-                        x: -20.182,
-                        y: 10.6084,
-                        z: 10.1051
-                    },
-                    lookAt: {
-                        x: 0.65,
-                        y: 4.7503,
-                        z: 0.056603
-                    }
-                }
-            ]
-            swiper.setup(parent, {
-                touchMove: true,
-                spacing: 24,
-                on: {
-                    slideChange: (slide) => {
-                        let index = slide.activeIndex;
-                        gsap.to('.tech-demo__prog-inner', {
-                            scaleX: .25 * (index + 1)
-                        })
-                        let tlSwiper = gsap.timeline({
-                            onUpdate: () => {
-                                this.camera.lookAt( this.lookAtTarget );
-                            }
-                        })
-                        tlSwiper
-                            .to(this.camera.position, {
-                                ...pointer[index].position,
-                                duration: 1,
-                        }, '0')
-                            .to(this.lookAtTarget, {
-                                ...pointer[index].lookAt,
-                                duration: 1,
-                                onUpdate: () => {
-                                    this.camera.lookAt( this.lookAtTarget );
-                                }
-                            }, '<=0')
-                        .to(this.darkMat, {opacity: index === 3 ? 0 : 1}, '<=0')
-                        this.containerGrp.forEach((el, idx) => {
-                            let delayTime;
-                            if (idx == 0) {
-                                delayTime = '<=.4'
-                            } else {
-                                delayTime = '<=0'
-                            }
-                            tlSwiper.to(el.position, {
-                                y: `${index === 2 || index === 3 ? (10 + 3 * (Math.random() - .5) * 2) : 0}`,
-                                duration: 1,
-                            }, delayTime)
-                            .to(el.material, {
-                                opacity: index === 2 || index === 3 ? 0 : 1,
-                            }, '<=0')
-                        })
-                    },
-                    beforeInit: () => {
-                        this.camera.position.set(pointer[0].position.x, pointer[0].position.y, pointer[0].position.z)
-                        this.lookAtTarget = new THREE.Vector3(pointer[0].lookAt.x, pointer[0].lookAt.y, pointer[0].lookAt.z)
-                        this.camera.lookAt(this.lookAtTarget)
-                    }
-                }
+            //End
+            .to('.popup', { duration: .5 })
+
+            $('.tech-demo__main-item-toggle').on('click', function(e) {
+                e.preventDefault()
+                $('.tech-demo__popup-item').eq(activeIndex).addClass('active')
+                console.log(activeIndex)
             })
-            this.onWindowResize()
+            $('.tech-demo__popup-close').on('click', function(e) {
+                e.preventDefault()
+                $('.tech-demo__popup-item').removeClass('active')
+                console.log(activeIndex)
+            })
+
+            $('.tech-demo__main-item-title').on('click', function(e) {
+                e.preventDefault();
+                let target = $(this).closest('.tech-demo__main-item').index();
+                //console.log(target)
+                lenis.scrollTo(tl.scrollTrigger.labelToScroll(`demo${target}`), {force: true})
+            })
+
         }
     }
     init() {

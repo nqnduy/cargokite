@@ -340,7 +340,6 @@ function getApi_abtTeam() {
 }
 function getApi_abtJob() {
     getAllDataByType('job').then((res) => {
-        console.log(res)
         let allJob = res;
         let templateJob = $('.abt-job__main-item').eq(0).clone();
         $('.abt-job__main').html('')

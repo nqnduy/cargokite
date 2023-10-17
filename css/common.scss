@@ -186,6 +186,7 @@ button {
     &.hidden {
         display: none;
     }
+    white-space: nowrap;
 }
 
 .arr-wrap {

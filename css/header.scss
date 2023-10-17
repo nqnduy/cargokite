@@ -410,5 +410,8 @@
                 @include transition(0.5s ease-out);
             }
         }
+        &.force-hidden {
+            @include transform(translateY(-100%) !important);
+        }
     }
 }

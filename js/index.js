@@ -129,7 +129,8 @@ const scripts = () => {
                         lenis.start();
                         window.scrollTo(0, parseInt(scrollY || '0') * -1);
                     }
-                    header.removeClass('open-nav force');
+                    header.removeClass('open-nav');
+                    header.removeClass('force')
                 }
                 else {
                     if ($(window).width() <= 476) {
@@ -141,7 +142,8 @@ const scripts = () => {
                         }, 500)
                         lenis.stop();
                     }
-                    header.addClass('open-nav force');
+                    header.addClass('open-nav');
+                    header.addClass('force')
                 }
             })
 		},
@@ -249,6 +251,8 @@ const scripts = () => {
     }
     function resetBeforeLeave(data) {
         console.log('reset')
+        $('.header').removeClass('force-hidden')
+        $('.header').removeClass('force')
         addNavActiveLink(data);
     }
     function resetScroll() {

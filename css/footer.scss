@@ -169,6 +169,7 @@
         border: 1px solid rgba($cl-white, .1);
         color: rgba($cl-white, 1);
         transition: all $dur-default ease;
+        border-radius: 0;
         &::placeholder {
             color: rgba($cl-placeholder, 1);
         }
@@ -352,6 +353,8 @@
             }
             &-legal {
                 margin-left: 0;
+                justify-content: left;
+                column-gap: 3.2rem;
             }
         }
         &__marquee {
