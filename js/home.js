@@ -280,8 +280,8 @@ function homeShift() {
     requestAnimationFrame(() => {
         let bigShipPath = $('.home-shift__main-part--big-ship .home-shift__img-wrap').width() + $(window).width()
         let smallShipPath = $('.home-shift__main-part--small-ship .home-shift__img-wrap').width() + $(window).width() + $('.home-shift__small-txt').width()
-        gsap.set('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'})
-        gsap.set('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'})
+        gsap.set('.home-shift__main-part--big-txt', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'})
+        gsap.set('.home-shift__main-part--small-txt', {clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'})
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.home-shift__main',
@@ -294,9 +294,9 @@ function homeShift() {
             }
         })
         tl
-        .to('.home-shift__main-part--big-txt .title-wrap', {clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', duration: 1.2})
+        .to('.home-shift__main-part--big-txt', {clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)', duration: 1.2})
         .to('.home-shift__main-part--big-ship .home-shift__img-wrap', {x: -bigShipPath, duration: 1.2}, 0)
-        .to('.home-shift__main-part--small-txt .title-wrap', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 1}, 0)
+        .to('.home-shift__main-part--small-txt', {clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 1}, 0)
         .to('.home-shift__main-part--small-ship .home-shift__img-wrap', {x: -smallShipPath, duration: 1.2})
 
         requestAnimationFrame(() => {
@@ -309,7 +309,7 @@ function homeShift() {
                 }
             })
             requestAnimationFrame(() => {
-                tlInit.from('.home-shift__main-part--big-txt .title-wrap', {yPercent: -50, ease: 'none'})
+                tlInit.from('.home-shift__main-part--big-txt', {yPercent: -50, ease: 'none'})
             })
 
             let tlImgBg = gsap.timeline({
