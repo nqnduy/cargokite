@@ -82,7 +82,12 @@ class techDemoWebGL {
             alpha: true
         })
         this.renderer.setSize(this.viewport.width, this.viewport.height);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        if ($(window).width() < 767 && isTouchDevice()) {
+            this.renderer.setPixelRatio(window.devicePixelRatio);
+        } else {
+            this.renderer.setPixelRatio(1.0);
+        }
+        
     }
     createMesh() {
         let url = new URL('../assets/cargo-demo-4.glb', import.meta.url)
