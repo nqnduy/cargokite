@@ -139,10 +139,10 @@
             width: 100%;
             aspect-ratio: 386 / 225;
             &-wrapper {
-                transition-duration: 600ms !important;
             }
             &-slide {
                 display: block;
+                video {}
             }
             &-nav {
                 display: flex;

@@ -235,11 +235,11 @@ function abtTeam() {
 
         let teamImgWrap = '.abt-team__main-img-inner';
         function mousMove() {
-            if (teamImgWrap) {
+            if (teamImgWrap.length) {
                 let iconsX = xGetter(teamImgWrap);
                 let iconsY = yGetter(teamImgWrap);
                 xSetter(teamImgWrap)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgWrap).width() * .2 ), 0.01);
-                ySetter(teamImgWrap)(lerp(iconsY, pointerCurr().y - $('.abt-team__main-img').get(0).getBoundingClientRect().top - $('.abt-team__main-img').height() * .1), 0.01);    
+                ySetter(teamImgWrap)(lerp(iconsY, pointerCurr().y - $(teamImgWrap).get(0).getBoundingClientRect().top - $(teamImgWrap).height() * .1), 0.01);    
             }
             requestAnimationFrame(mousMove)
         }
@@ -304,12 +304,32 @@ function abtJob() {
         .from(abtJobItems, {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .1, clearProps: 'all'})
     })
 }
+function getApit_abtInfo() {
+    getAllDataByType('abt_gallery', 'asc').then((res) => {
+        let allSlides = res;
+        let templateSlideImg = $('.abt-info__swiper-item-img').eq(0).clone();
+        let templateSlideVid = $('.abt-info__swiper-item-vid').eq(0).clone();
+        $('.abt-info__swiper .swiper-wrapper').html('')
+        console.log(allSlides)
+        allSlides.forEach((i) => {
+            if (!i.data.video.url) {
+                let htmlSlide = templateSlideImg.clone();
+                htmlSlide.find('img').attr('src', i.data.image.url).attr('alt', i.data.image.alt ? i.data.image.alt : i.type)
+                htmlSlide.appendTo('.abt-info__swiper .swiper-wrapper');
+            } else {
+                let htmlSlide = templateSlideVid.clone();
+                htmlSlide.find('video').attr('src', i.data.video.url);
+                htmlSlide.appendTo('.abt-info__swiper .swiper-wrapper');
+            }
+        })
+        abtInfo()
+    })
+}
 function getApi_abtMiles() {
     getAllDataByType('milestone', 'asc').then((res) => {
         let allMiles = res;
         let templateMile = $('.abt-mil__main-item').eq(0).clone();
         $('.abt-mil__main-inner').html('')
-        console.log(allMiles)
         allMiles.forEach((i) => {
             let htmlMile = templateMile.clone();
             htmlMile.find('.abt-mil__main-item-label').text(i.data.label)
@@ -368,11 +388,12 @@ const aboutScript = {
         console.log('enter about')
         setTimeout(() => {
             abtHero()
-            abtInfo()
+            //abtInfo()
             //abtMiles()
             //abtTeam()
             //abtJob()
         }, 100);
+        getApit_abtInfo()
         getApi_abtMiles()
         getApi_abtTeam()
         getApi_abtJob()

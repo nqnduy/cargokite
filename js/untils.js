@@ -125,7 +125,6 @@ const yGetter = (el) => gsap.getProperty(el, 'y')
 
 function toHTML(richTextArray, pClass, linkClass) {
     let html = '';
-    console.log(richTextArray)
     for (const block of richTextArray) {
         switch (block.type) {
         case 'paragraph':
