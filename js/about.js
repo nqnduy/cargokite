@@ -4,6 +4,8 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
 import { nestedLinesSplit, toHTML, sortAsc, xGetter, yGetter, xSetter, ySetter, pointerCurr, lerp } from "./untils";
 import { getAllDataByType } from "./common/prismic_fn";
+import Swiper from "swiper";
+import { Navigation, Pagination, Autoplay } from 'swiper';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 let typeOpts = {
@@ -61,28 +63,6 @@ function abtInfo() {
     .from(abtInfoQuoteAuthor.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '>=-.2')
     .from(abtInfoQuoteJob.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
 
-    const abtAddItems = $('.abt-info__add-item')
-    abtAddItems.each((index, el) => {
-        const abtAddItemLabel = new SplitText($(el).find('.abt-info__add-item-label'), typeOpts.words);
-        const abtAddItemTxt = new SplitText($(el).find('.abt-info__add-item-txt'), typeOpts.words);
-        let tlAddItem = gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top top+=50%',
-            },
-            defaults: {
-                ease: gOpts.ease
-            },
-            onComplete: () => {
-                abtAddItemLabel.revert()
-                abtAddItemTxt.revert()
-            }
-        })
-        tlAddItem
-        .from(abtAddItemLabel.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-        .from(abtAddItemTxt.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    })
-
     const abtInfoMemberNum = new SplitText('.abt-info__add-member-amount', typeOpts.chars);
     const abtInfoMemberLabel = new SplitText('.abt-info__add-member-label', typeOpts.words);
 
@@ -100,6 +80,7 @@ function abtInfo() {
     .from('.abt-info__add-member-inner', {autoAlpha: 0, duration: .4})
     .from(abtInfoMemberNum.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '>=-.2')
     .from(abtInfoMemberLabel.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+    .from('.abt-info__swiper', {yPercent: 25, autoAlpha: 0, duration: .8}, '<=.2')
 
     gsap.set('.abt-info__richtext-img', {clipPath: 'inset(10%)'})
     gsap.set('.abt-info__richtext-img img', {scale: 1.4, autoAlpha: 0})
@@ -138,6 +119,22 @@ function abtInfo() {
     tlAbtVis
     .from(abtVisTitle.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
     .from(abtVisTxt.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+
+    const abtInfoSwiper = new Swiper('.abt-info__swiper .swiper', {
+        modules: [Navigation, Autoplay],
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        direction: 'vertical',
+        autoplay: {
+            delay: 2000,
+            pauseOnMouseEnter: true
+        },
+        navigation: {
+            nextEl: '.abt-info__swiper .swiper-nav-btn-right',
+            prevEl: '.abt-info__swiper .swiper-nav-btn-left',
+        },
+    })
 }
 function abtMiles() {
     //Setup
@@ -168,9 +165,11 @@ function abtMiles() {
         }
     })
     if ($(window).width() <= 767) {
-        gsap.set('.abt-mil-pin-container', { height: $('.abt-mil__main-inner').height() + $('.abt-mil__head').outerHeight(), position: 'sticky', top: -1  });
+        gsap.set('.abt-mil-pin-container', { height: $('.abt-mil__main-inner').height() + $('.abt-mil__head').height(), position: 'sticky', top: -1  });
+    } else {
+        gsap.to($('.abt-mil-pin-container').closest('.pin-spacer'), {background: '#212121'})
     }
-    gsap.to($('.abt-mil-pin-container').parent('.pin-spacer'), {background: '#212121'})
+    
     tlMain
     .to('.abt-mil__main-inner', {y: -mainDistance, ease: 'none'})
     .to('.abt-mil__progress-dot', {top: '100%', ease: 'none'}, 0)
@@ -190,7 +189,7 @@ function abtMiles() {
     tlHead
     .from(abtMilLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02})
     .from(abtMilTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '<=.2')
-    .from('.abt-mil__progress', {yPercent: 15, autoAlpha: 0, duration: .4}, '<=.2')
+    .from('.abt-mil__progress', {autoAlpha: 0, duration: .4}, '0')
 }
 function abtTeam() {
     const abtTeamTitle = new SplitText('.abt-team__title', typeOpts.words);
@@ -235,10 +234,12 @@ function abtTeam() {
 
         let teamImgWrap = '.abt-team__main-img-inner';
         function mousMove() {
-            let iconsX = xGetter(teamImgWrap);
-            let iconsY = yGetter(teamImgWrap);
-            xSetter(teamImgWrap)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgWrap).width() * .2 ), 0.01);
-            ySetter(teamImgWrap)(lerp(iconsY, pointerCurr().y - $('.abt-team__main-img').get(0).getBoundingClientRect().top), 0.01);    
+            if (teamImgWrap) {
+                let iconsX = xGetter(teamImgWrap);
+                let iconsY = yGetter(teamImgWrap);
+                xSetter(teamImgWrap)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgWrap).width() * .2 ), 0.01);
+                ySetter(teamImgWrap)(lerp(iconsY, pointerCurr().y - $('.abt-team__main-img').get(0).getBoundingClientRect().top - $('.abt-team__main-img').height() * .1), 0.01);    
+            }
             requestAnimationFrame(mousMove)
         }
         requestAnimationFrame(mousMove)

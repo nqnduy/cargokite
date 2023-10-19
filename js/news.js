@@ -75,9 +75,10 @@ function getApi_newsHero() {
     })
 }
 function newsHeroInteraction() {
+    let limitAmount = 10;
     let newsHeroItem = $('.news-hero__main-item')
     newsHeroItem.each((i, el) => {
-        if (i >= 3) {
+        if (i >= limitAmount) {
             $(el).addClass('hidden')
         }
     })
@@ -97,7 +98,7 @@ function newsHeroInteraction() {
 
     $('.news-hero__load-btn').on('click', function(e) {
         e.preventDefault();
-        if ($('.news-hero__main-item.hidden').length < 4  ) {
+        if ($('.news-hero__main-item.hidden').length < limitAmount + 1  ) {
             $(this).addClass('disable')
         }
         $('.news-hero__main-item.hidden').each((idx, el) => {

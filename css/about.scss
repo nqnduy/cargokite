@@ -54,13 +54,14 @@
     }
     &__richtext {
         grid-column: 7/12;
-        grid-row: 2/3;
+        grid-row: 2/4;
         align-self: start;
         display: flex;
         flex-direction: column;
         justify-content: start;
         align-items: start;
         position: relative;
+        margin-bottom: 41.5rem;
         &-img {
             width: 100%;
         }
@@ -91,20 +92,11 @@
         grid-column: 2/4;
         grid-row: 2/3;
         margin-top: 10rem;
-        margin-bottom: 23rem;
+        margin-bottom: 24.6rem;
         align-self: start;
         display: flex;
         flex-direction: column;
         row-gap: 10rem;
-        &-item {
-            &-label {
-                color: rgba($cl-txt, 1);
-                margin-bottom: 1.2rem;
-            }
-            &-txt {
-                color: rgba($cl-body, 1);
-            }
-        }
         &-member {
             display: grid;
             &-inner {
@@ -136,9 +128,61 @@
             }
         }
     }
+    &__swiper {
+        grid-column: 2/6;
+        grid-row: 3/4;
+        margin-bottom: 20rem;
+        position: relative;
+        align-self: start;
+        width: 100%;
+        .swiper {
+            width: 100%;
+            aspect-ratio: 386 / 225;
+            &-wrapper {
+                transition-duration: 600ms !important;
+            }
+            &-slide {
+                display: block;
+            }
+            &-nav {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+                position: absolute;
+                right: 1.2rem;
+                top: 1.2rem;
+                z-index: 5;
+                opacity: 0;
+                @include transition(all $dur-default ease);
+                @include transform(translateX(100%));
+                &-btn {
+                    pointer-events: auto;
+                    @include size(3.2rem);
+                    background-color: rgba($cl-white, 1);
+                    color: rgba($cl-dark-bg, 1);
+                    opacity: .8;
+                    @include transition(opacity $dur-default ease);
+                    &-left {
+                        border-bottom: solid 1px #CFD3D4;
+                    }
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+            &:hover {
+                .swiper-nav {
+                    opacity: 1;
+                    @include transform(translateX(0%));
+                }
+            }
+        }
+    }
     &__vis {
         grid-column: 14/17;
-        grid-row: 2/3;
+        grid-row: 2/4;
         align-self: end;
         justify-self: start;
         max-width: 28.5rem;
@@ -213,7 +257,7 @@
     }
     &__title {
         color: rgba($cl-white, 1);
-        margin-bottom: 4rem;
+        //margin-bottom: 4rem;
         //max-width: 28.6rem;
     }
     &__progress {
@@ -221,6 +265,10 @@
         height: 25.5rem;
         border-radius: 9.9rem;
         border: solid 1px rgba($cl-white, .1);
+        position: absolute;
+        left: 1.6rem;
+        top: 50%;
+        transform: translateY(-50%);
         &-inner {
             width: 100%;
             height: calc(100% - 1rem - 2px);
@@ -348,7 +396,6 @@
                 display: grid;
                 width: 48.9rem;
                 position: absolute;
-                transform: translateY(-50%);
             }
             &-item {
                 grid-column: 1/2;
@@ -580,7 +627,7 @@
         }
         &__richtext {
             grid-column: 7/13;
-            overflow: hidden;
+            margin-bottom: auto;
             &-decor {
                 @include size(8.4rem, 9.8rem);
                 left: auto;
@@ -598,26 +645,25 @@
         }
         &__add {
             grid-column: 1/4;
-            grid-row: 2/4;
-            margin-right: -2rem;
+            grid-row: 2/3;
             row-gap: 6rem;
             margin-bottom: 0;
-            &-item-txt {
-                max-width: 19.4rem;
-            }
             &-member {
                 &-amount {
                     font-size: 3.6rem;
                     margin-bottom: 1.2rem;
                 }
-                &::after {
-                    display: none;
-                }
             }
+        }
+        &__swiper {
+            grid-column: 1/6;
+            grid-row: 3/5;
+            margin-top: 10rem;
+            margin-bottom: 25rem;
         }
         &__vis {
             grid-column: 7/13;
-            grid-row: 3/4;
+            grid-row: 4/5;
             margin-bottom: 22.6rem;
             margin-top: 4.4rem;
             &-title {
@@ -638,7 +684,7 @@
         }
         &__title {
             font-size: 3.2rem;
-            margin-bottom: 2.2rem;
+            //margin-bottom: 2.2rem;
         }
         &__label {
             margin-bottom: 1.2rem;
@@ -650,6 +696,10 @@
                     font-size: 4rem;
                 }
             }
+        }
+        &__progress {
+            width: 1rem;
+            left: 1.2rem;
         }
     }
     .abt-team {
@@ -856,26 +906,31 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 3.2rem 2rem;
             margin: 5rem 0;
-            &-item {
-                &-label,
-                &-txt {
-                    font-size: 1.4rem;
-                    line-height: 1.5em;
-                }
-                &:nth-child(2) {
-                    grid-row: 2/3;
-                }
-            }
+            margin-bottom: 6rem;
             &-member {
                 &-label {
                     font-size: 1.4rem;
                 }
             }
         }
+        &__swiper {
+            grid-column: 1/3;
+            grid-row: 5/6;
+            margin-bottom: 22.8rem;
+            .swiper {
+                &-nav {
+                    opacity: 1;
+                    @include transform(translateX(0%));
+                    &-btn {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
         &__vis {
             grid-column: 1/3;
             grid-row: 4/5;
-            margin-bottom: 22.8rem;
+            margin-bottom: 0;
             &-title {
                 font-size: 1.8rem;
             }
@@ -904,6 +959,9 @@
             z-index: 2;
             grid-row: 1/2;
         }
+        &__title {
+            
+        }
         &__main {
             grid-row: 1/3;
             z-index: 1;
@@ -923,7 +981,7 @@
             }
             &::before,
             &::after {
-                height: 10vh;
+                height: 12svh;
             }
         }
         &__progress {

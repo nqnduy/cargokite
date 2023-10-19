@@ -550,11 +550,14 @@ function techVideo() {
 function techVideoInteraction() {
     const container = $('.tech-vid')
     const item = $('.tech-vid__main-inner');
-    let offset = ($(window).height() - $('.tech-vid__holder').height())  / 2
+    let offset = ($(window).height() - $('.tech-vid__holder').height())  / 2;
     if (viewport.width > 767) {
         container.addClass('end-state')
         let state = Flip.getState(item);
         container.removeClass('end-state')
+        // goal value = 1 - 0.3 = 0.7
+        gsap.quickSetter('.tech-vid__play-btn', 'scaleX', ``)(.7);
+        gsap.quickSetter('.tech-vid__play-btn', 'scaleY', ``)(.7);
         Flip.to(state, {
             simple: true,
             scrollTrigger: {
@@ -564,7 +567,10 @@ function techVideoInteraction() {
                 scrub: true,
                 pin: true,
                 onUpdate: (self) => {
-                    self.progress > .2 ? $(playBtn).removeClass('force-hidden') : $(playBtn).addClass('force-hidden')
+                    // goal value = 1 - 0.3 = 0.7
+                    let val = 1 - ((1 - self.progress) * .3)
+                    gsap.quickSetter('.tech-vid__play-btn', 'scaleX', ``)(val);
+                    gsap.quickSetter('.tech-vid__play-btn', 'scaleY', ``)(val);
                 }
             }
         })

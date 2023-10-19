@@ -121,12 +121,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            // img {
-            //     z-index: 1;
-            //     pointer-events: none;
-            // }
+            img {
+                pointer-events: none;
+                z-index: 2;
+            }
             &.clear-thumb {
-                .tech-vid__main-thumbnail {
+                img {
                     opacity: 0;
                     @include transition(0.4s ease-out);
                 }
@@ -152,13 +152,10 @@
     }
     &__play-btn {
         position: absolute;
-        z-index: 2;
+        z-index: 3;
         pointer-events: auto;
         @include sm-up {
             transition: opacity $dur-default ease;
-            &.force-hidden {
-                opacity: 0 !important;
-            }
         }
         @include size(12rem);
         @include sm {
