@@ -202,6 +202,7 @@ function abtTeam() {
         },
         onComplete: () => {
             abtTeamTitle.revert();
+            new SplitText('.abt-team__title', typeOpts.lines);
             abtTeamTxt.revert();
             abtTeamLink.revert();
         }
