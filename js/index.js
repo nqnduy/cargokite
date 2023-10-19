@@ -251,6 +251,7 @@ const scripts = () => {
     }
     function resetBeforeLeave(data) {
         console.log('reset')
+        $('.header').removeClass('on-hide')
         $('.header').removeClass('force-hidden')
         $('.header').removeClass('force')
         addNavActiveLink(data);
