@@ -127,8 +127,7 @@ function abtInfo() {
         loop: true,
         direction: 'vertical',
         autoplay: {
-            delay: 2000,
-            pauseOnMouseEnter: true
+            delay: 1200,
         },
         navigation: {
             nextEl: '.abt-info__swiper .swiper-nav-btn-right',
@@ -234,12 +233,13 @@ function abtTeam() {
         })
 
         let teamImgWrap = '.abt-team__main-img-inner';
+        let teamImgInner = '.abt-team__main-img-inner .abt-team__main-img-item'
         function mousMove() {
             if (teamImgWrap.length) {
-                let iconsX = xGetter(teamImgWrap);
-                let iconsY = yGetter(teamImgWrap);
-                xSetter(teamImgWrap)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgWrap).width() * .2 ), 0.01);
-                ySetter(teamImgWrap)(lerp(iconsY, pointerCurr().y - $(teamImgWrap).get(0).getBoundingClientRect().top - $(teamImgWrap).height() * .1), 0.01);    
+                let iconsX = xGetter(teamImgInner);
+                let iconsY = yGetter(teamImgInner);
+                xSetter(teamImgInner)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgInner).width() * .2 ), 0.01);
+                ySetter(teamImgInner)(lerp(iconsY, pointerCurr().y - $(teamImgWrap).get(0).getBoundingClientRect().top - $(teamImgWrap).height() * .1), 0.01);    
             }
             requestAnimationFrame(mousMove)
         }
