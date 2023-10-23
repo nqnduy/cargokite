@@ -166,7 +166,7 @@
             justify-content: center;
             align-items: center;
             @include size(100%);
-            background-color: rgba($cl-white, .1);
+            background-color: rgba($cl-orange, 1);
             color: rgba($cl-white, 1);
             backdrop-filter: blur(3px);
             transition: all $dur-default ease;
@@ -183,7 +183,7 @@
         }
         &:hover {
             .tech-vid__play-btn-inner {
-                background-color: rgba($cl-white, .2);
+                //background-color: rgba($cl-white, .2);
                 transform: scale(.9);
                 svg {
                     transform: scale(1.2);
