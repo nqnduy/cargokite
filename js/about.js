@@ -127,7 +127,9 @@ function abtInfo() {
         loop: true,
         direction: 'vertical',
         autoplay: {
-            delay: 1200,
+            delay: 1400,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
         },
         navigation: {
             nextEl: '.abt-info__swiper .swiper-nav-btn-right',
