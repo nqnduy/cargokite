@@ -126,7 +126,7 @@
                 z-index: 2;
             }
             &.clear-thumb {
-                img {
+                .tech-vid__main-thumbnail {
                     opacity: 0;
                     @include transition(0.4s ease-out);
                 }

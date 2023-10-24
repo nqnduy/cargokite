@@ -229,7 +229,7 @@ function homeSolu() {
         }
     })
     tlScrub
-    .fromTo('.home-solu__head-txt-wrap', {yPercent: 14}, { yPercent: -6, ease: 'none'})
+    .fromTo('.home-solu__head-img-wrap img', {yPercent: 15}, { yPercent: -6, ease: 'none'})
 
     const homeSoluBody = new SplitText('.home-solu__body-txt', {types: 'words, lines, chars', linesClass: 'g-lines'});
 

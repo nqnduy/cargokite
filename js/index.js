@@ -171,7 +171,14 @@ const scripts = () => {
     function transitionOnce() {
         resetScroll()
         gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
-        let tl = gsap.timeline({})
+        let tl = gsap.timeline({
+            onComplete: () => {
+                if (!cookieAccepted) {
+                    cookieConsent?.show(0);
+                    gsap.fromTo('#cm', {yPercent: 25, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1, duration: .4, delay: 2, ease: 'none'})
+                }
+            }
+        })
         tl
         .to('.trans__item', {delay: .4, scaleY: 0, duration: 1, stagger: {
             each: '.1',
@@ -218,7 +225,8 @@ const scripts = () => {
             delay: .5,
             onComplete: () => {
                 if (!cookieAccepted) {
-                    cookieConsent?.show(1);
+                    cookieConsent?.show(0);
+                    gsap.fromTo('#cm', {yPercent: 25, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1, duration: .4, delay: 2, ease: 'none'})
                 }
             }
         })
