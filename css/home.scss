@@ -899,6 +899,11 @@
             }
         }
         &__icon {
+            flex-shrink: 0;
+            svg {
+                width: 1.8rem;
+                height: auto;
+            }
             path {
                 transform-origin: center;
                 transition: all $dur-default ease;

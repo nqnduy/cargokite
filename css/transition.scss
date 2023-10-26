@@ -14,7 +14,9 @@
     }
     &__logo {
         width: 14.6rem;
+        max-width: 148px;
         height: 14.6rem;
+        max-height: 148px;
         position: absolute;
         z-index: 2;
     }

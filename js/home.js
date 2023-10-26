@@ -390,9 +390,9 @@ function homeTech() {
         }
     })
     tlShip.fromTo('.home-tech__ship img', {
-        xPercent: $(window).width() > 767 ? 75 : 55, yPercent: -35
+        xPercent: $(window).width() > 767 ? 65 : 55, yPercent: -35
     }, {
-        xPercent: $(window).width() > 767 ? -75 : -55, yPercent: 35, ease: 'none'
+        xPercent: $(window).width() > 767 ? -65 : -55, yPercent: 35, ease: 'none'
     })
 }
 function homeWhy() {
