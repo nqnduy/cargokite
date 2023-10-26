@@ -84,8 +84,36 @@
     background-color: rgba($cl-orange, 1);
     color: rgba($cl-white, 1);
     transition: background-color $dur-default ease;
+    -webkit-backface-visibility: hidden;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        bottom: 100%;
+        top: 0;
+        left: -100%;
+        z-index: -1;
+        @include transition(transform 0.3s cubic-bezier(0.75, 0, 0.125, 1));
+    }
+    &::before {
+        background-color: #FF633F;
+    }
+    &::after {
+        background-color: #ED300B;
+    }
     &:hover {
-        background-color: rgba($cl-dark-orange, 1);
+        &::before,
+        &::after {
+            @include transform(translate3d(100%, 0, 0));
+        }
+        &::after {
+            @include transition-delay(0.175s);
+        }
     }
     &-pri {
         font-weight: 500;
