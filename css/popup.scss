@@ -447,6 +447,11 @@
     .popup {
         &__main {
             max-width: calc(100% - 4rem);
+            &-head {
+                &-title {
+                    font-size: 2.1rem;
+                }
+            }
         }
     }
 }
