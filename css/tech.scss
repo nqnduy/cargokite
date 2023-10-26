@@ -423,6 +423,7 @@
                     pointer-events: none;
                     z-index: 2;
                     color: rgba($cl-white, .7);
+                    flex-shrink: 0;
                     @include transition(opacity $dur-default ease);
                     .txt-14 {
                         white-space: nowrap;
