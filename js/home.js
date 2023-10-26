@@ -14,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 function calculate() {
     if ($(window).width() - $('.container').width() >= 0) {
         let scalefactor = $(window).width()/$('.container').width()
+        console.log($('.container').width())
         console.log(scalefactor)
         $('.home-tech__bg-tri-inner').css('transform', `translate(-50%, -50%) scale(${scalefactor})`)
     }
@@ -309,7 +310,7 @@ function homeShift() {
                 }
             })
             requestAnimationFrame(() => {
-                tlInit.from('.home-shift__main-part--big-txt', {yPercent: -50, ease: 'none'})
+                tlInit.from('.home-shift__main-part--big-txt', {yPercent: -10, ease: 'none'})
             })
 
             let tlImgBg = gsap.timeline({
