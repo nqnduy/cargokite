@@ -83,7 +83,7 @@
                         <div class="popup__main-submit-aspect"></div>
                     </button>
                 </form>
-                
+
                 <a href="#" class="popup__close" data-popup="close">
                     <div class="icon icon-32">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,11 +164,14 @@
                 </nav>
             </div>
         </header>
-    
+
         <div class="main" data-barba="container" data-barba-namespace="home" data-namespace="home">
             <div class="home-hero__wrap">
                 <div class="home-hero__bg-wrap">
-                    <img src="./imgs/home-hero.jpg?width=2880" alt="Hero background cargokite ship" width="1920" height="1080" class="img-fill img-abs">
+                    <video class="home-hero__bg-vid" id="home-hero-vid" loop preload="auto" autoplay muted playsinline>
+                        <source src="./imgs/home-hero-ocean.mp4" type="video/mp4">
+                    </video>
+                    <img src="./imgs/home-hero.png?width=2880" alt="Hero background cargokite ship" width="1920" height="1080" class="img-fill img-abs">
                 </div>
                 <section class="home-hero">
                     <div class="container grid">
@@ -681,7 +684,7 @@
                                     <div class="faq-item__line-inner"></div>
                                 </div>
                                 <div class="txt txt-18 txt-med faq-item__head-txt">
-                                    Do you build the entire ship in-house? 
+                                    Do you build the entire ship in-house?
                                 </div>
                                 <div class="faq-item__icon icon icon-16">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -723,7 +726,7 @@
                                     <div class="faq-item__line-inner"></div>
                                 </div>
                                 <div class="txt txt-18 txt-med">
-                                    Are your ships already in operation? 
+                                    Are your ships already in operation?
                                 </div>
                                 <div class="faq-item__icon icon icon-16">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -848,7 +851,7 @@
                 </div>
             </section>
         </div>
-        <footer class="footer"> 
+        <footer class="footer">
             <div class="container grid">
                 <div class="footer__form-wrap">
                     <div class="icon icon-80 footer__form-icon">
