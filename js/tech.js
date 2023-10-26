@@ -597,7 +597,12 @@ function techVideoInteraction() {
         videoAction.play('#vidTech');
 
         if (!clearThumb(item)) return;
-        let target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height() - offset;
+        let target;
+        if ($(window).width() > 991 ) {
+            target = $('.tech-vid').offset().top + $('.tech-vid').outerHeight() - $(window).height() - offset;
+        } else {
+            target = $('.tech-vid__holder').offset().top + $('.tech-vid__holder').outerHeight() - $(window).height() - offset;
+        }
         clearThumb(item);
         lenis.scrollTo(target)
     })

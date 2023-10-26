@@ -21,7 +21,8 @@ $cl-dark-bg: #212121;
 $cl-disable: #DBDBDB;
 $dur-default: 400ms;
 
-$container-width: 172.8rem;
+//$container-width: 172.8rem;
+$container-width: 192rem; //resolve in 192x12.5px(fontsize) = 2400px
 
 //Font
 html {
@@ -34,8 +35,11 @@ html {
     font-family: 'HelveticaNowDisplay';
     font-size: 0.5787037037vw;
     color: rgba($cl-txt, 1);
+    @media only screen and (min-width: 2160px) {
+        font-size: 12.5px;
+    }
     @media only screen and (min-width: 1728px) {
-        font-size: 10px;
+        //font-size: 10px;
     }
     @media only screen and (max-width: 991px) {
         font-size: 1vw;

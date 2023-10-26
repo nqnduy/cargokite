@@ -251,10 +251,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: start;
             text-align: center;
             position: relative;
-            padding-top: 5.4rem;
+            padding-top: 38rem;
         }
         &-img-wrap {
             grid-column: 1/2;
@@ -267,7 +267,10 @@
         margin-bottom: 2rem;
     }
     &__title {
-        max-width: 57.8rem;
+        max-width: 77.8rem;
+        .txt-hl {
+            display: inline-block;
+        }
     }
     &__body {
         grid-column: 4/14;
@@ -555,7 +558,7 @@
         position: relative;
         z-index: 2;
         @media only screen and (min-width: 1817px) {
-            background: linear-gradient(180deg, #111112, #111112 90%, transparent 90% );
+            background: linear-gradient(180deg, #111112, #111112 calc(100% - 9.3rem), transparent calc(100% - 9.3rem) );
         }
     }
     &__inner {
@@ -589,6 +592,9 @@
             .home-tech__item-icon {
                 color: rgba($cl-white, .4);
             }
+        }
+        &:nth-child(2) {
+            margin-top: 11.6vh;
         }
         &-inner {
             grid-column: 1/2;
@@ -646,6 +652,7 @@
         transition: background-color $dur-default ease;
         &-title {
             color: rgba($cl-white, 1);
+            max-width: 24.2rem;
         }
         &:hover {
             background-color: rgba($cl-dark-orange, 1);
@@ -896,6 +903,11 @@
             }
         }
         &__icon {
+            flex-shrink: 0;
+            svg {
+                width: 1.8rem;
+                height: auto;
+            }
             path {
                 transform-origin: center;
                 transition: all $dur-default ease;
@@ -1205,6 +1217,9 @@
             }
         }
         &__item {
+            &:nth-child(2) {
+                margin-top: 0;
+            }
             &-inner {
                 padding: 2.4rem;
             }
