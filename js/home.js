@@ -71,11 +71,14 @@ function homeHero() {
             }
         })
         tlScrub
-        .to('.home-hero__bg-wrap', {yPercent: 15, ease: 'none', duration: 1})
-        .to('.home-hero__title', {autoAlpha: 0, ease: 'none', duration: .4}, '0')
-        .to('.home-hero__sub', {autoAlpha: 0, duration: .4, ease: 'none'}, '0')
-        // .to('.home-hero__title', {yPercent: -35, ease: 'none'}, '0')
-        // .to('.home-hero__sub', { yPercent: -45, ease: 'none' }, '0')
+        .to('.home-hero__bg-wrap', {yPercent: 15, ease: 'none'})
+        // .to('.home-hero__title', {autoAlpha: 0, ease: 'none', duration: .4}, '0')
+        // .to('.home-hero__sub', {autoAlpha: 0, duration: .4, ease: 'none'}, '0')
+        if ($(window).width() > 991) {
+            tl
+            .to('.home-hero__title', {yPercent: -65, ease: 'none'}, '0')
+            .to('.home-hero__sub', { yPercent: -200, ease: 'none' }, '0')
+        }
     }
 
 }
