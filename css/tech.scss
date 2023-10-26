@@ -73,7 +73,24 @@
         margin-top: 4.2rem;
         grid-column: 2/6;
         grid-row: 1/2;
+        display: flex;
+        flex-wrap: nowrap;
         align-self: start;
+        overflow: hidden;
+        &-item {
+            white-space: nowrap;
+            .txt-hl {
+                width: 3rem;
+                text-align: center;
+                display: inline-block;
+                padding: 0 .4rem;
+                border-radius: 50%;
+                font-family: initial;
+            }
+            &.anim {
+                animation: rtl 14s infinite linear;
+            }
+        }
         @include md {
             margin-top: 3rem;
             grid-column: 1/4;
@@ -116,7 +133,7 @@
             grid-area: span 1 / span 2;
         }
         &-inner {
-            
+
             //width: 24%;
             width: calc(28.5714% - 1.42857rem);
             margin-right: calc(-7.14286% - .142857rem);
@@ -232,7 +249,7 @@
         pointer-events: none;
         z-index: 2;
         @include sm {
-            display: block;    
+            display: block;
             position: sticky;
             grid-column: 1/3;
             grid-row: 1/2;

@@ -365,7 +365,7 @@ class techDemoWebGL {
             ]
             let activeIndex = 0;
             let prog;
-            let tl = gsap.timeline({    
+            let tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.tech-demo__main',
                     start: 'top top+=50%',
@@ -376,7 +376,7 @@ class techDemoWebGL {
                         duration: { min: 0.2, max: 3 },
                         delay: 0.1,
                         onComplete: (self) => {
-                            
+
                         }
                     },
                     onUpdate: (self) => {
@@ -540,7 +540,8 @@ function techVideo() {
             ease: gOpts.ease
         },
         onComplete: () => {
-            techVidLabel.revert()
+            techVidLabel.revert();
+            $('.tech-vid__label-item').addClass('anim')
         },
     })
     tl
@@ -632,7 +633,7 @@ function techVideoInteraction() {
                             } else {
                                 gsap.to(playBtn, { opacity: 1, duration: 0.3 })
                             }
-                            
+
                             xSetter(playBtn)(lerp(iconsX, 0), 0.01);
                             ySetter(playBtn)(lerp(iconsY, 0), 0.01);
                         }
