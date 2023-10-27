@@ -224,7 +224,7 @@
                 display: flex;
                 align-items: flex-end;
                 opacity: 0;
-                clip-path: polygon(0% 0%, 0% 0%, 0% calc(100% + 1px), 0% calc(100% + 1px));
+                clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
                 transition: opacity 0.6s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 background-color: rgba($cl-white, .05);
                 &.active {
@@ -275,7 +275,7 @@
                 }
                 &-link {
                     opacity: 1;
-                    clip-path: polygon(0% 0%, calc(100% + 1px) 0%, calc(100% + 1px) calc(100% + 1px), 0% calc(100% + 1px));
+                    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
                     transition: opacity 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 }
             }
