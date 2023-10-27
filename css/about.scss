@@ -767,8 +767,8 @@
                     z-index: 2;
                     grid-area: 1/1/2/2;
                     opacity: 1;
-                    width: 100%;
-                    height: auto;
+                    @include size(auto);
+                    margin: 0 -2.4rem;
                     display: flex;
                     aspect-ratio: 0.9;
                     position: relative;
@@ -961,7 +961,7 @@
             grid-row: 1/2;
         }
         &__title {
-            
+
         }
         &__main {
             grid-row: 1/3;
