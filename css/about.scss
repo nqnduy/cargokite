@@ -1023,7 +1023,8 @@
                 }
             }
             &-img {
-                background-color: black;
+                background-color: rgba(0,0,0,.95);
+                height: 100svh;
                 &-inner {
                     width: calc(100% - 8rem);
                     padding-top: 4.8rem;

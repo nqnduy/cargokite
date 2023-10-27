@@ -341,6 +341,7 @@
 
 @include sm {
     .popup {
+        height: 100svh;
         &__main {
             max-width: calc(100% - 8rem);
             margin-top: 6rem;
@@ -388,6 +389,9 @@
                     padding-top: 1.6rem;
                     padding-bottom: 1.6rem;
                 }
+                .textarea-wrap {
+                    max-height: 20rem;
+                }
             }
             &-form-success {
                 grid-column: 1/2;
@@ -404,7 +408,7 @@
                 grid-row: 3/4;
                 justify-self: center;
                 width: 100%;
-                padding: 2.4rem 3.2rem;
+                padding: 2rem 2.8rem;
                 margin-bottom: 1.2rem;
                 &-aspect {
                     display: none;
@@ -443,6 +447,11 @@
     .popup {
         &__main {
             max-width: calc(100% - 4rem);
+            &-head {
+                &-title {
+                    font-size: 2.1rem;
+                }
+            }
         }
     }
 }
