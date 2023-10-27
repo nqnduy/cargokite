@@ -101,6 +101,7 @@ button {
     --line-width: 100%;
     position: relative;
     overflow: hidden;
+    vertical-align: bottom;
     &::before, &::after {
         content: '';
         position: absolute;
