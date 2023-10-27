@@ -227,20 +227,9 @@
                 opacity: 0;
                 clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
                 transition: opacity 0.6s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
-                &::before {
-                    content: '';
-                    z-index: -1;
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    background-color: rgba($cl-white, .05);
-                }
+                background-color: rgba($cl-white, .05);
                 &.active {
-                    &::before {
-                        background-color: $cl-orange;
-                    }
+                    background-color: $cl-orange;
                 }
             }
         }
