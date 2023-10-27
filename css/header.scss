@@ -134,7 +134,7 @@
                 width: 100%;
                 right: 0;
                 left: 0;
-                @include transition(all 0.49s cubic-bezier(0.7, 0.1, 0.1, 1.5));
+                @include transition(0.49s cubic-bezier(0.7, 0.1, 0.1, 1.5));
                 &-1 {
                     width: 45.45%;
                     top: calc(50% - ((10%)) + -0.2rem);
@@ -167,15 +167,13 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             &-item {
-                --nav-trans-dur: 0.25s;
+                --nav-trans-dur: 0.2s;
                 --nav-delay-stagger: 0.08s;
                 --nav-delay-index: 1;
                 position: relative;
                 list-style: none;
                 width: 15rem;
                 overflow: hidden;
-                opacity: 0;
-                transition: opacity 0.6s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 &:before {
                     content: '';
                     padding-top: 100%;
@@ -227,9 +225,8 @@
                 display: flex;
                 align-items: flex-end;
                 opacity: 0;
-                @include transform(scale(1.2));
-                @include transform-origin(top);
-                transition: opacity 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), transform 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
+                clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+                transition: opacity 0.6s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 &::before {
                     content: '';
                     z-index: -1;
@@ -239,7 +236,6 @@
                     left: 0;
                     width: 100%;
                     background-color: rgba($cl-white, .05);
-                    opacity: 1;
                 }
                 &.active {
                     &::before {
@@ -283,8 +279,6 @@
                 pointer-events: auto;
                 @include transition(0.4s ease-out);
                 &-item {
-                    opacity: 1;
-                    transition: opacity 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), transform 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                     &:nth-child(1) { --nav-delay-index: 1; }
                     &:nth-child(2) { --nav-delay-index: 3; }
                     &:nth-child(3) { --nav-delay-index: 2; }
@@ -293,8 +287,8 @@
                 }
                 &-link {
                     opacity: 1;
-                    @include transform(scale(1));
-                    transition: opacity 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), transform 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
+                    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+                    transition: opacity 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 }
             }
             .header__toggle {
@@ -379,6 +373,7 @@
                 padding: 1rem;
             }
             &-cta {
+                --nav-delay-index: 0;
                 position: relative;
                 display: flex;
                 align-items: center;
@@ -387,7 +382,8 @@
                 padding: 2rem;
                 clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
                 background-color: $cl-orange;
-                @include transition(clip-path 0.35s ease-out);
+                opacity: 0;
+                transition: opacity 0.6s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 .arr-ic-main {
                     @include size(2rem);
                 }
@@ -422,8 +418,10 @@
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
                 @include transition(0.5s ease-out);
                 &-cta {
+                    --nav-delay-index: 6;
+                    opacity: 1;
                     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-                    @include transition(clip-path .35s ease-out (0.35s + (6 - 1) *0.08));
+                    transition: opacity 0.4s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index)))), clip-path 0.6s ease-out (calc(var(--nav-trans-dur) + (var(--nav-delay-stagger) * var(--nav-delay-index))));
                 }
             }
         }
