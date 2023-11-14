@@ -34,9 +34,9 @@ let gOpts = {
 };
 
 function homeHero() {
-    const homeHeroTitle = new SplitText('.home-hero__title', typeOpts.chars);
-    const homeHeroLabel = new SplitText('.home-hero__backer-label', typeOpts.words);
-    const homeHeroBacker = $('.home-hero__backer-item')
+    const homeHeroTitle = new SplitText('.home-hero .home-hero__title', typeOpts.chars);
+    const homeHeroLabel = new SplitText('.home-hero .home-hero__backer-label', typeOpts.words);
+    const homeHeroBacker = $('.home-hero .home-hero__backer-item')
     const homeHeroSub = nestedLinesSplit('.home-hero__sub-txt', typeOpts.words);
     const homeHeroCaption = new SplitText('.home-hero__sub-caption', typeOpts.words);
 
@@ -46,9 +46,9 @@ function homeHero() {
         },
         onComplete: () => {
             homeHeroTitle.revert();
-            new SplitText('.home-hero__title', typeOpts.lines);
+            new SplitText('.home-hero .home-hero__title', typeOpts.lines);
             homeHeroLabel.revert();
-            new SplitText('.home-hero__backer-label', typeOpts.lines);
+            new SplitText('.home-hero .home-hero__backer-label', typeOpts.lines);
             homeHeroCaption.revert();
             $('.home-hero__sub-caption-item').addClass('anim')
         },
@@ -76,11 +76,10 @@ function homeHero() {
         // .to('.home-hero__sub', {autoAlpha: 0, duration: .4, ease: 'none'}, '0')
         if ($(window).width() > 991) {
             tlScrub
-            .to('.home-hero__title', {yPercent: -65, ease: 'none'}, '0')
-            .to('.home-hero__sub', { yPercent: -200, ease: 'none' }, '0')
+            .to('.home-hero .home-hero__title', {yPercent: -65, ease: 'none'}, '0')
+            .to('.home-hero .home-hero__sub', { yPercent: -200, ease: 'none' }, '0')
         }
     }
-
 }
 function homeIntro() {
     const homeIntroLabel = new SplitText('.home-intro__label', typeOpts.chars)

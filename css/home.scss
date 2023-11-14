@@ -1,6 +1,6 @@
 .home-hero {
     height: 100vh;
-    min-height: 90rem;
+    
     padding-bottom: max(8.5vh, 8.5rem);
     position: sticky;
     top: 0;
@@ -16,14 +16,20 @@
         top: 0;
         left: 0;
         width: 100%;
-        min-height: 90rem;
+        
         height: 100vh;
         z-index: 1;
+        background-color: black;
         video {
+            opacity: .75;
             position: absolute;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: 50% 100%;
+        }
+        .img-fill {
+            object-position: 50% 100%;
         }
     }
     .container.grid {
@@ -34,6 +40,12 @@
         grid-column: 1/8;
         max-width: 68rem;
         color: rgba($cl-white, 1);
+        align-self: start;
+        justify-self: start;
+        padding-bottom: 7vh;
+        &.force-hidden {
+            opacity: 0;
+        }
     }
     &__backer {
         display: flex;
@@ -43,6 +55,9 @@
         row-gap: 1rem;
         align-self: end;
         padding-bottom: .7rem;
+        &.force-hidden {
+            opacity: 0;
+        }
         &-label {
             color: rgba($cl-white, .7);
         }
@@ -997,6 +1012,7 @@
         &__title {
             margin-top: 18vh;
             grid-column: 1/9;
+            padding-bottom: 0;
         }
         &__sub {
             grid-column: 9/13;
@@ -1408,10 +1424,15 @@
         height: auto;
         position: relative;
         padding-bottom: max(3svh, 3rem);
+        &__wrap {
+            &::before {
+                height: 68%;
+            }
+        }
         &__title {
             grid-column: 1/3;
             grid-row: 1/2;
-            margin-top: 14rem;
+            margin-top: 16vh;
             margin-bottom: 3rem;
         }
         &__sub {

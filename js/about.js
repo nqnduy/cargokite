@@ -237,7 +237,7 @@ function abtTeam() {
         let teamImgWrap = '.abt-team__main-img-inner';
         let teamImgInner = '.abt-team__main-img-inner .abt-team__main-img-item'
         function mousMove() {
-            if (teamImgWrap.length) {
+            if ($(teamImgWrap).length) {
                 let iconsX = xGetter(teamImgInner);
                 let iconsY = yGetter(teamImgInner);
                 xSetter(teamImgInner)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgInner).width() * .2 ), 0.01);
