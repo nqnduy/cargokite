@@ -107,12 +107,13 @@ const scripts = () => {
                 if (!header.hasClass('on-scroll')) {
                     setTimeout(() => {
                         header.addClass('on-scroll');
-                    }, 800)
+                    }, 900)
                 }
                 logo.addClass('scroll-mode');
             }
             else {
                 header.removeClass("on-scroll");
+                header.hasClass('open-ham');
                 logo.removeClass('scroll-mode');
             };
         },
