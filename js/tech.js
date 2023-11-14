@@ -534,7 +534,7 @@ function techVideo() {
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.tech-vid__label',
-            start: 'top top+=75%',
+            start: 'top top+=75%'
         },
         defaults: {
             ease: gOpts.ease
@@ -551,7 +551,25 @@ function techVideo() {
 function techVideoInteraction() {
     const container = $('.tech-vid')
     const item = $('.tech-vid__main-inner');
-    let offset = ($(window).height() - $('.tech-vid__holder').height())  / 2;
+    let offset = ($(window).height() - $('.tech-vid__holder').height()) / 2;
+    const videoAction = {
+        play: (video) => {
+            if (!video) return;
+            let el = $(video).get(0);
+            el.play();
+
+            $('.tech-vid__play-btn').addClass('playing');
+            $('.tech-vid__main-vid').addClass('playing');
+        },
+        pause: (video) => {
+            if (!video) return;
+            let el = $(video).get(0);
+            el.pause();
+
+            $('.tech-vid__play-btn').removeClass('playing');
+            $('.tech-vid__main-vid').removeClass('playing');
+        }
+    }
     if (viewport.width > 767) {
         container.addClass('end-state')
         let state = Flip.getState(item);
@@ -572,25 +590,22 @@ function techVideoInteraction() {
                     let val = 1 - ((1 - self.progress) * .3)
                     gsap.quickSetter('.tech-vid__play-btn', 'scaleX', ``)(val);
                     gsap.quickSetter('.tech-vid__play-btn', 'scaleY', ``)(val);
+                },
+                onLeave: () => {
+                    gsap.timeline({
+                        scrollTrigger: {
+                            trigger: '.tech-vid__main',
+                            start: 'top top',
+                            end: 'bottom top',
+                            markers: true,
+                            onLeave: () => videoAction.pause('#vidTech')
+                        }
+                    })
                 }
             }
         })
     }
 
-    const videoAction = {
-        play: (video) => {
-            if (!video) return;
-            let el = $(video).get(0);
-            el.play()
-
-            $('.tech-vid__play-btn').addClass('playing');
-            $('.tech-vid__main-vid').addClass('playing');
-        },
-        pause: (video) => {
-            $('.tech-vid__play-btn').removeClass('playing');
-            $('.tech-vid__main-vid').removeClass('playing');
-        }
-    }
     let clearThumb = (wrap) => wrap.hasClass('clear-thumb') ? true : wrap.addClass('clear-thumb');
     let playBtn = '.tech-vid__play-btn'
     $(playBtn).on('click', function(e) {

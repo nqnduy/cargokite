@@ -63,7 +63,7 @@
 	-ms-animation: #{$str};
 	-o-animation: #{$str};
 }
-@mixin transform($args) {
+@mixin transform($args...) {
 	transform: $args;
 	-webkit-transform: $args;
 	-moz-transform: $args;
@@ -78,7 +78,7 @@
 	-ms-transform-origin: $args;
 	-o-transform-origin: $args;
 }
-@mixin transition($args) {
+@mixin transition($args...) {
 	transition: $args;
 	-webkit-transition: $args;
 	-moz-transition: $args;

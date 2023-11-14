@@ -81,20 +81,6 @@ const scripts = () => {
     refreshOnBreakpoint();
 
     const header = $('.header')
-    // lenis.on('scroll', function (inst) {
-    //     if (inst.scroll > header.height()) {
-    //         header.addClass('on-scroll')
-    //         if (inst.direction == 1) {
-    //             // down
-    //             header.addClass('on-hide')
-    //         } else if (inst.direction == -1) {
-    //             // up
-    //             header.removeClass('on-hide')
-    //         }
-    //     } else {
-    //         header.removeClass('on-scroll on-hide')
-    //     };
-    // })
     let lastScrollTop = 0;
     const handleHeader = {
         toggleHide: (scrollPos) => {
@@ -110,9 +96,29 @@ const scripts = () => {
 				}
 			}
 			lastScrollTop = scrollPos;
-		},
-		addBG: (scrollPos) => {
-			if (scrollPos > header.height()) header.addClass("on-scroll");
+        },
+        onScrollDes: (scrollPos) => {
+            let headerHeight = header.height();
+            let logo = $('.header__logo');
+            if (scrollPos > (headerHeight * 2)) {
+                if (header.hasClass('open-ham')) {
+                    header.removeClass('open-ham');
+                }
+                if (!header.hasClass('on-scroll')) {
+                    setTimeout(() => {
+                        header.addClass('on-scroll');
+                    }, 800)
+                }
+                logo.addClass('scroll-mode');
+            }
+            else {
+                header.removeClass("on-scroll");
+                logo.removeClass('scroll-mode');
+            };
+        },
+        onScrollMb: (scrollPos) => {
+            let headerHeight = header.height();
+            if (scrollPos > headerHeight) header.addClass("on-scroll");
 			else header.removeClass("on-scroll");
         },
         toggleNav: () => {
@@ -146,22 +152,43 @@ const scripts = () => {
                     header.addClass('force')
                 }
             })
-		},
-    };
+        },
+        toggleHam: () => {
+            const hamburger = $('.header__hamburger');
+            hamburger.on('click', function (e) {
+                e.preventDefault();
+                header.toggleClass('open-ham');
+            })
 
-    handleHeader.toggleNav();
+            $(window).on('click', (e) => {
+                if (!$('.header__hamburger:hover').length)
+                    if (!$('.header__link:hover').length)
+                        header.removeClass('open-ham');
+                    else {
+                        setTimeout(() => {
+                            header.removeClass('open-ham');
+                        }, 500);
+                    }
+            })
+        }
+    };
+    if (viewport.width > 991) {
+        handleHeader.toggleHam();
+    }
+    else {
+        handleHeader.toggleNav();
+    }
     function scrollHeaderSwitch() {
         if (viewport.width > 767) {
             lenis.on('scroll', function (inst) {
                 let scrollPos = inst.scroll;
-                handleHeader.addBG(inst.scroll);
-                handleHeader.toggleHide(inst.scroll);
+                handleHeader.onScrollDes(scrollPos);
             })
         }
         else {
             $('.wrapper').on("scroll", function () {
                 let scrollPos = $('.wrapper').scrollTop();
-                handleHeader.addBG(scrollPos);
+                handleHeader.onScrollMb(scrollPos);
                 handleHeader.toggleHide(scrollPos);
             });
         }
@@ -224,6 +251,7 @@ const scripts = () => {
         let tl = gsap.timeline({
             delay: .5,
             onComplete: () => {
+                addNavActiveLink(data);
                 if (!cookieAccepted) {
                     cookieConsent?.show(0);
                     gsap.fromTo('#cm', {yPercent: 25, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1, duration: .4, delay: 2, ease: 'none'})
@@ -241,6 +269,9 @@ const scripts = () => {
     function addNavActiveLink(data) {
         header.removeClass('dark-mode')
         header.removeClass('mix-mode')
+        if (viewport.width > 991) {
+            header.addClass('open-ham')
+        }
         if ($(data.next.container).attr('data-header') == 'dark') {
             header.addClass('dark-mode')
         } else if ($(data.next.container).attr('data-header') == 'mix') {
@@ -262,13 +293,11 @@ const scripts = () => {
         $('.header').removeClass('on-hide')
         $('.header').removeClass('force-hidden')
         $('.header').removeClass('force')
-        addNavActiveLink(data);
     }
     function resetScroll() {
         let locationHash = window.location.hash;
         lenis.stop()
         if ($(locationHash).length) {
-            console.log(locationHash)
             setTimeout(() => {
                 lenis.scrollTo(locationHash, {
                     force: true,
