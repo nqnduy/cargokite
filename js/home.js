@@ -72,8 +72,6 @@ function homeHero() {
         })
         tlScrub
         .to('.home-hero__bg-wrap', {yPercent: 15, ease: 'none'})
-        // .to('.home-hero__title', {autoAlpha: 0, ease: 'none', duration: .4}, '0')
-        // .to('.home-hero__sub', {autoAlpha: 0, duration: .4, ease: 'none'}, '0')
         if ($(window).width() > 991) {
             tlScrub
             .to('.home-hero .home-hero__title', {yPercent: -65, ease: 'none'}, '0')
@@ -82,44 +80,51 @@ function homeHero() {
     }
 }
 function homeIntro() {
-    const homeIntroLabel = new SplitText('.home-intro__label', typeOpts.chars)
-    const homeIntroTitle = new SplitText('.home-intro__title', typeOpts.words)
-    const homeIntroRichh3 = new SplitText('.home-intro__richtext-h3', typeOpts.words)
-    const homeIntroRichp = new SplitText('.home-intro__richtext-p', typeOpts.words)
-    const homeIntroRichlink = new SplitText('.home-intro__richtext-link', typeOpts.words)
-
-    gsap.set('.home-intro__richtext-img, .home-intro__img', {clipPath: 'inset(10%)'})
-    gsap.set('.home-intro__richtext-img img, .home-intro__img img', {scale: 1.4, autoAlpha: 0})
-
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-intro',
-            start: 'top top+=50%',
-        },
-        defaults: {
-            ease: gOpts.ease
-        },
-        onComplete: () => {
-            homeIntroLabel.revert()
-            homeIntroTitle.revert()
-            new SplitText('.home-intro__title', typeOpts.lines)
-            homeIntroRichh3.revert()
-            new SplitText('.home-intro__richtext-h3', typeOpts.lines)
-            homeIntroRichp.revert()
-            homeIntroRichlink.revert()
+    ScrollTrigger.create({
+        trigger: '.home-intro',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homeIntroLabel = new SplitText('.home-intro__label', typeOpts.chars)
+            const homeIntroTitle = new SplitText('.home-intro__title', typeOpts.words)
+            const homeIntroRichh3 = new SplitText('.home-intro__richtext-h3', typeOpts.words)
+            const homeIntroRichp = new SplitText('.home-intro__richtext-p', typeOpts.words)
+            const homeIntroRichlink = new SplitText('.home-intro__richtext-link', typeOpts.words)
+        
+            gsap.set('.home-intro__richtext-img, .home-intro__img', {clipPath: 'inset(10%)'})
+            gsap.set('.home-intro__richtext-img img, .home-intro__img img', {scale: 1.4, autoAlpha: 0})
+        
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-intro',
+                    start: 'top top+=50%',
+                },
+                defaults: {
+                    ease: gOpts.ease
+                },
+                onComplete: () => {
+                    homeIntroLabel.revert()
+                    homeIntroTitle.revert()
+                    new SplitText('.home-intro__title', typeOpts.lines)
+                    homeIntroRichh3.revert()
+                    new SplitText('.home-intro__richtext-h3', typeOpts.lines)
+                    homeIntroRichp.revert()
+                    homeIntroRichlink.revert()
+                }
+            })
+            tl
+            .from(homeIntroLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+            .from(homeIntroTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .to('.home-intro__img', { clipPath: 'inset(0%)', duration: 1, ease: 'expo.out'}, '<=.4')
+            .to('.home-intro__img img', { scale: 1, duration: 1, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '<=0')
+            .to('.home-intro__richtext-img', { clipPath: 'inset(0%)', duration: 1, ease: 'expo.out'}, '0')
+            .to('.home-intro__richtext-img img', { scale: 1, duration: 1, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '<=0')
+            .from(homeIntroRichh3.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .from(homeIntroRichp.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .015}, '<=.2')
+            .from(homeIntroRichlink.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '>=-.2')
+            .from('.home-intro__richtext-link', {'--line-width': '0%', duration: .6}, '<=.2')
         }
     })
-    tl
-    .from(homeIntroLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-    .from(homeIntroTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .to('.home-intro__img', { clipPath: 'inset(0%)', duration: 1, ease: 'expo.out'}, '<=.4')
-    .to('.home-intro__img img', { scale: 1, duration: 1, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '<=0')
-    .to('.home-intro__richtext-img', { clipPath: 'inset(0%)', duration: 1, ease: 'expo.out'}, '0')
-    .to('.home-intro__richtext-img img', { scale: 1, duration: 1, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '<=0')
-    .from(homeIntroRichh3.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .from(homeIntroRichp.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .015}, '<=.2')
-    .from(homeIntroRichlink.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .03}, '>=-.2')
-    .from('.home-intro__richtext-link', {'--line-width': '0%', duration: .6}, '<=.2')
 
     let tlScrub = gsap.timeline({
         scrollTrigger: {
@@ -142,87 +147,148 @@ function homeIntro() {
     tlScrubImg.fromTo('.home-intro__img', {yPercent: 15}, { yPercent: -15, ease: 'none'})
 }
 function homeProb() {
-    const homeProbLabel = new SplitText('.home-prob__label', typeOpts.chars)
-    const homeProbTitle = new SplitText('.home-prob__title', typeOpts.words)
+    ScrollTrigger.create({
+        trigger: '.home-prob',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homeProbLabel = new SplitText('.home-prob__label', typeOpts.chars)
+            const homeProbTitle = new SplitText('.home-prob__title', typeOpts.words)
 
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-prob',
-            start: 'top top+=50%',
-        },
-        defaults: {
-            ease: gOpts.ease
-        },
-        onComplete: () => {
-            homeProbLabel.revert()
-            homeProbTitle.revert()
-            new SplitText('.home-prob__title', typeOpts.lines)
-        }
-    })
-    tl
-    .from(homeProbLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-    .from(homeProbTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-
-    const homeProbItems = $('.home-prob__main-item')
-    homeProbItems.each((index, el) => {
-        gsap.set(el.querySelector('.home-prob__main-item-img'), {clipPath: 'inset(20%)'})
-        gsap.set(el.querySelector('.home-prob__main-item-img img'), {scale: 1.4, autoAlpha: 0})
-        const homeProbItemTitle = new SplitText(el.querySelector('.home-prob__main-item-title'), typeOpts.words)
-        const homeProbItemSub = nestedLinesSplit(el.querySelector('.home-prob__main-item-txt'), typeOpts.words)
-        const homeProbItemTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top top+=50%',
-            },
-            onComplete: () => {
-                homeProbItemTitle.revert()
-                new SplitText(el.querySelector('.home-prob__main-item-title'), typeOpts.lines)
-                homeProbItemSub.revert()
-            }
-        })
-        homeProbItemTl
-        .to(el.querySelector('.home-prob__main-item-img'), { clipPath: 'inset(0%)', duration: 1.4, ease: 'expo.out'})
-        .to(el.querySelector('.home-prob__main-item-img img'), { scale: 1, duration: 1.4, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '0')
-        .from(homeProbItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
-        .from(homeProbItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
-        if ($(window).width > 991) {
-            const homeProbItemTlScrub = gsap.timeline({
+            let tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: el,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true,
+                    trigger: '.home-prob',
+                    start: 'top top+=50%',
+                },
+                defaults: {
+                    ease: gOpts.ease
+                },
+                onComplete: () => {
+                    homeProbLabel.revert()
+                    homeProbTitle.revert()
+                    new SplitText('.home-prob__title', typeOpts.lines)
                 }
             })
-            let dir = index % 2 == 0 ? 1 : -1;
-            homeProbItemTlScrub
-            .fromTo(el, {yPercent: 10 * dir}, { yPercent: -10 * dir, ease: 'none'})
+            tl
+            .from(homeProbLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+            .from(homeProbTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+
+            const homeProbItems = $('.home-prob__main-item')
+            homeProbItems.each((index, el) => {
+                gsap.set(el.querySelector('.home-prob__main-item-img'), {clipPath: 'inset(20%)'})
+                gsap.set(el.querySelector('.home-prob__main-item-img img'), {scale: 1.4, autoAlpha: 0})
+                const homeProbItemTitle = new SplitText(el.querySelector('.home-prob__main-item-title'), typeOpts.words)
+                const homeProbItemSub = nestedLinesSplit(el.querySelector('.home-prob__main-item-txt'), typeOpts.words)
+                const homeProbItemTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top top+=50%',
+                    },
+                    onComplete: () => {
+                        homeProbItemTitle.revert()
+                        new SplitText(el.querySelector('.home-prob__main-item-title'), typeOpts.lines)
+                        homeProbItemSub.revert()
+                    }
+                })
+                homeProbItemTl
+                .to(el.querySelector('.home-prob__main-item-img'), { clipPath: 'inset(0%)', duration: 1.4, ease: 'expo.out'})
+                .to(el.querySelector('.home-prob__main-item-img img'), { scale: 1, duration: 1.4, autoAlpha: 1, ease: 'expo.out', clearProps: 'all'}, '0')
+                .from(homeProbItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
+                .from(homeProbItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .6, stagger: .02}, '<=.2')
+                if ($(window).width > 991) {
+                    const homeProbItemTlScrub = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true,
+                        }
+                    })
+                    let dir = index % 2 == 0 ? 1 : -1;
+                    homeProbItemTlScrub
+                    .fromTo(el, {yPercent: 10 * dir}, { yPercent: -10 * dir, ease: 'none'})
+                }
+            })
         }
     })
+    
 }
 function homeSolu() {
-    const homeSoluLabel = new SplitText('.home-solu__label', typeOpts.chars)
-    const homeSoluTitle = new SplitText('.home-solu__title', typeOpts.words)
+    ScrollTrigger.create({
+        trigger: '.home-solu__head',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homeSoluLabel = new SplitText('.home-solu__label', typeOpts.chars)
+            const homeSoluTitle = new SplitText('.home-solu__title', typeOpts.words)
 
-    gsap.set('.home-solu .p-line-top, .home-solu .p-line-bottom', {transformOrigin: 'center top'})
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-solu__head',
-            start: 'top top+=50%',
-            onComplete: () => {
-                homeSoluLabel.revert()
-                homeSoluTitle.revert()
-                new SplitText('.home-solu__title', typeOpts.lines)
-            }
+            gsap.set('.home-solu .p-line-top, .home-solu .p-line-bottom', {transformOrigin: 'center top'})
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-solu__head',
+                    start: 'top top+=50%',
+                    onComplete: () => {
+                        homeSoluLabel.revert()
+                        homeSoluTitle.revert()
+                        new SplitText('.home-solu__title', typeOpts.lines)
+                    }
+                }
+            })
+            tl
+            .from('.home-solu__head-img-wrap', {yPercent: 45, autoAlpha: 0, duration: 1, ease: 'power2.out'}, 0)
+            .from(homeSoluLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .from(homeSoluTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .from('.home-solu .p-line-top', {autoAlpha: 0, scaleY: 0, duration: .4 })
+            .from('.home-solu .p-line-bottom', {autoAlpha: 0, scaleY: 0, duration: .6 }, '>=.2')
+
+            
+
+            const homeSoluBody = new SplitText('.home-solu__body-txt', {types: 'words, lines, chars', linesClass: 'g-lines'});
+
+            let tlScrubText = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-solu__body-txt',
+                    start: 'top bottom-=25%',
+                    end: 'bottom top+=25%',
+                    scrub: .4,
+                }
+            })
+            requestAnimationFrame(() => {
+                tlScrubText
+                .from(homeSoluBody.chars, {color: '#B8B8B8', duration: .1, stagger: 0.02, ease: 'power1.out'}, '0')
+            })
+
+            const homeSoluItems = $('.home-solu__main-item')
+            homeSoluItems.each((index, el) => {
+                const homeSoluItemTitle = new SplitText(el.querySelector('.home-solu__main-item-title'), typeOpts.words)
+                const homeSoluItemSub = new SplitText(el.querySelector('.home-solu__main-item-txt'), typeOpts.words)
+                const homeSoluItemTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top top+=50%',
+                    },
+                    onComplete: () => {
+                        homeSoluItemTitle.revert()
+                        new SplitText(el.querySelector('.home-solu__main-item-title'), typeOpts.lines)
+                        homeSoluItemSub.revert()
+                    }
+                })
+                homeSoluItemTl
+                .from(homeSoluItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02, delay: index % 2 == 1 ? .2 : 0})
+                .from(homeSoluItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            })
+
+            let tlImg = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-solu__main-img-wrap',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            })
+            tlImg.fromTo('.home-solu__main-img-wrap img', {yPercent: 10}, {yPercent: -10, ease: 'none'})
         }
     })
-    tl
-    .from('.home-solu__head-img-wrap', {yPercent: 45, autoAlpha: 0, duration: 1, ease: 'power2.out'}, 0)
-    .from(homeSoluLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .from(homeSoluTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .from('.home-solu .p-line-top', {autoAlpha: 0, scaleY: 0, duration: .4 })
-    .from('.home-solu .p-line-bottom', {autoAlpha: 0, scaleY: 0, duration: .6 }, '>=.2')
-
     let tlScrub = gsap.timeline({
         scrollTrigger: {
             trigger: '.home-solu__head',
@@ -233,51 +299,6 @@ function homeSolu() {
     })
     tlScrub
     .fromTo('.home-solu__head-img-wrap img', {yPercent: 15}, { yPercent: -6, ease: 'none'})
-
-    const homeSoluBody = new SplitText('.home-solu__body-txt', {types: 'words, lines, chars', linesClass: 'g-lines'});
-
-    let tlScrubText = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-solu__body-txt',
-            start: 'top bottom-=25%',
-            end: 'bottom top+=25%',
-            scrub: .4,
-        }
-    })
-    requestAnimationFrame(() => {
-        tlScrubText
-        .from(homeSoluBody.chars, {color: '#B8B8B8', duration: .1, stagger: 0.02, ease: 'power1.out'}, '0')
-    })
-
-    const homeSoluItems = $('.home-solu__main-item')
-    homeSoluItems.each((index, el) => {
-        const homeSoluItemTitle = new SplitText(el.querySelector('.home-solu__main-item-title'), typeOpts.words)
-        const homeSoluItemSub = new SplitText(el.querySelector('.home-solu__main-item-txt'), typeOpts.words)
-        const homeSoluItemTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top top+=50%',
-            },
-            onComplete: () => {
-                homeSoluItemTitle.revert()
-                new SplitText(el.querySelector('.home-solu__main-item-title'), typeOpts.lines)
-                homeSoluItemSub.revert()
-            }
-        })
-        homeSoluItemTl
-        .from(homeSoluItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02, delay: index % 2 == 1 ? .2 : 0})
-        .from(homeSoluItemSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    })
-
-    let tlImg = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-solu__main-img-wrap',
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true
-        }
-    })
-    tlImg.fromTo('.home-solu__main-img-wrap img', {yPercent: 10}, {yPercent: -10, ease: 'none'})
 }
 function homeShift() {
     requestAnimationFrame(() => {
@@ -329,125 +350,139 @@ function homeShift() {
 
 }
 function homeTech() {
-    const homeTechLabel = new SplitText('.home-tech__label', typeOpts.chars)
-    const homeTechTitle = new SplitText('.home-tech__title', typeOpts.words);
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-tech__head',
-            start: 'top top+=50%',
-        },
-        defaults: {
-            ease: gOpts.ease
-        },
-        onComplete: () => {
-            homeTechLabel.revert()
-            homeTechTitle.revert()
-            new SplitText('.home-tech__title', typeOpts.lines);
+    ScrollTrigger.create({
+        trigger: '.home-tech',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homeTechLabel = new SplitText('.home-tech__label', typeOpts.chars)
+            const homeTechTitle = new SplitText('.home-tech__title', typeOpts.words);
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-tech__head',
+                    start: 'top top+=50%',
+                },
+                defaults: {
+                    ease: gOpts.ease
+                },
+                onComplete: () => {
+                    homeTechLabel.revert()
+                    homeTechTitle.revert()
+                    new SplitText('.home-tech__title', typeOpts.lines);
+                }
+            })
+            tl
+            .from(homeTechLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+            .from(homeTechTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+        
+            const homeTechItems = $('.home-tech__item:not(".home-tech__link")');
+            homeTechItems.each((index, el) => {
+                let homeTechItemTitle = new SplitText(el.querySelector('.home-tech__item-title'), typeOpts.words)
+                let tlHomeTechItem = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top top+=65%'
+                    },
+                    onComplete: () => {
+                        homeTechItemTitle.revert()
+                    }
+                })
+                tlHomeTechItem
+                .from(el, {autoAlpha: 0, duration: .8, delay: index == 0 ? 0 : index % 2 == 0 ? .3 : 0})
+                .from(el.querySelector('.home-tech__item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
+                .from(homeTechItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            })
+        
+            let homeTechItemLinkTitle = new SplitText('.home-tech__link-title', {type: 'words, lines'})
+                let tlHomeTechItemLink = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.home-tech__link',
+                        start: 'top top+=65%'
+                    },
+                    onComplete: () => {
+                        homeTechItemLinkTitle.revert()
+                    }
+                })
+                tlHomeTechItemLink
+                .from('.home-tech__link', {autoAlpha: 0, duration: .8})
+                .from('.home-tech__link .arr-wrap', {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
+                .from(homeTechItemLinkTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+        
+                    
+            let tlShip = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-tech__ship',
+                    start: 'top bottom+=15%',
+                    end: 'bottom top-=35%',
+                    scrub: .4,
+                }
+            })
+            tlShip.fromTo('.home-tech__ship img', {
+                xPercent: $(window).width() > 767 ? 65 : 55, yPercent: -35
+            }, {
+                xPercent: $(window).width() > 767 ? -65 : -55, yPercent: 35, ease: 'none'
+            })
         }
-    })
-    tl
-    .from(homeTechLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-    .from(homeTechTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-
-    const homeTechItems = $('.home-tech__item:not(".home-tech__link")');
-    homeTechItems.each((index, el) => {
-        let homeTechItemTitle = new SplitText(el.querySelector('.home-tech__item-title'), typeOpts.words)
-        let tlHomeTechItem = gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top top+=65%'
-            },
-            onComplete: () => {
-                homeTechItemTitle.revert()
-            }
-        })
-        tlHomeTechItem
-        .from(el, {autoAlpha: 0, duration: .8, delay: index == 0 ? 0 : index % 2 == 0 ? .3 : 0})
-        .from(el.querySelector('.home-tech__item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
-        .from(homeTechItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    })
-
-    let homeTechItemLinkTitle = new SplitText('.home-tech__link-title', {type: 'words, lines'})
-        let tlHomeTechItemLink = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.home-tech__link',
-                start: 'top top+=65%'
-            },
-            onComplete: () => {
-                homeTechItemLinkTitle.revert()
-            }
-        })
-        tlHomeTechItemLink
-        .from('.home-tech__link', {autoAlpha: 0, duration: .8})
-        .from('.home-tech__link .arr-wrap', {autoAlpha: 0, yPercent: 25, duration: .4}, '<=.2')
-        .from(homeTechItemLinkTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-
-            
-    let tlShip = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-tech__ship',
-            start: 'top bottom+=15%',
-            end: 'bottom top-=35%',
-            scrub: .4,
-        }
-    })
-    tlShip.fromTo('.home-tech__ship img', {
-        xPercent: $(window).width() > 767 ? 65 : 55, yPercent: -35
-    }, {
-        xPercent: $(window).width() > 767 ? -65 : -55, yPercent: 35, ease: 'none'
     })
 }
 function homeWhy() {
-    const homeWhyLabel = new SplitText('.home-why__label', typeOpts.chars)
-    const homeWhyTitle = new SplitText('.home-why__title', typeOpts.words);
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-why__head',
-            start: 'top top+=50%',
-        },
-        defaults: {
-            ease: gOpts.ease
-        },
-        onComplete: () => {
-            homeWhyLabel.revert()
-            homeWhyTitle.revert()
-            new SplitText('.home-why__title', typeOpts.lines)
-        }
-    })
-    tl
-    .from(homeWhyLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-    .from(homeWhyTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .from('.home-why__btn', {yPercent: 60, autoAlpha: 0, duration: .4}, '>=-.2')
-
-    const homeWhyItems = $('.home-why__main-item');
-    homeWhyItems.each((index, el) => {
-        let homeWhyItemTitle
-        if ($(window).width() > 767) {
-            homeWhyItemTitle = new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.words)
-        }
-        let tlHomeWhyItem = gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top top+=65%'
-            },
-            onComplete: () => {
-                if ($(window).width() > 767) {
-                    homeWhyItemTitle.revert()
-                    new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.lines)
+    ScrollTrigger.create({
+        trigger: '.home-why',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homeWhyLabel = new SplitText('.home-why__label', typeOpts.chars)
+            const homeWhyTitle = new SplitText('.home-why__title', typeOpts.words);
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-why__head',
+                    start: 'top top+=50%',
+                },
+                defaults: {
+                    ease: gOpts.ease
+                },
+                onComplete: () => {
+                    homeWhyLabel.revert()
+                    homeWhyTitle.revert()
+                    new SplitText('.home-why__title', typeOpts.lines)
                 }
-            }
-        })
-        tlHomeWhyItem
-        .from(el, {autoAlpha: 0, duration: 1, delay: index == 0 ? 0 : index % 2 == 0 ? .3 : 0})
-        .from(el.querySelector('.home-why__main-item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4, clearProps: 'transform'}, '<=.2')
-        if ($(window).width() > 767) {
-            tl.from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-        } else {
+            })
             tl
-            .from(el.querySelector('.home-why__main-item-title'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
-            .from(el.querySelector('.home-why__main-item-sub'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
+            .from(homeWhyLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+            .from(homeWhyTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .from('.home-why__btn', {yPercent: 60, autoAlpha: 0, duration: .4}, '>=-.2')
+        
+            const homeWhyItems = $('.home-why__main-item');
+            homeWhyItems.each((index, el) => {
+                let homeWhyItemTitle
+                if ($(window).width() > 767) {
+                    homeWhyItemTitle = new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.words)
+                }
+                let tlHomeWhyItem = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top top+=65%'
+                    },
+                    onComplete: () => {
+                        if ($(window).width() > 767) {
+                            homeWhyItemTitle.revert()
+                            new SplitText(el.querySelector('.home-why__main-item-title'), typeOpts.lines)
+                        }
+                    }
+                })
+                tlHomeWhyItem
+                .from(el, {autoAlpha: 0, duration: 1, delay: index == 0 ? 0 : index % 2 == 0 ? .3 : 0})
+                .from(el.querySelector('.home-why__main-item-icon'), {autoAlpha: 0, yPercent: 25, duration: .4, clearProps: 'transform'}, '<=.2')
+                if ($(window).width() > 767) {
+                    tl.from(homeWhyItemTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+                } else {
+                    tl
+                    .from(el.querySelector('.home-why__main-item-title'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
+                    .from(el.querySelector('.home-why__main-item-sub'), {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
+                }
+        
+            })
         }
-
     })
 
     if ($(window).width() > 991) {
@@ -477,84 +512,98 @@ function homeWhy() {
     }
 }
 function homePart() {
-    const homePartLabel = new SplitText('.home-part__label', typeOpts.chars)
-    const homePartTitle = new SplitText('.home-part__title', typeOpts.words);
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-part__head',
-            start: 'top top+=65%',
-        },
-        defaults: {
-            ease: gOpts.ease
-        },
-        onComplete: () => {
-            homePartLabel.revert()
-            homePartTitle.revert()
-            new SplitText('.home-part__title', typeOpts.lines);
+    ScrollTrigger.create({
+        trigger: '.home-part',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homePartLabel = new SplitText('.home-part__label', typeOpts.chars)
+            const homePartTitle = new SplitText('.home-part__title', typeOpts.words);
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-part__head',
+                    start: 'top top+=65%',
+                },
+                defaults: {
+                    ease: gOpts.ease
+                },
+                onComplete: () => {
+                    homePartLabel.revert()
+                    homePartTitle.revert()
+                    new SplitText('.home-part__title', typeOpts.lines);
+                }
+            })
+            tl
+            .from(homePartLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+            .from(homePartTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .from('.home-part__btn', {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
+        
+            let tlItems = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-part__main-supporters',
+                    start: 'top top+=65%',
+                }
+            })
+            tlItems
+            .from('.home-part__main-supporters .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'all'})
+        
+            let tlSubTitle = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-part__investor',
+                    start: 'top top+=65%',
+                }
+            })
+            tlSubTitle.from('.home-part__investor-title', {yPercent: 60, autoAlpha: 0, duration: .4, ease: 'none'})
+        
+            let tlItemInvest = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-part__main-investors',
+                    start: 'top top+=65%',
+                }
+            })
+            tlItemInvest
+            .from('.home-part__main-investors .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'all'})
         }
     })
-    tl
-    .from(homePartLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-    .from(homePartTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .from('.home-part__btn', {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
-
-    let tlItems = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-part__main-supporters',
-            start: 'top top+=65%',
-        }
-    })
-    tlItems
-    .from('.home-part__main-supporters .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'all'})
-
-    let tlSubTitle = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-part__investor',
-            start: 'top top+=65%',
-        }
-    })
-    tlSubTitle.from('.home-part__investor-title', {yPercent: 60, autoAlpha: 0, duration: .4, ease: 'none'})
-
-    let tlItemInvest = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-part__main-investors',
-            start: 'top top+=65%',
-        }
-    })
-    tlItemInvest
-    .from('.home-part__main-investors .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'all'})
 }
 function homeFaq() {
-    const homeFaqTitle = new SplitText('.home-faq__title',typeOpts.words);
-    const homeFaqSub = new SplitText('.home-faq__sub',typeOpts.words);
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-faq__head',
-            start: 'top top+=55%',
-        },
-        defaults: {
-            ease: gOpts.ease
-        },
-        onComplete: () => {
-            homeFaqTitle.revert()
-            new SplitText('.home-faq__title',typeOpts.lines);
-            homeFaqSub.revert()
+    ScrollTrigger.create({
+        trigger: '.home-faq',
+        start: 'top bottom',
+        once: true,
+        onEnter: () => {
+            const homeFaqTitle = new SplitText('.home-faq__title',typeOpts.words);
+            const homeFaqSub = new SplitText('.home-faq__sub',typeOpts.words);
+            let tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-faq__head',
+                    start: 'top top+=55%',
+                },
+                defaults: {
+                    ease: gOpts.ease
+                },
+                onComplete: () => {
+                    homeFaqTitle.revert()
+                    new SplitText('.home-faq__title',typeOpts.lines);
+                    homeFaqSub.revert()
+                }
+            })
+            tl
+            .from(homeFaqTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
+            .from(homeFaqSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
+            .from('.home-faq__link', {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .04}, '<=.2')
+            .from('.home-faq__link.hover-un', {'--line-width': '0%', duration: .6}, '<=.2')
+        
+            let tlItems = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.home-faq__main',
+                    start: 'top top+=55%',
+                }
+            })
+            tlItems
+            .from('.home-faq__main .faq-item', {autoAlpha: 0, duration: 1, yPercent: 25, stagger: .2, clearProps: 'all'})
         }
     })
-    tl
-    .from(homeFaqTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
-    .from(homeFaqSub.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
-    .from('.home-faq__link', {yPercent: 60, autoAlpha: 0, duration: .8, stagger: .04}, '<=.2')
-    .from('.home-faq__link.hover-un', {'--line-width': '0%', duration: .6}, '<=.2')
-
-    let tlItems = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.home-faq__main',
-            start: 'top top+=55%',
-        }
-    })
-    tlItems
-    .from('.home-faq__main .faq-item', {autoAlpha: 0, duration: 1, yPercent: 25, stagger: .2, clearProps: 'all'})
 }
 function homeTechInteraction() {
     let homeTechItems = $('.home-tech__item');

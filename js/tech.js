@@ -575,6 +575,14 @@ function techVideoInteraction() {
                 }
             }
         })
+        ScrollTrigger.create({
+            trigger: '.tech-vid',
+            start: 'top top',
+            end: 'bottom top',
+            onLeave: () => {
+                videoAction.pause('#vidTech')
+            }
+        })
     }
 
     const videoAction = {
@@ -587,6 +595,9 @@ function techVideoInteraction() {
             $('.tech-vid__main-vid').addClass('playing');
         },
         pause: (video) => {
+            if (!video) return;
+            let el = $(video).get(0);
+            el.pause()
             $('.tech-vid__play-btn').removeClass('playing');
             $('.tech-vid__main-vid').removeClass('playing');
         }
