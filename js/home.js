@@ -537,7 +537,35 @@ function homePart() {
             .from(homePartLabel.chars, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02})
             .from(homePartTitle.words, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .02}, '<=.2')
             .from('.home-part__btn', {yPercent: 60, autoAlpha: 0, duration: .4}, '<=.2')
-        
+
+            //Update width base on container's current width
+            let tlDur
+            if ($(window).width() <= 767) {
+                $('.home-part__marquee-wrapper .home-part__main-item').css('width', `${$('.container').width() / 3}px`)
+                tlDur = 20
+            } else if ($(window).width() <= 991 ) {
+                $('.home-part__marquee-wrapper .home-part__main-item').css('width', `${$('.container').width() / 5}px`)
+                tlDur = 30
+            } else {
+                $('.home-part__marquee-wrapper .home-part__main-item').css('width', `${$('.container').width() / 6}px`)
+                tlDur = 40
+            }
+            
+            let cloneItem = $('.home-part__marquee-wrapper .home-part__marquee-item').eq(0).clone();
+            cloneItem.clone().appendTo('.home-part__marquee-wrapper.--right')
+            cloneItem.clone().appendTo('.home-part__marquee-wrapper.--left')
+
+            let tlMarquee = gsap.timeline({
+                repeat: -1,
+                onUpdate: () => {
+                    gsap.to(tlMarquee, {timeScale: lenis.direction * Math.min(Math.max(lenis.velocity/2, 1), 4), duration: .1, ease: 'none'})
+                }
+            })
+            tlMarquee.seek(28800)
+            tlMarquee
+            .to('.home-part__marquee-wrapper.--right .home-part__marquee-item', {xPercent: -100, duration: tlDur,  ease: 'none'})
+            .to('.home-part__marquee-wrapper.--left .home-part__marquee-item', {xPercent: 100, duration: tlDur,  ease: 'none'}, 0)
+            
             let tlItems = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.home-part__main-supporters',
@@ -545,7 +573,8 @@ function homePart() {
                 }
             })
             tlItems
-            .from('.home-part__main-supporters .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'all'})
+            .from('.home-part__main-supporters .home-part__marquee-wrapper.--right .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'transform'})
+            .from('.home-part__main-supporters .home-part__marquee-wrapper.--left .home-part__main-item', {autoAlpha: 0, duration: .8, yPercent: 25, stagger: .04, clearProps: 'transform'}, 0)
         
             let tlSubTitle = gsap.timeline({
                 scrollTrigger: {
@@ -649,19 +678,20 @@ function getApi_homePart() {
     getAllDataByType('partner', 'asc').then((res) => {
         let allPart = res;
         let templatePart = $('.home-part__main-item').eq(0).clone();
-        $('.home-part__main-supporters').html('')
+        $('.home-part__main-supporters .home-part__marquee-wrapper .home-part__marquee-item').html('')
         $('.home-part__main-investors').html('')
         allPart.forEach((i) => {
             let htmlPart = templatePart.clone();
             htmlPart.find('img').attr('src',i.data.logo.url).attr('alt',i.data.logo.alt ? i.data.logo.alt : i.data.name)
             if (i.data.type == "Supporter") {
-                htmlPart.appendTo('.home-part__main-supporters');
+                htmlPart.appendTo('.home-part__main-supporters .home-part__marquee-wrapper .home-part__marquee-item');
             } else {
                 htmlPart.appendTo('.home-part__main-investors');
             }
         })
-        homePart()
+        homePart()    
     })
+    
 }
 function getApi_homeFaq() {
     getAllDataByType('faq', 'asc').then((res) => {

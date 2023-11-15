@@ -865,6 +865,45 @@
             margin-right: -1px;
             padding: 2.8rem 1.9rem;
         }
+        &-supporters {
+            width: 100%;
+            display: block;
+            flex-wrap: nowrap;
+            .home-part {
+                &__marquee {
+                    display: block;
+                    width: 100%;
+                    overflow: hidden;
+                    &-wrapper {
+                        display: flex;
+                        align-items: stretch;
+                        flex-wrap: nowrap;
+                        will-change: transform;
+                        &.--right {
+                            justify-content: start;
+                            margin-bottom: -1px;
+                        }
+                        &.--left {
+                            justify-content: end;
+                            // .home-part__marquee-item {
+                            //     flex-direction: row-reverse;
+                            // }
+                        }
+                    }
+                    &-item {
+                        display: flex;
+                        align-items: stretch;
+                        justify-content: start;
+                        flex-wrap: nowrap;
+                        .home-part__main-item {
+                            margin-bottom: 0;
+                            width: calc(($container-width - 6rem * 2) / 6);
+                        }
+                    }
+                }
+
+            }
+        }
     }
     &__investor {
         grid-column: 1/17;
@@ -874,7 +913,7 @@
         color: rgba($cl-txt, 1);
         margin-bottom: 6rem;
         &-title {
-            margin-bottom: 2rem;
+            margin-bottom: 1.2rem;
         }
         &-sub {
             color: rgba($cl-desc, 1);
