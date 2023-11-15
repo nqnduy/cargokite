@@ -558,7 +558,8 @@ function homePart() {
             let tlMarquee = gsap.timeline({
                 repeat: -1,
                 onUpdate: () => {
-                    gsap.to(tlMarquee, {timeScale: lenis.direction * Math.min(Math.max(lenis.velocity/2, 1), 4), duration: .1, ease: 'none'})
+                    let tlDir = lenis.direction >= 0 ? 1 : -1;
+                    gsap.to(tlMarquee, {timeScale: tlDir * Math.min(Math.max(lenis.velocity/2, 1), 4), duration: .1, ease: 'none'})
                 }
             })
             tlMarquee.seek(28800)
