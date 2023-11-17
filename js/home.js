@@ -98,7 +98,7 @@ class homeHeroWebGL {
                 } else if ($(window).width() > 768) {
                     scaleFactorShip = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                 } else {
-                    scaleFactorShip = $(window).height() * .003472 * 2 > 2.4 ? 2.4 : $(window).height() * .003472 * 2
+                    scaleFactorShip = $(window).height() * .003472 * 2 > 2.2 ? 2.2 : $(window).height() * .003472 * 2
                     console.log('scale: ' + scaleFactorShip)
                 }
                 this.model.scale.set(scaleFactorShip,scaleFactorShip,scaleFactorShip)
@@ -157,7 +157,7 @@ class homeHeroWebGL {
                 scaleFactorShip = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                 console.log(scaleFactorShip)
             } else {
-                scaleFactorShip = $(window).height() * .003472 * 2 > 2.4 ? 2.4 : $(window).height() * .003472 * 2
+                scaleFactorShip = $(window).height() * .003472 * 2 > 2.2 ? 2.2 : $(window).height() * .003472 * 2
                 console.log('scale: ' + scaleFactorShip)
             }
             this.model.scale.set(scaleFactorShip,scaleFactorShip,scaleFactorShip)
