@@ -94,7 +94,7 @@ class homeHeroWebGL {
                 this.model = glb.scene;
                 let scaleFactorShip;
                 if ($(window).width() > 991 ) {
-                    scaleFactorShip = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
+                    scaleFactorShip = $(window).width() * .003472 > 8 ? 8 : $(window).width() * .003472
                 } else if ($(window).width() > 768) {
                     scaleFactorShip = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                 } else {
@@ -152,7 +152,7 @@ class homeHeroWebGL {
             console.log('resize')
             let scaleFactorShip;
             if ($(window).width() > 991 ) {
-                scaleFactorShip = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
+                scaleFactorShip = $(window).width() * .003472 > 8 ? 8 : $(window).width() * .003472
             } else if ($(window).width() > 768) {
                 scaleFactorShip = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                 console.log(scaleFactorShip)
