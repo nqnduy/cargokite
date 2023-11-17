@@ -1,11 +1,14 @@
 import $ from "jquery";
+import * as THREE from 'three';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { nestedLinesSplit, toHTML } from './untils';
+import { nestedLinesSplit, toHTML, lerp, pointerCurr, ySetter, yGetter } from './untils';
 import lenis from './vendors/lenis';
 import SplitText from "./vendors/SplitText";
 import { childrenSelect } from './common/utils/childrenSelector'
 import swiper from './components/swiper';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { getAllDataByType } from "./common/prismic_fn";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -33,7 +36,222 @@ let gOpts = {
     ease: 'power2.easeOut'
 };
 
-function homeHero() {
+class homeHeroWebGL {
+    constructor() {
+        this.container = $('.home-hero__canvas');
+        this.scene = new THREE.Scene();
+        this.hdri = new THREE.CubeTextureLoader()
+        .load([
+            new URL('../assets/map/high/px.png', import.meta.url),
+            new URL('../assets/map/high/nx.png', import.meta.url),
+            new URL('../assets/map/high/py.png', import.meta.url),
+            new URL('../assets/map/high/ny.png', import.meta.url),
+            new URL('../assets/map/high/pz.png', import.meta.url),
+            new URL('../assets/map/high/nz.png', import.meta.url)
+        ])
+    }
+    get viewport() {
+        let width = this.container.width();
+        let height = this.container.height();
+        let aspectRatio = width / height;
+        return {
+            width,
+            height,
+            aspectRatio
+        }
+    }
+    setupCamera() {
+        //Resize
+        window.addEventListener('resize', this.onWindowResize.bind(this))
+        //camera
+        this.perspective = this.viewport.height;
+        let fov = (Math.atan(this.viewport.height / 2 / this.perspective) * 2) * 180 / Math.PI;
+        // fov = this.viewport.width > 767 ? 67.21006304397703 : 67.21006304397703 * 1;
+        this.camera = new THREE.PerspectiveCamera(fov, this.viewport.aspectRatio, 0.1, 10000);
+        this.camera.position.set(0,0,this.perspective)
+        this.camera.lookAt(0,0,0)
+        //renderer
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true
+        })
+        this.renderer.setSize(this.viewport.width, this.viewport.height);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+
+        
+    }
+    createMesh() {
+        let url = new URL('../assets/cargo-hero-deform.glb', import.meta.url)
+        url = "" + url;
+        this.loader = new GLTFLoader();
+        this.dracoLoader = new DRACOLoader();
+
+        this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+        this.dracoLoader.setDecoderConfig({type: 'js'})
+        this.loader.setDRACOLoader( this.dracoLoader )
+        this.loader.load(url,
+            (glb) => {
+                this.model = glb.scene;
+                let scaleFactor;
+                if ($(window).width() > 991 ) {
+                    scaleFactor = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
+                } else if ($(window).width() > 768) {
+                    scaleFactor = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
+                    console.log(scaleFactor)
+                } else {
+                    scaleFactor = $(window).height() * .003472 > 2.5 ? 2.5 : $(window).width() * .003472
+                }
+                this.model.scale.set(scaleFactor,scaleFactor,scaleFactor)
+                this.model.position.y = -this.viewport.height * .2086 * 1;
+                console.log(this.viewport.height)
+                this.model.position.x = this.viewport.width * .0045;
+                this.scene.environment = this.hdri;
+                this.orangeMat = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color('#FF471D'),
+                    envMapIntensity: 4,
+                    roughness: .35,
+                    metalness: 0
+                })
+                this.darkMat = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color('#2B2C2F'),
+                    envMapIntensity: 3,
+                    roughness: .70,
+                    metalness: 1,
+                    transparent: true,
+                })
+                this.clock = new THREE.Clock()
+                this.model.traverse((obj) => {
+                    if (obj instanceof THREE.Mesh) {
+                        if (obj.name === 'kite') {
+                            obj.material = this.orangeMat;
+                            console.log(obj)
+                        } else if (obj.name.includes('str')) {
+                            obj.material = this.darkMat;
+                        }
+                        if (obj.name === 'chamfer') {
+                            obj.scale.set(1.3,1.3,1.3)
+                        }
+                    }
+                    this.bone = this.model.children[0]
+                    this.boneX = this.bone.position.x
+                })
+                this.lerpFactor = 0;
+                this.scene.add(this.model)
+                this.animate()
+            },
+            (xhr) => {
+                console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+            },
+            (error) => {
+                console.log( error );
+        })
+        
+    }
+    onWindowResize() {
+        if (this.model) {
+            console.log('resize')
+            let scaleFactor;
+            if ($(window).width() > 991 ) {
+                scaleFactor = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
+            } else if ($(window).width() > 768) {
+                scaleFactor = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
+                console.log(scaleFactor)
+            } else {
+                scaleFactor = $(window).height() * .003472 > 2.5 ? 2.5 : $(window).width() * .003472
+            }
+            this.model.scale.set(scaleFactor,scaleFactor,scaleFactor)
+        }
+        this.camera.aspect = this.viewport.aspectRatio;
+        this.renderer.setSize(this.viewport.width, this.viewport.height)
+        this.camera.updateProjectionMatrix();
+    }
+    mousMove() {
+        if (this.model) {
+            let windOffsetPan = Math.cos(this.clock.getElapsedTime() * 2) * Math.PI / 90 * (this.lerpFactor * 100);
+            let windOffsetTilt = Math.sin(this.clock.getElapsedTime() * 2 * 2) * Math.PI / 180 * (this.lerpFactor * 100);
+            let windOffsetRot = Math.sin(this.clock.getElapsedTime() * 2) * Math.PI / 45 * (this.lerpFactor * 100);
+            let moveFactor;
+            if ($(window).width() > 991) {
+                if ($('.home-hero__bg-wrap-inner').hasClass('done-anim')) {
+                    if (this.lerpFactor < 0.01) {
+                        this.lerpFactor += 0.0001
+                        console.log(this.lerpFactor)
+                    }
+                }
+
+                if ($('.home-hero__bg-wrap-inner').hasClass('done-anim')) {
+                    //Pan
+                    let pastX = this.bone.rotation.y;
+                    this.bone.rotation.y = lerp(pastX, (pointerCurr().x / $(window).width() - 0.5) * 2 * Math.PI / 4 * -1, this.lerpFactor)
+                    //Tilt
+                    let pastZ = this.bone.rotation.z;
+                    this.bone.rotation.z = lerp(pastZ, (pointerCurr().x / $(window).width() - 0.5) * 2 * Math.PI / 6 * -1, this.lerpFactor)
+                    
+                } else {
+                    this.bone.rotation.y = 0
+                    this.bone.rotation.z = 0
+                    this.bone.rotation.x = 1.57
+                }
+                //Rotate
+                this.bone.rotation.x = 1.57 - Math.abs(Math.sin(this.clock.getElapsedTime() * .8)) * Math.PI / 36 * (this.lerpFactor * 100);
+                
+                // Pan 
+                if ($('.home-hero__bg-wrap-inner').hasClass('done-anim')) { 
+                    this.model.children[0].children[0].rotation.z = 2.028715267360886e-17 + windOffsetPan
+                } else {
+                    this.model.children[0].children[0].rotation.z = 2.028715267360886e-17
+                }
+    
+                // Rotate
+                if ($('.home-hero__bg-wrap-inner').hasClass('done-anim')) {
+                    this.model.children[0].children[0].rotation.y = -9.27239782033422e-17 + windOffsetRot
+                } else {
+                    this.model.children[0].children[0].rotation.y = -9.27239782033422e-17
+                } 
+                // Tilt
+                this.model.children[0].children[0].rotation.x = -1.1400032464213996 + windOffsetTilt
+
+                moveFactor = $(window).height() * .018;
+                
+            } else {
+                this.bone.rotation.y = Math.cos(this.clock.getElapsedTime() * .4) * Math.PI / 6;
+                this.bone.rotation.z = Math.cos(this.clock.getElapsedTime() * .4) * Math.PI / 8;
+                this.bone.rotation.x = 1.57 - Math.abs(Math.sin(this.clock.getElapsedTime() * .8)) * Math.PI / 36;
+
+                this.model.children[0].children[0].rotation.z = 2.028715267360886e-17 + windOffsetPan
+                this.model.children[0].children[0].rotation.y = -9.27239782033422e-17 + windOffsetRot
+                this.model.children[0].children[0].rotation.x = -1.1400032464213996 + windOffsetTilt
+
+                moveFactor = this.viewport.height * .01;
+            }
+            ySetter('.home-hero__bg-ship, .home-hero__canvas')(Math.sin(this.clock.getElapsedTime()) * moveFactor)
+            gsap.set('.home-hero__bg-ship, .home-hero__canvas', {scale: 1 + Math.sin(this.clock.getElapsedTime()) * .01} )
+        }
+    }
+    animate() {
+        if (!$('[data-barba-namespace="home"]').length) {
+
+        } else {
+            this.mousMove()
+            this.renderer.render(this.scene, this.camera)
+        }
+        requestAnimationFrame(this.animate.bind(this))
+    }
+    init() {
+        this.setupCamera()
+        this.createMesh()
+    }
+    reset() {
+        this.container.append(this.renderer.domElement);
+        this.onWindowResize()
+    }
+}
+
+function homeHero() {let homeheroWebGL = new homeHeroWebGL();
+    homeheroWebGL.init()
+    homeheroWebGL.reset()
+    homeheroWebGL.onWindowResize()
+
     const homeHeroTitle = new SplitText('.home-hero .home-hero__title', typeOpts.chars);
     const homeHeroLabel = new SplitText('.home-hero .home-hero__backer-label', typeOpts.words);
     const homeHeroBacker = $('.home-hero .home-hero__backer-item')

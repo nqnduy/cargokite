@@ -179,6 +179,11 @@ const scripts = () => {
             $('.trans__count').addClass('active');
             $('.trans__home').addClass('active');
             $('.home-hero .home-hero__title, .home-hero .home-hero__backer').addClass('force-hidden')
+            // //Debug area
+            // $('.trans__wrapper').remove()
+            // $('.home-hero .home-hero__title, .home-hero .home-hero__backer').removeClass('force-hidden')
+            // lenis.start()
+            // // End Debug area
 
             let homeHeroTitleHeight = $('.home-hero__title').outerHeight();
             console.log(homeHeroTitleHeight)
@@ -255,7 +260,9 @@ const scripts = () => {
                 $('.trans__home-inner').remove()
                 $('.home-hero .home-hero__title, .home-hero .home-hero__backer').removeClass('force-hidden')
             }}, "<=-.25")
-            .from('.home-hero__bg-wrap > * ', {objectPosition: `50% 30%`, duration: 2, ease: "Power2.out"}, "<=.55")
+            .from('.home-hero__bg-wrap-inner ', {y: `${$('.home-hero__bg-wrap-inner').height() - $('.home-hero__bg-wrap').height()}`, duration: 2, ease: "Power2.out", onComplete: () => {
+                $('.home-hero__bg-wrap-inner').addClass('done-anim')
+            }}, "<=.55")
         } else {
             $('.trans__logo').addClass('active');
             tl = gsap.timeline({
@@ -308,7 +315,7 @@ const scripts = () => {
         resetScroll()
         console.log('enterTrans')
         gsap.set(data.current.container, {opacity: 0, display: 'none'})
-
+        
         gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
         let tl = gsap.timeline({
             delay: .5,
@@ -324,6 +331,10 @@ const scripts = () => {
             each: '.1',
         }, ease: "expo.in"}, 0)
             .to('.trans__logo', { rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in' }, '<=.4')
+
+        if (data.next.namespace == 'home') {
+            $('.home-hero__bg-wrap-inner').addClass('done-anim')
+        }
         return tl
     }
 
@@ -372,13 +383,6 @@ const scripts = () => {
         }
         lenis.start()
     }
-    // function changeScrollerContainer() {
-    //     let triggers = ScrollTrigger.getAll();
-    //     triggers.forEach(trigger => {
-    //         trigger.scroller.customElements = '.wrapper'
-    //         console.log(trigger);
-    //     });
-    // }
     function handleScrollTo() {
         $('[data-scrollto]').on('click', function(e) {
             //e.preventDefault();

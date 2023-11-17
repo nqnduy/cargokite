@@ -16,21 +16,58 @@
         top: 0;
         left: 0;
         width: 100%;
-        
         height: 100vh;
         z-index: 1;
         background-color: black;
-        video {
-            opacity: .85;
+        &-inner {
             position: absolute;
+            left: 0;
+            bottom: 0;
+            display: grid;
+            width: 100%;
+            transform: translateY(3%);
+            overflow: hidden;
+        }
+        .home-hero__bg-vid {
+            grid-column: 1/1;
+            grid-row: 1/1;
+            opacity: .85;
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: 50% 86%;
         }
-        .img-fill {
-            object-position: 50% 86%;
+        .home-hero__bg-ph {
+            grid-column: 1/1;
+            grid-row: 1/1;
+            opacity: 0;
+            pointer-events: none;
+            width: 100%;
+            height: auto;
         }
+        .home-hero__bg-ship {
+            position: absolute;
+            // bottom: 11.5%;
+            top: 67.955%;
+            left: 47.62%;
+            // width: 5.78%;
+            height: 20.52%;
+            width: auto;
+            transform-origin: 50% 50%;
+        }
+    }
+    &__canvas {
+        transform-origin: 50% 79%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 4;
+        // background-color: rgba(0,0,0,.8);
     }
     .container.grid {
         height: 100%;
@@ -1047,6 +1084,27 @@
             z-index: 1;
             min-height: 100%;
             height: 100%;
+            &-inner {
+                height: 100%;
+                transform: none !important;
+                overflow: hidden;
+            }
+            .home-hero__bg-vid {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: bottom;
+                top: auto;
+                bottom: 0;
+            }
+            .home-hero__bg-ph {
+                display: none;
+            }
+            .home-hero__bg-ship {
+                bottom: 11.5%;
+                top: auto;
+                left: 47.62%;
+            }
         }
         &__title {
             margin-top: 18vh;
@@ -1471,6 +1529,14 @@
                 height: 68%;
             }
         }
+        &__bg-wrap {
+            &-inner {
+                transform: scale(1.2) !important;
+                .home-hero__bg-ship {
+                    left: 47.25%;
+                }
+            }
+        }
         &__title {
             grid-column: 1/3;
             grid-row: 1/2;
@@ -1826,6 +1892,17 @@
 }
 
 @include xs {
+    .home-hero {
+        &__bg-wrap {
+            &-inner {
+                transform-origin: center bottom;
+                transform: scale(1.4) !important;
+                .home-hero__bg-ship {
+                    left: 45.5%;
+                }
+            }
+        }
+    }
     .home-intro {
         &__richtext {
             overflow: hidden;
