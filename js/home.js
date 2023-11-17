@@ -92,16 +92,16 @@ class homeHeroWebGL {
         this.loader.load(url,
             (glb) => {
                 this.model = glb.scene;
-                let scaleFactor;
+                let scaleFactorShip;
                 if ($(window).width() > 991 ) {
-                    scaleFactor = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
+                    scaleFactorShip = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
                 } else if ($(window).width() > 768) {
-                    scaleFactor = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
-                    console.log(scaleFactor)
+                    scaleFactorShip = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                 } else {
-                    scaleFactor = $(window).height() * .003472 > 2.8 ? 2.8 : $(window).width() * .003472
+                    scaleFactorShip = $(window).height() * .003472 * 2 > 2.4 ? 2.4 : $(window).height() * .003472 * 2
+                    console.log('scale: ' + scaleFactorShip)
                 }
-                this.model.scale.set(scaleFactor,scaleFactor,scaleFactor)
+                this.model.scale.set(scaleFactorShip,scaleFactorShip,scaleFactorShip)
                 this.model.position.y = -this.viewport.height * .2086 * 1;
                 console.log(this.viewport.height)
                 this.model.position.x = this.viewport.width * .0045;
@@ -150,16 +150,17 @@ class homeHeroWebGL {
     onWindowResize() {
         if (this.model) {
             console.log('resize')
-            let scaleFactor;
+            let scaleFactorShip;
             if ($(window).width() > 991 ) {
-                scaleFactor = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
+                scaleFactorShip = $(window).width() * .003472 > 9 ? 9 : $(window).width() * .003472
             } else if ($(window).width() > 768) {
-                scaleFactor = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
-                console.log(scaleFactor)
+                scaleFactorShip = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
+                console.log(scaleFactorShip)
             } else {
-                scaleFactor = $(window).height() * .003472 > 2.8 ? 2.8 : $(window).width() * .003472
+                scaleFactorShip = $(window).height() * .003472 * 2 > 2.4 ? 2.4 : $(window).height() * .003472 * 2
+                console.log('scale: ' + scaleFactorShip)
             }
-            this.model.scale.set(scaleFactor,scaleFactor,scaleFactor)
+            this.model.scale.set(scaleFactorShip,scaleFactorShip,scaleFactorShip)
         }
         this.camera.aspect = this.viewport.aspectRatio;
         this.renderer.setSize(this.viewport.width, this.viewport.height)
