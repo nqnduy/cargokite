@@ -99,7 +99,7 @@ class homeHeroWebGL {
                     scaleFactor = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                     console.log(scaleFactor)
                 } else {
-                    scaleFactor = $(window).height() * .003472 > 2.5 ? 2.5 : $(window).width() * .003472
+                    scaleFactor = $(window).height() * .003472 > 2.8 ? 2.8 : $(window).width() * .003472
                 }
                 this.model.scale.set(scaleFactor,scaleFactor,scaleFactor)
                 this.model.position.y = -this.viewport.height * .2086 * 1;
@@ -157,7 +157,7 @@ class homeHeroWebGL {
                 scaleFactor = $(window).width() * .003472 > 3 ? 3 : $(window).width() * .003472
                 console.log(scaleFactor)
             } else {
-                scaleFactor = $(window).height() * .003472 > 2.5 ? 2.5 : $(window).width() * .003472
+                scaleFactor = $(window).height() * .003472 > 2.8 ? 2.8 : $(window).width() * .003472
             }
             this.model.scale.set(scaleFactor,scaleFactor,scaleFactor)
         }
