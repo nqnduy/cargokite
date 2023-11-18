@@ -899,7 +899,7 @@ html.force--consent.show--consent body{
     content: '';
     position: absolute;
     height: 2.8rem;
-    width: 1.5px;
+    width: 0.15rem;
     background: var(--cc-btn-secondary-text);
     transform: rotate(45deg);
     border-radius: 1em;
@@ -1413,5 +1413,4 @@ html.force--consent.show--consent body{
         float: right !important;
         margin-top: 0 !important;
     }
-
 }

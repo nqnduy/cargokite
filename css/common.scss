@@ -200,6 +200,10 @@ button {
     flex: none;
     position: relative;
     overflow: hidden;
+    &-24 {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
     &-32 {
         width: 3.2rem;
         height: 3.2rem;

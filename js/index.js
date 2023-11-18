@@ -7,9 +7,11 @@ import barbaPrefetch from '@barba/prefetch';
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "./vendors/SplitText";
+import CustomEase from 'gsap/CustomEase';
 import { initCookie, cookieConsent, cookieAccepted } from './components/cookieconsent-init';
 import { getAllDataByType } from './common/prismic_fn';
 import { viewport } from './common/helpers/viewport';
+import { xGetter, yGetter, xSetter, ySetter, pointerCurr, lerp } from './untils';
 
 import homeScript from './home';
 import aboutScript from './about';
@@ -28,7 +30,7 @@ const scripts = () => {
     }
 
     barba.use(barbaPrefetch);
-    gsap.registerPlugin(ScrollTrigger, SplitText);
+    gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
 
     function debounce(func, delay = 100){
         let timer;
@@ -81,13 +83,14 @@ const scripts = () => {
     refreshOnBreakpoint();
 
     const header = $('.header')
+
     let lastScrollTop = 0;
     const handleHeader = {
-        toggleHide: (scrollPos) => {
-            let headerHeight = header.height();
+		toggleHide: (scrollPos) => {
+			let headerHeight = header.height();
 			if (scrollPos > lastScrollTop) {
 				if (scrollPos > headerHeight) {
-                    header.addClass('on-hide')
+					header.addClass("on-hide");
 				}
 			} else {
 				if (scrollPos > headerHeight) {
@@ -96,122 +99,221 @@ const scripts = () => {
 				}
 			}
 			lastScrollTop = scrollPos;
-        },
-        onScrollDes: (scrollPos) => {
-            let headerHeight = header.height();
-            let logo = $('.header__logo');
-            if (scrollPos > (headerHeight * 2)) {
-                if (header.hasClass('open-ham')) {
-                    header.removeClass('open-ham');
-                }
-                if (!header.hasClass('on-scroll')) {
-                    setTimeout(() => {
-                        header.addClass('on-scroll');
-                    }, 900)
-                }
-                logo.addClass('scroll-mode');
-            }
-            else {
-                header.removeClass("on-scroll");
-                header.hasClass('open-ham');
-                logo.removeClass('scroll-mode');
-            };
-        },
-        onScrollMb: (scrollPos) => {
-            let headerHeight = header.height();
-            if (scrollPos > headerHeight) header.addClass("on-scroll");
+		},
+		onScrollDes: (scrollPos) => {
+			let headerHeight = header.height();
+			let logo = $(".header__logo");
+			if (scrollPos > headerHeight * 2) {
+				if (header.hasClass("open-ham")) {
+					header.removeClass("open-ham");
+				}
+				if (!header.hasClass("on-scroll")) {
+					setTimeout(() => {
+						header.addClass("on-scroll");
+					}, 900);
+				}
+				logo.addClass("scroll-mode");
+			} else {
+				header.removeClass("on-scroll");
+				header.hasClass("open-ham");
+				logo.removeClass("scroll-mode");
+			}
+		},
+		onScrollMb: (scrollPos) => {
+			let headerHeight = header.height();
+			if (scrollPos > headerHeight) header.addClass("on-scroll");
 			else header.removeClass("on-scroll");
-        },
-        toggleNav: () => {
-            const hamburger = $('.header__toggle');
-            hamburger.on('click', function (e) {
-                e.preventDefault();
-                if (header.hasClass('open-nav')) {
-                    if ($(window).width() <= 476) {
-                        let scrollY = $("body").css('top');
-                        $("body").css({
-                            'position': 'relative',
-                            'top': ''
-                        });
-                        lenis.start();
-                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-                    }
-                    header.removeClass('open-nav');
-                    header.removeClass('force')
-                }
-                else {
-                    if ($(window).width() <= 476) {
-                        setTimeout(() => {
-                            $("body").css({
-                                'position': 'fixed',
-                                'top': `-${window.scrollY}px`
-                            });
-                        }, 500)
-                        lenis.stop();
-                    }
-                    header.addClass('open-nav');
-                    header.addClass('force')
-                }
-            })
-        },
-        toggleHam: () => {
-            const hamburger = $('.header__hamburger');
-            hamburger.on('click', function (e) {
-                e.preventDefault();
-                header.toggleClass('open-ham');
-            })
+		},
+		toggleNav: () => {
+			const hamburger = $(".header__toggle");
+			hamburger.on("click", function (e) {
+				e.preventDefault();
+				if (header.hasClass("open-nav")) {
+					if ($(window).width() <= 476) {
+						let scrollY = $("body").css("top");
+						$("body").css({
+							position: "relative",
+							top: "",
+						});
+						lenis.start();
+						window.scrollTo(0, parseInt(scrollY || "0") * -1);
+					}
+					header.removeClass("open-nav");
+					header.removeClass("force");
+				} else {
+					if ($(window).width() <= 476) {
+						setTimeout(() => {
+							$("body").css({
+								position: "fixed",
+								top: `-${window.scrollY}px`,
+							});
+						}, 500);
+						lenis.stop();
+					}
+					header.addClass("open-nav");
+					header.addClass("force");
+				}
+			});
+		},
+		toggleHam: () => {
+			const hamburger = $(".header__hamburger");
+			hamburger.on("click", function (e) {
+				e.preventDefault();
+				header.toggleClass("open-ham");
+			});
 
-            $(window).on('click', (e) => {
-                if (!$('.header__hamburger:hover').length)
-                    if (!$('.header__link:hover').length)
-                        header.removeClass('open-ham');
-                    else {
-                        setTimeout(() => {
-                            header.removeClass('open-ham');
-                        }, 500);
-                    }
-            })
-        }
+			$(window).on("click", (e) => {
+				if (!$(".header__hamburger:hover").length)
+					if (!$(".header__link:hover").length) header.removeClass("open-ham");
+					else {
+						setTimeout(() => {
+							header.removeClass("open-ham");
+						}, 500);
+					}
+			});
+		},
     };
+
     if (viewport.width > 991) {
-        handleHeader.toggleHam();
-    }
-    else {
-        handleHeader.toggleNav();
-    }
+		handleHeader.toggleHam();
+	} else {
+		handleHeader.toggleNav();
+	}
+
     function scrollHeaderSwitch() {
         if (viewport.width > 767) {
-            lenis.on('scroll', function (inst) {
-                let scrollPos = inst.scroll;
-                handleHeader.onScrollDes(scrollPos);
-            })
+            lenis.on("scroll", function (inst) {
+				let scrollPos = inst.scroll;
+				handleHeader.onScrollDes(scrollPos);
+			});
         }
         else {
             $('.wrapper').on("scroll", function () {
                 let scrollPos = $('.wrapper').scrollTop();
-                handleHeader.onScrollMb(scrollPos);
+                handleHeader.addBG(scrollPos);
                 handleHeader.toggleHide(scrollPos);
             });
         }
     }
     scrollHeaderSwitch();
 
-    function transitionOnce() {
+    function transitionOnce(data) {
         resetScroll()
         gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
-        let tl = gsap.timeline({
-            onComplete: () => {
-                if (!cookieAccepted) {
-                    cookieConsent?.show(0);
-                    gsap.fromTo('#cm', {yPercent: 25, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1, duration: .4, delay: 2, ease: 'none'})
-                }
+        let tl
+        if (data.next.namespace == 'home') {
+            //Setup css
+            $('.trans__count').addClass('active');
+            $('.trans__home').addClass('active');
+            $('.home-hero .home-hero__title, .home-hero .home-hero__backer').addClass('force-hidden')
+            // //Debug area
+            // $('.trans__wrapper').remove()
+            // $('.home-hero .home-hero__title, .home-hero .home-hero__backer').removeClass('force-hidden')
+            // lenis.start()
+            // // End Debug area
+
+            let homeHeroTitleHeight = $('.home-hero__title').outerHeight();
+            console.log(homeHeroTitleHeight)
+            let transHomePaddingBottom = parseInt($('.trans__home-inner').css('padding-bottom'))
+            console.log(transHomePaddingBottom)
+            console.log(homeHeroTitleHeight)
+            tl = gsap.timeline({
+                onComplete: () => {
+                    lenis.start()
+                    if (!cookieAccepted) {
+                        cookieConsent?.show(0);
+                        gsap.fromTo('#cm', {yPercent: 25, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1, duration: .4, delay: 2, ease: 'none'})
+                    }
+                },
+                delay: .4
+            })
+            lenis.stop()
+            const dur = {
+                phase_1: 2.2,
+                phase_2: 2.45,
+                phase_3: 1.25,
             }
-        })
-        tl
-        .to('.trans__item', {delay: .4, scaleY: 0, duration: 1, stagger: {
-            each: '.1',
-        }, ease: "expo.in"}, 0)
-        .to('.trans__logo', {rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in'}, '<=.4')
+            const bezier = {
+                bezier_1: CustomEase.create("cus1", "M0,0 C0.424,0.343 0.294,0.974 1,1 "),
+                bezier_2: CustomEase.create("cus2", "M0,0 C0.634,0 0.927,0.604 1,1 "),
+                bezier_3: CustomEase.create("cus3", "M0,0 C0.634,0 0.702,1 1,1 "),
+            }
+            let offsetVal_1, offsetVal_2
+            if ($(window).width() > 991) {
+                offsetVal_1 = .72
+                offsetVal_2 = .9
+            } else if ($(window).width() > 768) {
+                offsetVal_1 = .76
+                offsetVal_2 = 1.1
+            } else {
+                offsetVal_1 = .68
+                offsetVal_2 = 1.1
+            }
+
+            let homeHeroTitleTrans = new SplitText('.trans__home .home-hero__title', { type: 'chars,words,lines', linesClass: 'g-lines'});
+            let homeHeroLabelTrans = new SplitText('.trans__home .home-hero__backer-label', { type: 'words,lines', linesClass: 'g-lines'});
+            let homeHeroBackerTrans = $('.trans__home .home-hero__backer-item')
+            if ($(window).width() <= 991) {
+                $('.trans__home .home-hero__backer').css('margin-top', `${$('.home-hero .home-hero__backer').get(0).getBoundingClientRect().top}px`)
+            }
+
+            let count = { val: 0 };
+            //0-65 count + count move
+            //0
+            tl
+                .to('.trans__count-bar-inner', {scaleX: .65, duration: dur.phase_1, ease: bezier.bezier_1})
+                .to(count, {val: 65, roundProps: "val", duration: dur.phase_1, ease: bezier.bezier_1,
+                    onUpdate: function () {
+                        $('.trans__count-value').text(count.val < 10 ? `0${count.val}` : count.val)
+                }}, "<=0")
+
+                .to('.trans__count', {y: $(window).height() * offsetVal_1 - homeHeroTitleHeight, duration: dur.phase_1, ease: bezier.bezier_1}, "<=0")
+                .to('.trans__home .home-hero__title', {y: $(window).height() * offsetVal_1 - homeHeroTitleHeight, duration: dur.phase_1 + .2, ease: bezier.bezier_1}, "<=0")
+                // //65
+                .to('.trans__count-bar-inner', {scaleX: 1, duration: dur.phase_2, ease: bezier.bezier_2})
+                .to(count, {
+                    val: 100, roundProps: "val", duration: dur.phase_2, ease: bezier.bezier_2,
+                    onUpdate: function () {
+                        $('.trans__count-value').text(count.val < 10 ? `0${count.val}` : count.val)
+                    }
+                }, "<=0")
+                .to('.trans__count', {y: `-=${$(window).height() * offsetVal_2 - homeHeroTitleHeight}`, duration: dur.phase_2 +.1, ease: bezier.bezier_2}, "<=0")
+                .to('.trans__home .home-hero__title', {y: 0, duration: dur.phase_2+.4, ease: bezier.bezier_3}, "<=0")
+
+                .to('.trans__count', {autoAlpha: 0, duration: dur.phase_3, ease: 'power1.in'}, "<=1.3")
+                .to('.trans__home .home-hero__backer', {y: 0, duration: dur.phase_3, ease: 'power1.in'}, "<=0")
+                .from(homeHeroLabelTrans.words, {yPercent: 60, autoAlpha: 0, duration: .2, stagger: .01}, ">=0")
+                .from(homeHeroBackerTrans, {yPercent: 60, autoAlpha: 0, duration: .4, stagger: .05}, "<=0")
+                .to('.trans__item', {
+                    scaleY: 0, duration: 1, stagger: { each: '.1' }, ease: "expo.in",
+                    onComplete: () => {
+                        $('.trans__home-inner').remove()
+                        $('.home-hero .home-hero__title, .home-hero .home-hero__backer').removeClass('force-hidden')
+                    }
+                }, "<=-.25")
+                .from('.home-hero__bg-wrap-inner ', {
+                    y: `${$('.home-hero__bg-wrap-inner').height() - $('.home-hero__bg-wrap').height()}`,
+                    duration: 2, ease: "Power2.out",
+                    onComplete: () => {
+                        $('.home-hero__bg-wrap-inner').addClass('done-anim')
+                    }
+                }, "<=.55")
+        }
+        else {
+            $('.trans__logo').addClass('active');
+            tl = gsap.timeline({
+                onComplete: () => {
+                    $('.trans__home-inner').remove()
+                    if (!cookieAccepted) {
+                        cookieConsent?.show(0);
+                        gsap.fromTo('#cm', {yPercent: 25, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1, duration: .4, delay: 2, ease: 'none'})
+                    }
+                }
+            })
+            tl
+                .to('.trans__item', {delay: .4, scaleY: 0, duration: 1, stagger: { each: '.1' }, ease: "expo.in" }, 0)
+                .to('.trans__logo', {rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in'}, '<=.4')
+        }
     }
 
     function transitionLeave(data) {
@@ -235,10 +337,8 @@ const scripts = () => {
             }
         })
         tl
-        .to('.trans__item', {scaleY: 1, duration: 1, stagger: {
-            each: '.1',
-        }, ease: "expo.out"}, 0)
-        .to('.trans__logo', {rotateZ: '0deg', autoAlpha: 1, duration: .6, yPercent: 0}, '>=-.8.5')
+            .to('.trans__item', {scaleY: 1, duration: 1, stagger: { each: '.1' }, ease: "expo.out"}, 0)
+            .to('.trans__logo', {rotateZ: '0deg', autoAlpha: 1, duration: .6, yPercent: 0}, '>=-.8.5')
 
         return tl
     }
@@ -260,19 +360,23 @@ const scripts = () => {
             }
         })
         tl
-        .to('.trans__item', {scaleY: 0, duration: 1, stagger: {
-            each: '.1',
-        }, ease: "expo.in"}, 0)
+            .to('.trans__item', {scaleY: 0, duration: 1, stagger: { each: '.1' }, ease: "expo.in"}, 0)
             .to('.trans__logo', { rotateZ: '-7deg', autoAlpha: 0, duration: .6, yPercent: 30, ease: 'power2.in' }, '<=.4')
+
+        if (data.next.namespace == 'home') {
+            $('.home-hero__bg-wrap-inner').addClass('done-anim')
+        }
         return tl
     }
 
     function addNavActiveLink(data) {
         header.removeClass('dark-mode')
         header.removeClass('mix-mode')
+
         if (viewport.width > 991) {
-            header.addClass('open-ham')
+            header.addClass("open-ham");
         }
+
         if ($(data.next.container).attr('data-header') == 'dark') {
             header.addClass('dark-mode')
         } else if ($(data.next.container).attr('data-header') == 'mix') {
@@ -313,16 +417,8 @@ const scripts = () => {
         }
         lenis.start()
     }
-    // function changeScrollerContainer() {
-    //     let triggers = ScrollTrigger.getAll();
-    //     triggers.forEach(trigger => {
-    //         trigger.scroller.customElements = '.wrapper'
-    //         console.log(trigger);
-    //     });
-    // }
     function handleScrollTo() {
         $('[data-scrollto]').on('click', function(e) {
-            //e.preventDefault();
             let target = $(this).attr('href')
             lenis.scrollTo(target)
         })
@@ -587,6 +683,24 @@ const scripts = () => {
         })
     }
 
+    function handleFooterCursor() {
+        const footerCursorWrap = '.footer__cursor';
+        const footerCursor = '.footer__cursor-main';
+        function mousMove() {
+            if ($(footerCursor).length) {
+                let iconsX = xGetter(footerCursor);
+                let iconsY = yGetter(footerCursor);
+                xSetter(footerCursor)(lerp(iconsX, pointerCurr().x), 0.01);
+                ySetter(footerCursor)(lerp(iconsY, pointerCurr().y - $(footerCursorWrap).get(0).getBoundingClientRect().top), 0.01);
+            }
+            requestAnimationFrame(mousMove)
+        }
+        requestAnimationFrame(mousMove)
+    }
+    if ($(window).width() > 767) {
+        handleFooterCursor()
+    }
+
     const VIEWS = [
         homeScript,
         aboutScript,
@@ -609,9 +723,7 @@ const scripts = () => {
                 handlePopup.cookie();
                 checkIfJobAvail()
             },
-            async enter(data) {
-
-            },
+            async enter(data) { },
             async afterEnter(data) {
                 await transitionEnter(data)
                 handleScrollTo()
@@ -625,8 +737,7 @@ const scripts = () => {
                     removeAllScrollTrigger()
                 })
             },
-            async afterLeave(data) {
-            }
+            async afterLeave(data) {  }
         }],
         views: VIEWS
     })

@@ -67,11 +67,11 @@
     &-32 {
         @include size(3.2rem);
     }
-    &-80 {
-        @include size(8rem);
-    }
     &-48 {
         @include size(4.8rem);
+    }
+    &-80 {
+        @include size(8rem);
     }
     &-100 {
         @include size(10rem);

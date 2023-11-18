@@ -19,6 +19,10 @@
         max-height: 148px;
         position: absolute;
         z-index: 2;
+        opacity: 0;
+        &.active {
+            opacity: 1;
+        }
     }
     &__inner {
         z-index: 1;
@@ -35,6 +39,134 @@
         height: 100%;
         background-color: #eb2c00;
         margin: 0 -1px;
+    }
+    &__home {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 3;
+        width: 100%;
+        height: 100vh;
+        opacity: 0;
+        &.active {
+            opacity: 1;
+        }
+        &-inner {
+            height: 100%;
+            padding-bottom: max(8.5vh, 8.5rem);
+            @include md {
+                padding-bottom: 6rem;
+            }
+            .container {
+                height: 100%;
+            }
+            .home-hero {
+                &__title {
+                    grid-row: 1/2;
+                    transform: translateY(calc(68vh));
+                }
+                &__backer {
+                    transform: translateY(calc(6rem + 100%));
+                }
+            }
+            @include md {
+                .home-hero {
+                    &__title {
+                        transform: translateY(calc(82vh))
+                    }
+                    &__backer {
+                        transform: translateY(calc(6rem + 100%));
+                        grid-row: 1/3;
+                        align-self: start;
+                        margin-top: 100vh;
+                    }
+                }
+            }
+            @include sm {
+                .home-hero {
+                    &__title {
+                        transform: translateY(calc(84svh))
+                    }
+                }
+            }
+        }
+    }
+    &__count {
+        grid-column: 1/17;
+        grid-row: 1/3;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+        transform: translateY(68vh);
+        row-gap: calc(25vh - 20rem - .5rem);
+        height: 25vh;
+        opacity: 0;
+        @include md {
+            row-gap: calc(14vh - 12.2rem - .5rem);
+            height: 14vh;
+            transform: translateY(82vh);
+            grid-column: 1/13;
+        }
+        @include sm {
+            row-gap: calc(13svh - 10svh - .2rem);
+            height: 13svh;
+            transform: translateY(84svh);
+            grid-column: 1/3;
+        }
+        &.active {
+            opacity: 1;
+        }
+        &-number {
+            position: relative;
+            color: rgba($cl-white, 1);
+        }
+        &-value {
+            font-size: 20rem;
+            line-height: 14.2rem;
+            font-kerning: none;
+            font-variant-numeric: tabular-nums;
+            @include md {
+                font-size: 16rem;
+                line-height: 12.2rem;
+            }
+            @include sm {
+                font-size: 10svh;
+                line-height: 10svh;
+            }
+        }
+        &-percent {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            font-size: 8rem;
+            line-height: 5.7rem;
+            margin-left: .4rem;
+            @include md {
+                font-size: 6rem;
+                line-height: 4.7rem;
+            }
+            @include sm {
+                font-size: 4rem;
+            }
+        }
+        &-bar {
+            width: 100%;
+            height: .5rem;
+            background-color: rgba($cl-white, .1);
+            flex-shrink: 0;
+            @include sm {
+                height: .2rem;
+            }
+            &-inner {
+                transform-origin: left;
+                width: 100%;
+                height: 100%;
+                background-color: rgba($cl-white, 1);
+                transform: scaleX(0);
+            }
+        }
+
     }
 }
 @include md {

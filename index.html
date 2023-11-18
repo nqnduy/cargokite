@@ -105,6 +105,44 @@
                 <div class="trans__item"></div>
                 <div class="trans__item"></div>
             </div>
+            <div class="trans__home">
+                <div class="trans__home-inner">
+                    <div class="container grid">
+                        <div class="trans__count">
+                            <div class="trans__count-number">
+                                <div class="trans__count-value">00</div>
+                                <span class="trans__count-percent">
+                                    %
+                                </span>
+                            </div>
+                            <div class="trans__count-bar">
+                                <div class="trans__count-bar-inner"></div>
+                            </div>
+                        </div>
+                        <h1 class="heading h1 home-hero__title">
+                            Zero Emission
+                            Ocean
+                            Transportation
+                        </h1>
+                        <div class="home-hero__backer">
+                            <div class="txt txt-12 home-hero__backer-label">
+                                Backed by these top-tier investors:
+                            </div>
+                            <div class="home-hero__backer-inner">
+                                <div class="home-hero__backer-item hidden">
+                                    <img srcset="./imgs/backer-lowercarbon.svg" alt="lowercarbon" loading="lazy" width="172" height="25">
+                                </div>
+                                <div class="home-hero__backer-item">
+                                    <img src="./imgs/backer-sosv.svg" alt="sosv" loading="lazy" width="50" height="22">
+                                </div>
+                                <div class="home-hero__backer-item">
+                                    <img src="./imgs/backer-fttf.svg" alt="fttf" loading="lazy" width="206" height="24">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <header class="header">
             <div class="header__leftspace">
@@ -193,19 +231,25 @@
                                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 1.5H30.5V27.5H27.5V4.5H4.5V1.5Z" fill="white"/>
                                         </svg>
                                     </div>
-                            </a></li>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </header>
+
         <div class="main" data-barba="container" data-barba-namespace="home" data-namespace="home">
             <div class="home-hero__wrap">
                 <div class="home-hero__bg-wrap">
-                    <video class="home-hero__bg-vid" id="home-hero-vid" loop preload="auto" autoplay muted playsinline>
-                        <source src="./imgs/home-hero-ocean.mp4" type="video/mp4">
-                    </video>
-                    <img src="./imgs/home-hero.png?width=2880" alt="Hero background cargokite ship" width="1920" height="1080" class="img-fill img-abs">
+                    <div class="home-hero__bg-wrap-inner">
+                        <video class="home-hero__bg-vid" id="home-hero-vid" loop preload="auto" autoplay muted playsinline>
+                            <source src="./imgs/home-hero-ocean-3.mp4" type="video/mp4">
+                        </video>
+                        <img src="./imgs/home-hero-video-ph.jpg?width=200" alt="Hero background cargokite ship" width="1728" height="1340" class="home-hero__bg-ph">
+                        <img src="./imgs/home-hero-ship.png?width=200" alt="Hero background cargokite ship" width="200" height="275" class="home-hero__bg-ship">
+                        <div class="home-hero__canvas"></div>
+                    </div>
                 </div>
                 <section class="home-hero">
                     <div class="container grid">
@@ -247,11 +291,11 @@
                         Welcome to CargoKite, where engineering excellence meets innovation
                     </h2>
                     <div class="img-wrap home-intro__img" style="--aspect: 155%">
-                        <img src="./imgs/home-intro-2.jpg?width=900" alt="welcome to cargokite" class="img-fill img-abs" loading="lazy" width="286" height="445">
+                        <img src="./imgs/home-intro-2.jpg?width=675" alt="welcome to cargokite" class="img-fill img-abs" loading="lazy" width="286" height="445">
                     </div>
                     <div class="home-intro__richtext">
                         <div class="img-wrap home-intro__richtext-img" style="--aspect: 61.7%">
-                            <img src="./imgs/home-intro-1.jpg?width=1100" alt="Cargokite's team" class="img-fill img-abs" loading="lazy" width="350" height="215">
+                            <img src="./imgs/home-intro-1.jpg?width=825" alt="Cargokite's team" class="img-fill img-abs" loading="lazy" width="350" height="215">
                         </div>
                         <h3 class="txt txt-24 txt-med home-intro__richtext-h3">
                             We are a tech startup from Munich reinventing how goods are transported across the ocean.
@@ -276,7 +320,7 @@
                     <div class="home-prob__main grid">
                         <div class="home-prob__main-item">
                             <div class="img-wrap home-prob__main-item-img" style="--aspect: 72%">
-                                <img src="./imgs/home-prob-1.jpg?width=772" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="386" height="279">
+                                <img src="./imgs/home-prob-1.jpg?width=579" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="386" height="279">
                             </div>
                             <h3 class="heading h6 home-prob__main-item-title">
                                 …not reliable due to a lack of resilience
@@ -287,7 +331,7 @@
                         </div>
                         <div class="home-prob__main-item">
                             <div class="img-wrap home-prob__main-item-img" style="--aspect: 100%">
-                                <img src="./imgs/home-prob-2.jpg?width=774" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="387" height="387">
+                                <img src="./imgs/home-prob-2.jpg?width=581" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="387" height="387">
                             </div>
                             <h3 class="heading h6 home-prob__main-item-title">
                                 …not sustainable
@@ -298,7 +342,7 @@
                         </div>
                         <div class="home-prob__main-item">
                             <div class="img-wrap home-prob__main-item-img" style="--aspect: 100%">
-                                <img src="./imgs/home-prob-3.jpg?width=978" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="489" height="489">
+                                <img src="./imgs/home-prob-3.jpg?width=734" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="489" height="489">
                             </div>
                             <h3 class="heading h6 home-prob__main-item-title">
                                 …only for standard routes
@@ -309,7 +353,7 @@
                         </div>
                         <div class="home-prob__main-item">
                             <div class="img-wrap home-prob__main-item-img" style="--aspect: 150%">
-                                <img src="./imgs/home-prob-4.jpg?width=570" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="285" height="428">
+                                <img src="./imgs/home-prob-4.jpg?width=428" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="285" height="428">
                             </div>
                             <h3 class="heading h6 home-prob__main-item-title">
                                 …not customer-oriented
@@ -320,7 +364,7 @@
                         </div>
                         <div class="home-prob__main-item">
                             <div class="img-wrap home-prob__main-item-img" style="--aspect: 108%">
-                                <img src="./imgs/home-prob-5.jpg?width=774" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="387" height="418">
+                                <img src="./imgs/home-prob-5.jpg?width=581" alt="cargokite problems" class="img-fill img-abs" loading="lazy" width="387" height="418">
                             </div>
                             <h3 class="heading h6 home-prob__main-item-title">
                                 …slow
@@ -358,7 +402,7 @@
                     </div>
                     <div class="home-solu__main grid">
                         <div class="home-solu__main-img-wrap">
-                            <img src="./imgs/home-solu-ship.png?width=774" alt="Cargokite ship" loading="lazy" width="387" height="946">
+                            <img src="./imgs/home-solu-ship.png?width=581" alt="Cargokite ship" loading="lazy" width="387" height="946">
                         </div>
                         <div class="home-solu__main-inner grid">
                             <div class="home-solu__main-item">
@@ -411,7 +455,7 @@
                         <div class="home-shift__main-part home-shift__main-part--big-ship">
                             <div class="container fluid">
                                 <div class="home-shift__img-wrap">
-                                    <img src="./imgs/home-shift-big-ship.png?width=2800" class="img-height" alt="Freight ship" width="1920" height="292">
+                                    <img src="./imgs/home-shift-big-ship.svg" class="img-height" alt="Freight ship" width="1920" height="292">
                                 </div>
                             </div>
                         </div>
@@ -454,7 +498,7 @@
                 </div>
             </section>
             <div class="home-ship__bg-img">
-                <img src="./imgs/home-solu-bg.jpg?width=2880" alt="Background" class="img-fill" loading="lazy" width="1920" height="1080">
+                <img src="./imgs/home-solu-bg.jpg?width=2160" alt="Background" class="img-fill" loading="lazy" width="1920" height="1080">
             </div>
             <section class="home-tech grid">
                 <div class="home-tech__top">
@@ -556,7 +600,7 @@
                     </div>
                 </div>
                 <div class="home-tech__ship">
-                        <img src="./imgs/ship.png?width=2206" alt="Ship" loading="lazy" width="1103" height="730">
+                        <img src="./imgs/ship.png?width=1660" alt="Ship" loading="lazy" width="1103" height="730">
                     </div>
                     <div class="home-tech__bg-tri">
                         <div class="home-tech__bg-tri-inner"></div>
@@ -597,7 +641,7 @@
                                     <div class="home-why__main-item-inner">
                                         <div class="icon icon-100 home-why__main-item-icon">
                                             <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M76.6852 6.0918L91.6649 23.7049C93.5897 25.9228 91.9606 29.2999 89.0863 29.2999H83.9583V39.8533C83.9583 40.8737 83.1311 41.7009 82.1107 41.7009C81.0902 41.7009 80.263 40.8737 80.263 39.8533V27.7623C80.263 27.7101 80.2652 27.6584 80.2694 27.6073C80.2652 27.5562 80.263 27.5045 80.263 27.4523C80.263 26.4318 81.0902 25.6046 82.1107 25.6046H88.4295L76.6852 11.7957L64.9409 25.6046H71.2598C72.2802 25.6046 73.1074 26.4318 73.1074 27.4523C73.1074 27.5045 73.1053 27.5562 73.101 27.6073C73.1053 27.6584 73.1074 27.7101 73.1074 27.7623V85.024C73.1074 86.0445 72.2802 86.8717 71.2598 86.8717C70.2393 86.8717 69.4121 86.0445 69.4121 85.024V29.2999H64.2842C61.4098 29.2999 59.7808 25.9227 61.7056 23.7048L76.6852 6.0918ZM53.1668 33.7458C53.1668 32.7253 53.994 31.8981 55.0144 31.8981H58.6417C59.6622 31.8981 60.4894 32.7253 60.4894 33.7458C60.4894 34.7662 59.6622 35.5934 58.6417 35.5934H55.0144C53.994 35.5934 53.1668 34.7662 53.1668 33.7458ZM49.5705 42.3335C49.5705 40.445 51.0798 38.9357 52.9683 38.9357H60.7189C62.6074 38.9357 64.1167 40.445 64.1167 42.3335V84.993C64.1167 86.0135 63.2895 86.8407 62.269 86.8407C61.2486 86.8407 60.4214 86.0135 60.4214 84.993V42.631H53.2658V84.993C53.2658 86.0135 52.4386 86.8407 51.4181 86.8407C50.3977 86.8407 49.5705 86.0135 49.5705 84.993V42.3335ZM33.4491 45.7438C33.4491 44.7233 34.2764 43.8961 35.2968 43.8961H38.9241C39.9445 43.8961 40.7718 44.7233 40.7718 45.7438C40.7718 46.7642 39.9445 47.5914 38.9241 47.5914H35.2968C34.2764 47.5914 33.4491 46.7642 33.4491 45.7438ZM82.1107 47.3374C83.1311 47.3374 83.9583 48.1646 83.9583 49.1851V85.024C83.9583 86.0445 83.1311 86.8717 82.1107 86.8717C81.0902 86.8717 80.263 86.0445 80.263 85.024V49.1851C80.263 48.1646 81.0902 47.3374 82.1107 47.3374ZM29.8529 53.9904C29.8529 52.1019 31.3621 50.5927 33.2506 50.5927H41.0013C42.8898 50.5927 44.3991 52.1019 44.3991 53.9904V84.993C44.3991 86.0135 43.5718 86.8407 42.5514 86.8407C41.531 86.8407 40.7038 86.0135 40.7038 84.993V54.288H33.5482V84.993C33.5482 86.0135 32.7209 86.8407 31.7005 86.8407C30.6801 86.8407 29.8529 86.0135 29.8529 84.993V53.9904ZM13.6695 58.0208C13.6695 57.0003 14.4967 56.1731 15.5172 56.1731H19.1445C20.1649 56.1731 20.9921 57.0003 20.9921 58.0208C20.9921 59.0412 20.1649 59.8684 19.1445 59.8684H15.5172C14.4967 59.8684 13.6695 59.0412 13.6695 58.0208ZM10.0732 66.5155C10.0732 64.627 11.5825 63.1177 13.471 63.1177H21.2216C23.1101 63.1177 24.6194 64.627 24.6194 66.5155V84.993C24.6194 86.0135 23.7922 86.8407 22.7718 86.8407C21.7513 86.8407 20.9241 86.0135 20.9241 84.993V66.813H13.7685V84.993C13.7685 86.0135 12.9413 86.8407 11.9209 86.8407C10.9004 86.8407 10.0732 86.0135 10.0732 84.993V66.5155ZM7.5 92.0616C7.5 91.0412 8.32723 90.2139 9.34766 90.2139H85.49C86.5104 90.2139 87.3376 91.0412 87.3376 92.0616C87.3376 93.082 86.5104 93.9093 85.49 93.9093H9.34766C8.32723 93.9093 7.5 93.082 7.5 92.0616Z" fill="currentColor"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M76.6852 6.08984L91.6649 23.7029C93.5897 25.9208 91.9606 29.298 89.0863 29.298H83.9583V84.9911C83.9583 86.0115 83.1311 86.8387 82.1107 86.8387C81.0902 86.8387 80.263 86.0115 80.263 84.9911V27.7603C80.263 27.7081 80.2652 27.6564 80.2694 27.6053C80.2652 27.5542 80.263 27.5025 80.263 27.4503C80.263 26.4299 81.0902 25.6026 82.1107 25.6026H88.4295L76.6852 11.7937L64.9409 25.6026H71.2598C72.2802 25.6026 73.1074 26.4299 73.1074 27.4503C73.1074 27.5025 73.1053 27.5542 73.101 27.6053C73.1053 27.6564 73.1074 27.7081 73.1074 27.7603V85.0221C73.1074 86.0425 72.2802 86.8697 71.2598 86.8697C70.2393 86.8697 69.4121 86.0425 69.4121 85.0221V29.298H64.2842C61.4098 29.298 59.7808 25.9207 61.7056 23.7029L76.6852 6.08984ZM53.1668 33.7438C53.1668 32.7234 53.994 31.8962 55.0144 31.8962H58.6417C59.6622 31.8962 60.4894 32.7234 60.4894 33.7438C60.4894 34.7643 59.6622 35.5915 58.6417 35.5915H55.0144C53.994 35.5915 53.1668 34.7643 53.1668 33.7438ZM49.5705 42.3315C49.5705 40.443 51.0798 38.9337 52.9683 38.9337H60.7189C62.6074 38.9337 64.1167 40.443 64.1167 42.3315V84.9911C64.1167 86.0115 63.2895 86.8387 62.269 86.8387C61.2486 86.8387 60.4214 86.0115 60.4214 84.9911V42.6291H53.2658V84.9911C53.2658 86.0115 52.4386 86.8387 51.4181 86.8387C50.3977 86.8387 49.5705 86.0115 49.5705 84.9911V42.3315ZM33.4492 45.7418C33.4492 44.7214 34.2764 43.8942 35.2968 43.8942H38.9241C39.9445 43.8942 40.7718 44.7214 40.7718 45.7418C40.7718 46.7623 39.9445 47.5895 38.9241 47.5895H35.2968C34.2764 47.5895 33.4492 46.7623 33.4492 45.7418ZM29.8528 53.9885C29.8528 52.1 31.3621 50.5907 33.2506 50.5907H41.0013C42.8898 50.5907 44.3991 52.1 44.3991 53.9885V84.9911C44.3991 86.0115 43.5718 86.8387 42.5514 86.8387C41.531 86.8387 40.7038 86.0115 40.7038 84.9911V54.286H33.5482V84.9911C33.5482 86.0115 32.7209 86.8387 31.7005 86.8387C30.6801 86.8387 29.8528 86.0115 29.8528 84.9911V53.9885ZM13.6695 58.0188C13.6695 56.9984 14.4967 56.1712 15.5172 56.1712H19.1445C20.1649 56.1712 20.9921 56.9984 20.9921 58.0188C20.9921 59.0393 20.1649 59.8665 19.1445 59.8665H15.5172C14.4967 59.8665 13.6695 59.0393 13.6695 58.0188ZM10.0732 66.5135C10.0732 64.625 11.5825 63.1157 13.471 63.1157H21.2216C23.1101 63.1157 24.6194 64.625 24.6194 66.5135V84.9911C24.6194 86.0115 23.7922 86.8387 22.7718 86.8387C21.7513 86.8387 20.9241 86.0115 20.9241 84.9911V66.8111H13.7685V84.9911C13.7685 86.0115 12.9413 86.8387 11.9209 86.8387C10.9004 86.8387 10.0732 86.0115 10.0732 84.9911V66.5135ZM7.5 92.0596C7.5 91.0392 8.32723 90.212 9.34766 90.212H85.49C86.5104 90.212 87.3376 91.0392 87.3376 92.0596C87.3376 93.0801 86.5104 93.9073 85.49 93.9073H9.34766C8.32723 93.9073 7.5 93.0801 7.5 92.0596Z" fill="currentColor"/>
                                             </svg>
                                         </div>
                                         <h3 class="heading h6 txt-med home-why__main-item-title">
@@ -643,35 +687,74 @@
                             </div>
                         </a>
                     </div>
-                    <div class="home-part__main home-part__main-supporters">
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-17.svg?width=229" alt="HAX logo" loading="lazy" width="229" height="129">
+                </div>
+                <div class="home-part__main home-part__main-supporters">
+                    <div class="home-part__marquee">
+                        <div class="home-part__marquee-wrapper --right">
+                            <div class="home-part__marquee-item">
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-17.svg" alt="HAX logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-2.svg" alt="ESA logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-16.svg" alt="Federal Ministry of Economic Affairs of Germany logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-6.svg" alt="TUM logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-7.svg" alt="Fraunhofer CML logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-1.svg" alt="Microsoft for Startup logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-5.svg" alt="KIC logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo.svg" alt="Unternehmertum logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-4.svg" alt="Digital hub Logistics logo" loading="lazy" width="229" height="129">
+                                </div>
+                            </div>
                         </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-2.svg?width=229" alt="ESA logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-16.svg?width=229" alt="Federal Ministry of Economic Affairs of Germany logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-6.svg?width=229" alt="TUM logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-7.svg?width=229" alt="Fraunhofer CML logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-1.svg?width=229" alt="Microsoft for Startup logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-5.svg?width=229" alt="KIC logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo.svg?width=229" alt="Unternehmertum logo" loading="lazy" width="229" height="129">
-                        </div>
-                        <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-4.svg?width=229" alt="Digital hub Logistics logo" loading="lazy" width="229" height="129">
+                        <div class="home-part__marquee-wrapper --left">
+                            <div class="home-part__marquee-item">
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-17.svg" alt="HAX logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-2.svg" alt="ESA logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-16.svg" alt="Federal Ministry of Economic Affairs of Germany logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-6.svg" alt="TUM logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-7.svg" alt="Fraunhofer CML logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-1.svg" alt="Microsoft for Startup logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-5.svg" alt="KIC logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo.svg" alt="Unternehmertum logo" loading="lazy" width="229" height="129">
+                                </div>
+                                <div class="home-part__main-item">
+                                    <img src="./imgs/partner/logo-4.svg" alt="Digital hub Logistics logo" loading="lazy" width="229" height="129">
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="container grid">
                     <div class="home-part__investor">
                         <h3 class="heading h6 home-part__investor-title">
                             Investors
@@ -682,10 +765,10 @@
                     </div>
                     <div class="home-part__main home-part__main-investors">
                         <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-sosv.svg?width=229" alt="SOSV logo" loading="lazy" width="229" height="129">
+                            <img src="./imgs/partner/logo-sosv.svg" alt="SOSV logo" loading="lazy" width="229" height="129">
                         </div>
                         <div class="home-part__main-item">
-                            <img src="./imgs/partner/logo-fttf.svg?width=229" alt="FTTF logo" loading="lazy" width="229" height="129">
+                            <img src="./imgs/partner/logo-fttf.svg" alt="FTTF logo" loading="lazy" width="229" height="129">
                         </div>
                     </div>
                 </div>
@@ -885,115 +968,118 @@
                 </div>
             </section>
         </div>
+
         <footer class="footer">
-            <div class="container grid">
-                <div class="footer__form-wrap">
-                    <div class="icon icon-80 footer__form-icon">
-                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M65 21.667L40 46.667L15 21.667" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
-                            <path d="M70 10H9.99998C6.31808 10 3.33331 12.9848 3.33331 16.6667V63.3333C3.33331 67.0152 6.31808 70 9.99998 70H70C73.6819 70 76.6666 67.0152 76.6666 63.3333V16.6667C76.6666 12.9848 73.6819 10 70 10Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square"/>
-                            <path d="M26.6667 46.667L15 58.3337" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
-                            <path d="M53.3333 46.667L65 58.3337" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="heading h4 footer__form-title heading-f-lh">
-                        Subscribe to Newsletters
-                    </div>
-                    <div class="txt txt-16 footer__form-sub">
-                        Want to stay up to date? Sign up for CargoKite's biannual update.
-                    </div>
-                    <form action="#" class="footer__form-main">
-                        <div class="input-wrap">
-                            <input type="email" name="email" class="txt txt-16 input-field" placeholder="Enter your email" required="required">
+            <div class="footer__inner">
+                <div class="container grid">
+                    <div class="footer__form-wrap">
+                        <div class="icon icon-80 footer__form-icon">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M65 21.667L40 46.667L15 21.667" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+                                <path d="M70 10H9.99998C6.31808 10 3.33331 12.9848 3.33331 16.6667V63.3333C3.33331 67.0152 6.31808 70 9.99998 70H70C73.6819 70 76.6666 67.0152 76.6666 63.3333V16.6667C76.6666 12.9848 73.6819 10 70 10Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square"/>
+                                <path d="M26.6667 46.667L15 58.3337" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+                                <path d="M53.3333 46.667L65 58.3337" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+                            </svg>
                         </div>
-                        <button class="btn btn-pri btn-lg input-submit" type="submit">
-                            <div class="input-submit-icon">
-                                <div class="icon icon-20">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M4.59961 9.40169L8.39974 13.2018L16 5.60156" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                        <div class="heading h4 footer__form-title heading-f-lh">
+                            Subscribe to Newsletters
+                        </div>
+                        <div class="txt txt-16 footer__form-sub">
+                            Want to stay up to date? <br>Sign up for CargoKite's biannual update.
+                        </div>
+                        <form action="#" class="footer__form-main">
+                            <div class="input-wrap">
+                                <input type="email" name="email" class="txt txt-16 input-field" placeholder="Enter your email" required="required">
+                            </div>
+                            <button class="btn btn-pri btn-lg input-submit" type="submit">
+                                <div class="input-submit-icon">
+                                    <div class="icon icon-20">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4.59961 9.40169L8.39974 13.2018L16 5.60156" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span class="txt txt-18 txt-med input-submit-txt">
+                                    Subscribe
+                                </span>
+                                <span class="txt txt-18 txt-med input-submit-txt-tail">
+                                    d
+                                </span>
+                            </button>
+                        </form>
+                        <div class="txt txt-12 footer__form-caption">
+                            Don't worry about spam. We hate it too!
+                        </div>
+                    </div>
+                    <div class="footer__main">
+                        <div class="footer__links">
+                            <a href="./" class="footer__link txt txt-20 txt-med" data-link="home">Home.</a>
+                            <a href="./about.html" class="footer__link txt txt-20 txt-med tag-wrap" data-link="about">
+                                About.
+                                <span class="tag-link">
+                                    we're hiring
+                                </span>
+                            </a>
+                            <a href="./tech.html" class="footer__link txt txt-20 txt-med" data-link="tech">Technology.</a>
+                            <a href="./news.html" class="footer__link txt txt-20 txt-med" data-link="news">News & Media.</a>
+                            <a href="#" data-popup="contact" class="footer__link txt txt-20 txt-med" data-link="contact">Get in touch.</a>
+                        </div>
+                        <div class="footer__info grid footer__info-mid">
+                            <div class="footer__info-addr grid">
+                                <div class="footer__info-addr-grp">
+                                    <div class="txt txt-16 footer__info-addr-label">
+                                        Head office
+                                    </div>
+                                    <div class="txt txt-16 footer__info-addr-txt">
+                                        CargoKite GmbH <br>
+                                        Liebherrstraße 20 <br>
+                                        80538 München <br>
+                                        Germany
+                                    </div>
+                                </div>
+                                <div class="footer__info-addr-grp">
+                                    <div class="txt txt-16 footer__info-addr-label">
+                                        Postal & Visitor address
+                                    </div>
+                                    <div class="txt txt-16 footer__info-addr-txt">
+                                        CargoKite GmbH <br>Lichtenbergstraße 6 <br>85748 Garching bei <br>München Germany
+                                    </div>
                                 </div>
                             </div>
-                            <span class="txt txt-18 txt-med input-submit-txt">
-                                Subscribe
-                            </span>
-                            <span class="txt txt-18 txt-med input-submit-txt-tail">
-                                d
-                            </span>
-                        </button>
-                    </form>
-                    <div class="txt txt-12 footer__form-caption">
-                        Don't worry about spam. We hate it too!
-                    </div>
-                </div>
-                <div class="footer__main">
-                    <div class="footer__links">
-                        <a href="./" class="footer__link txt txt-20 txt-med" data-link="home">Home.</a>
-                        <a href="./about.html" class="footer__link txt txt-20 txt-med tag-wrap" data-link="about">
-                            About.
-                            <span class="tag-link">
-                                we're hiring
-                            </span>
-                        </a>
-                        <a href="./tech.html" class="footer__link txt txt-20 txt-med" data-link="tech">Technology.</a>
-                        <a href="./news.html" class="footer__link txt txt-20 txt-med" data-link="news">News & Media.</a>
-                        <a href="#" data-popup="contact" class="footer__link txt txt-20 txt-med" data-link="contact">Get in touch.</a>
-                    </div>
-                    <div class="footer__info grid footer__info-mid">
-                        <div class="footer__info-addr grid">
-                            <div class="footer__info-addr-grp">
-                                <div class="txt txt-16 footer__info-addr-label">
-                                    Head office
+                            <div class="footer__info-contact">
+                                <div class="footer__info-contact-grp">
+                                    <div class="txt txt-14 footer__info-contact-label">
+                                        Email
+                                    </div>
+                                    <a href="mailto:info@cargokite.com" class="txt txt-28 footer__info-contact-link">
+                                        info@cargokite.com
+                                    </a>
                                 </div>
-                                <div class="txt txt-16 footer__info-addr-txt">
-                                    CargoKite GmbH <br>
-                                    Liebherrstraße 20 <br>
-                                    80538 München <br>
-                                    Germany
-                                </div>
-                            </div>
-                            <div class="footer__info-addr-grp">
-                                <div class="txt txt-16 footer__info-addr-label">
-                                    Postal & Visitor address
-                                </div>
-                                <div class="txt txt-16 footer__info-addr-txt">
-                                    CargoKite GmbH <br>Lichtenbergstraße 6 <br>85748 Garching bei München <br>Germany
+                                <div class="footer__info-contact-grp">
+                                    <div class="txt txt-14 footer__info-contact-label">
+                                        Phone
+                                    </div>
+                                    <a href="tel:+49 89 52036527" class="txt txt-28 footer__info-contact-link">
+                                        +49 89 52036527
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="footer__info-contact">
-                            <div class="footer__info-contact-grp">
-                                <div class="txt txt-14 footer__info-contact-label">
-                                    Email
-                                </div>
-                                <a href="mailto:info@cargokite.com" class="txt txt-28 footer__info-contact-link">
-                                    info@cargokite.com
+                        <div class="footer__info grid">
+                            <div class="txt txt-14 footer__info-copy">
+                                © 2023, CargoKite. All Rights Reserved.
+                            </div>
+                            <div class="footer__info-legal">
+                                <a href="./legal.html" class="txt txt-14 footer__info-legal-link" data-link="legal">
+                                    Legal notice
+                                </a>
+                                <a href="./privacy.html" class="txt txt-14 footer__info-legal-link" data-link="privacy">
+                                    Privacy policy
+                                </a>
+                                <a href="https://www.linkedin.com/company/cargokite/" class="txt txt-14 footer__info-legal-link" target="_blank">
+                                    Linkedin
                                 </a>
                             </div>
-                            <div class="footer__info-contact-grp">
-                                <div class="txt txt-14 footer__info-contact-label">
-                                    Phone
-                                </div>
-                                <a href="tel:+49 89 52036527" class="txt txt-28 footer__info-contact-link">
-                                    +49 89 52036527
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer__info grid">
-                        <div class="txt txt-14 footer__info-copy">
-                            © 2023, CargoKite. All Rights Reserved.
-                        </div>
-                        <div class="footer__info-legal">
-                            <a href="./legal.html" class="txt txt-14 footer__info-legal-link" data-link="legal">
-                                Legal notice
-                            </a>
-                            <a href="./privacy.html" class="txt txt-14 footer__info-legal-link" data-link="privacy">
-                                Privacy policy
-                            </a>
-                            <a href="https://www.linkedin.com/company/cargokite/" class="txt txt-14 footer__info-legal-link">
-                                Linkedin
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -1005,6 +1091,27 @@
                     </div>
                     <div class="heading footer__marquee-item">
                         Are you interested? Let's discuss today!
+                    </div>
+                </div>
+                <div class="footer__cursor">
+                    <div class="footer__cursor-main arr-hover">
+                        <div class="txt-20 txt-bold footer__cursor-txt">
+                            Say Hi!
+                        </div>
+                        <div class="arr-wrap arr-wrap-24">
+                            <div class="icon icon-24 arr-ic-main">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.8301 2.76091L2.25005 23.341L0.659058 21.75L21.2392 1.16992L22.8301 2.76091Z" fill="currentColor"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.375 1.125H22.875V20.625H20.625V3.375H3.375V1.125Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="icon icon-24 arr-ic-clone">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.8301 2.76091L2.25005 23.341L0.659058 21.75L21.2392 1.16992L22.8301 2.76091Z" fill="currentColor"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.375 1.125H22.875V20.625H20.625V3.375H3.375V1.125Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </a>
