@@ -69,7 +69,7 @@ function abtInfo() {
     const tlInfoMember = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-info__add-member-inner',
-            start: 'top top+=65%',
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         },
         onComplete: () => {
             abtInfoMemberNum.revert()
@@ -109,7 +109,7 @@ function abtInfo() {
     const tlAbtVis = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-info__vis',
-            start: 'top top+=65%',
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         },
         onComplete: () => {
             abtVisTitle.revert()
@@ -155,7 +155,7 @@ function abtMiles() {
     .to('.abt-mil__ship-img', {y: shipDistance + $(window).height() * .35, ease: 'none'})
 
     let mainDistance = $('.abt-mil__main-inner').height() - $(window).height() * .3;
-    
+
     let tlMain = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-mil__wrap',
@@ -170,7 +170,7 @@ function abtMiles() {
     } else {
         gsap.to($('.abt-mil-pin-container').closest('.pin-spacer'), {background: '#212121'})
     }
-    
+
     tlMain
     .to('.abt-mil__main-inner', {y: -mainDistance, ease: 'none'})
     .to('.abt-mil__progress-dot', {top: '100%', ease: 'none'}, 0)
@@ -180,7 +180,7 @@ function abtMiles() {
     let tlHead = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-mil__head',
-            start: 'top top+=65%'
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         },
         onComplete: () => {
             abtMilLabel.revert();
@@ -199,7 +199,7 @@ function abtTeam() {
     let tlHead = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-team__title',
-            start: 'top top+=65%'
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         },
         onComplete: () => {
             abtTeamTitle.revert();
@@ -241,7 +241,7 @@ function abtTeam() {
                 let iconsX = xGetter(teamImgInner);
                 let iconsY = yGetter(teamImgInner);
                 xSetter(teamImgInner)(lerp(iconsX, (pointerCurr().x / $(window).width() - 0.5) * 2 * $(teamImgInner).width() * .2 ), 0.01);
-                ySetter(teamImgInner)(lerp(iconsY, pointerCurr().y - $(teamImgWrap).get(0).getBoundingClientRect().top - $(teamImgWrap).height() * .1), 0.01);    
+                ySetter(teamImgInner)(lerp(iconsY, pointerCurr().y - $(teamImgWrap).get(0).getBoundingClientRect().top - $(teamImgWrap).height() * .1), 0.01);
             }
             requestAnimationFrame(mousMove)
         }
@@ -287,7 +287,7 @@ function abtJob() {
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-job__title',
-            start: 'top top+=65%'
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         }
     })
     tl
@@ -298,7 +298,7 @@ function abtJob() {
     const tlJobList = gsap.timeline({
         scrollTrigger: {
             trigger: '.abt-job__main',
-            start: 'top top+=65%',
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         }
     })
     requestAnimationFrame(() => {

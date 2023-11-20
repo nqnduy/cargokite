@@ -83,11 +83,11 @@ const scripts = () => {
     refreshOnBreakpoint();
 
     const header = $('.header')
+    let headerHeight = header.height();
 
     let lastScrollTop = 0;
     const handleHeader = {
 		toggleHide: (scrollPos) => {
-			let headerHeight = header.height();
 			if (scrollPos > lastScrollTop) {
 				if (scrollPos > headerHeight) {
 					header.addClass("on-hide");
@@ -101,26 +101,26 @@ const scripts = () => {
 			lastScrollTop = scrollPos;
 		},
 		onScrollDes: (scrollPos) => {
-			let headerHeight = header.height();
 			let logo = $(".header__logo");
-			if (scrollPos > headerHeight * 2) {
+			if (scrollPos > headerHeight * 3) {
 				if (header.hasClass("open-ham")) {
 					header.removeClass("open-ham");
 				}
-				if (!header.hasClass("on-scroll")) {
+				if (!header.hasClass("change-ham-bg")) {
 					setTimeout(() => {
-						header.addClass("on-scroll");
+						header.addClass("change-ham-bg");
 					}, 900);
-				}
-				logo.addClass("scroll-mode");
+                }
+                header.addClass("on-scroll");
+                $('.header__logowrap').addClass("scroll-mode");
 			} else {
-				header.removeClass("on-scroll");
-				header.hasClass("open-ham");
-				logo.removeClass("scroll-mode");
+				header.removeClass("change-ham-bg");
+                header.hasClass("open-ham");
+                header.removeClass("on-scroll");
+                $('.header__logowrap').removeClass("scroll-mode");
 			}
 		},
 		onScrollMb: (scrollPos) => {
-			let headerHeight = header.height();
 			if (scrollPos > headerHeight) header.addClass("on-scroll");
 			else header.removeClass("on-scroll");
 		},
@@ -178,24 +178,83 @@ const scripts = () => {
 		handleHeader.toggleHam();
 	} else {
 		handleHeader.toggleNav();
-	}
+    }
+
+    function changeLogoBackground() {
+        let mainTransition = {
+            ease: 'power1.in',
+            duration: 0.15
+        }
+        function mainArea() {
+            let currentMainArea = getCurrentLogoColor('[data-logo-main]');
+
+            let currentColorMain = $(currentMainArea).attr('data-logo-main');
+            let mainColorDefault = $(':root').css('--logo-color-main');
+
+            if (currentMainArea) {
+                gsap.to(':root', { '--logo-color-main-dynamic': currentColorMain, ...mainTransition })
+            }
+            else {
+                gsap.to(':root', { '--logo-color-main-dynamic': mainColorDefault, ...mainTransition })
+            }
+        }
+        function decorArea() {
+            let currentDecorArea = getCurrentLogoColor('[data-logo-decor]');
+
+            let currentColorDecor = $(currentDecorArea).attr('data-logo-decor');
+            let decorColorDefault = $(':root').css('--logo-color-decor');
+
+            if (currentDecorArea) {
+                gsap.to(':root', { '--logo-color-decor-dynamic': currentColorDecor, ...mainTransition })
+            }
+            else {
+                gsap.to(':root', { '--logo-color-decor-dynamic': decorColorDefault, ...mainTransition })
+            }
+        }
+        if (viewport.width > 767) {
+            mainArea();
+            decorArea();
+        }
+    }
+
+    function getCurrentLogoColor(attribute) {
+        let sections = $(attribute);
+
+        for (let i = 0; i < sections.length; i++) {
+            let rect = sections[i].getBoundingClientRect();
+            if (rect.top < (headerHeight) && (rect.bottom - headerHeight * 0.5) > 0) {
+                return $(sections[i]);
+            }
+        }
+        return null;
+    }
 
     function scrollHeaderSwitch() {
         if (viewport.width > 767) {
             lenis.on("scroll", function (inst) {
 				let scrollPos = inst.scroll;
-				handleHeader.onScrollDes(scrollPos);
+                handleHeader.onScrollDes(scrollPos);
+                changeLogoBackground();
 			});
         }
         else {
             $('.wrapper').on("scroll", function () {
                 let scrollPos = $('.wrapper').scrollTop();
-                handleHeader.addBG(scrollPos);
+                handleHeader.onScrollMb(scrollPos);
                 handleHeader.toggleHide(scrollPos);
             });
         }
     }
     scrollHeaderSwitch();
+
+    function scrollToHash(hash, immediate = true) {
+        if (hash) {
+            lenis.scrollTo(hash, {
+                offset: 0,
+                duration: .0000001,
+            })
+        }
+    }
 
     function transitionOnce(data) {
         resetScroll()
@@ -326,7 +385,7 @@ const scripts = () => {
         gsap.set('.trans__logo', {rotateZ: '7deg', autoAlpha: 0, yPercent: -40, ease: 'power2.out'})
         let tl = gsap.timeline({
             onComplete: () => {
-                addNavActiveLink(data)
+                addNavActiveLink(data);
                 gsap.set(data.next.container, { clearProps: 'display' })
                 $("body").css({
                     'position': 'relative',
@@ -351,6 +410,9 @@ const scripts = () => {
         gsap.set('.trans__item', {transformOrigin: 'bottom', scaleY: 1})
         let tl = gsap.timeline({
             delay: .5,
+            onStart: () => {
+                changeLogoBackground();
+            },
             onComplete: () => {
                 addNavActiveLink(data);
                 if (!cookieAccepted) {
@@ -385,6 +447,13 @@ const scripts = () => {
 
         $('[data-link]').removeClass('active')
         $(`[data-link="${$(data.next.container).attr('data-namespace')}"]`).addClass('active')
+
+        let hash = window.location.hash;
+        if (hash) {
+            setTimeout(() => {
+                scrollToHash(hash);
+            }, 650);
+        }
     }
     function removeAllScrollTrigger() {
         console.log('remove scroll trigger')
@@ -715,6 +784,7 @@ const scripts = () => {
             name: 'opacity-transition',
             sync: true,
             once(data) {
+                changeLogoBackground();
                 addNavActiveLink(data)
                 handleScrollTo()
                 transitionOnce(data)

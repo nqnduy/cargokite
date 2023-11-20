@@ -941,7 +941,7 @@ function techMapInteraction() {
     const techMapTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.tech-map__head',
-            start: 'top top+=65%',
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         },
         onComplete: () => {
             techMapTitle.revert()
@@ -960,7 +960,7 @@ function techControl() {
     const techControlTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.tech-control__head',
-            start: 'top top+=65%',
+            start: `top top+=${$(window).width() > 767 ? 65 : 75}%`
         },
         onComplete: () => {
             techControlTitle.revert()
